@@ -8,6 +8,11 @@
        controller: 'prijavaCtrl',
        controllerAs: 'vm'
     })
+    .when('/vpisniList', {
+       templateUrl: '/vpisniList/vpisniList.pogled.html',
+       controller: 'vpisniListCtrl',
+       controllerAs: 'vm'
+    })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);
