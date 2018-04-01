@@ -2,7 +2,7 @@
   /* global angular */
   
   vpisniListCtrl.$inject = ['$location'];
-  function prijavaCtrl($location) {
+  function vpisniListCtrl($location) {
     
     var vm = this;
     
