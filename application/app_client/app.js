@@ -23,6 +23,9 @@
        controller: 'vpisniListCtrl',
        controllerAs: 'vm'
     })
+    .when('/uvozPodatkov', {
+       templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html'
+    })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);
