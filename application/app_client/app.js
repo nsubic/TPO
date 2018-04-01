@@ -8,6 +8,16 @@
        controller: 'prijavaCtrl',
        controllerAs: 'vm'
     })
+    .when('/seznamRef', {
+       templateUrl: '/seznamVpisanih/referentka/seznam.html',
+       controller: 'seznamRef',
+       controllerAs: 'vm'
+    })
+    .when('/seznamPro', {
+       templateUrl: '/seznamVpisanih/profesor/seznam.html',
+       controller: 'seznamPro',
+       controllerAs: 'vm'
+    })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);

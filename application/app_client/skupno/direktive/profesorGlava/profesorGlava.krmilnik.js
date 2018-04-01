@@ -1,15 +1,15 @@
 (function() {
   /* global angular */
   
-  var adminglava = function() {
+  var profesorglava = function() {
     return {
       restrict: 'EA',
       replace:true,
-      templateUrl: "/skupno/direktive/adminGlava/adminGlava.html"
+      templateUrl: "/skupno/direktive/profesorGlava/profesorGlava.html"
     };
   };
   
   angular
     .module('estudent')
-    .directive('adminglava', adminglava);
+    .directive('profesorglava', profesorglava);
 })();
