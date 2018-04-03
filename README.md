@@ -15,3 +15,10 @@ Username: sql2229375
 Password: eW2!jB2%
 Port number: 3306
 DB Name: sql2229375
+
+
+Tabela OSEBA:
+-upIme
+-zgoscenaVrednost
+-nakljucnaVrednost
+-vloga  (številka od 1 do 4: 1-student, 2-profesr, 3-referentka, 4-admin)
