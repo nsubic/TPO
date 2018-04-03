@@ -18,13 +18,20 @@
        controller: 'seznamPro',
        controllerAs: 'vm'
     })
+    .when('/podatkiStudentRef', {
+       templateUrl: '/podatkiOstudentu/podatkiOstudentuRef.pogled.html',
+       controller: 'podatkiOstudentu',
+       controllerAs: 'vm'
+    })
+    .when('/podatkiStudentPro', {
+       templateUrl: '/podatkiOstudentu/podatkiOstudentuPro.pogled.html',
+       controller: 'podatkiOstudentu',
+       controllerAs: 'vm'
+    })
     .when('/vpisniList', {
        templateUrl: '/vpisniList/vpisniList.pogled.html',
        controller: 'vpisniListCtrl',
        controllerAs: 'vm'
-    })
-    .when('/uvozPodatkov', {
-       templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html'
     })
      .otherwise({redirectTo: '/prijava'});
      

@@ -1,5 +1,5 @@
 require('dotenv').load();
-
+var mysql = require('mysql');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,7 +10,10 @@ var passport = require('passport');
 
 
 //var index = require('./app_server/routes/index');
-var indexApi = require('./app_api/routes/index');
+var indexApiGet = require('./app_api/routes/get');
+var indexApiPost = require('./app_api/routes/post');
+var indexApiDelete = require('./app_api/routes/delete');
+var indexApiPut = require('./app_api/routes/put');
 
 var app = express();
 
@@ -25,10 +28,23 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
 
-
+app.use(function(req, res, next){
+	global.connection = mysql.createConnection({
+    host: "sql2.freemysqlhosting.net",
+    user: "sql2229375",
+    password: "eW2!jB2%",
+    database:"sql2229375"
+	});
+	connection.connect()
+ 
+	next();
+});
 
 //app.use('/', index);
-app.use('/api', indexApi);
+app.use('/api', indexApiGet);
+app.use('/api', indexApiPost);
+app.use('/api', indexApiDelete);
+app.use('/api', indexApiPut);
 
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, 'app_client', 'index.html'));
