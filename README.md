@@ -10,8 +10,26 @@ npm install -g nodemon
 nodemon
 
 baza dostopna na: http://www.phpmyadmin.co/
-server: sql2.freemysqlhosting.net
-Username: sql2229375
-Password: eW2!jB2%
+server: sql11.freemysqlhosting.net
+Username: sql11230633
+Password: WYkELlYD1B
 Port number: 3306
-DB Name: sql2229375
+DB Name: sql11230633
+
+
+Tabela OSEBA:
+-upIme
+-zgoscenaVrednost
+-nakljucnaVrednost
+-vloga  (številka od 1 do 4: 1-student, 2-profesr, 3-referentka, 4-admin)
+
+
+Nosilec_predmeta
+-sifra_profesorjaFK  INT
+-sifra_predmetaFk    INT
+-st_opcije           INT   -> (zaporedna številka opcije, od 1 dalje, v eni opciji je lahko več profesorjev)
+
+Profesor
+-sifra_profesorja    INT
+-ime                 VARCHAR
+-priimek             VARCHAR
