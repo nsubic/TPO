@@ -30,10 +30,10 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({
-    host: "sql2.freemysqlhosting.net",
-    user: "sql2229375",
-    password: "eW2!jB2%",
-    database:"sql2229375"
+    host: "sql11.freemysqlhosting.net",
+    user: "sql11230633",
+    password: "WYkELlYD1B",
+    database:"sql11230633"
 	});
 	connection.connect()
  
