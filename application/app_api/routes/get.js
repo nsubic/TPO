@@ -68,6 +68,18 @@ router.get('/vpisaniPredmet/:sifra/:leto1/:leto2', function(req, res, next) {
     }
 });
 
+router.get('/predmetiProfesorja/:sifra/', function(req, res, next) {
+    console.log(req.params.sifra)
+     if (req.params && req.params.sifra) { 
+     global.connection.query('SELECT * FROM `Predmet`Inner join Nosilec_predmeta ON Predmet.sifra_predmeta = Nosilec_predmeta.sifra_predmetaFK Inner join Predmetnik ON Predmet.sifra_predmeta = Predmetnik.sifra_predmetaFK Where Predmetnik.Nosilec_predmeta_sifra_opcije = Nosilec_predmeta.sifra_opcije AND Nosilec_predmeta.sifra_profesorjaFK = ?', [req.params.sifra], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
 
 
 

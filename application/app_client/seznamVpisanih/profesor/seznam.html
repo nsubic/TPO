@@ -1,3 +1,62 @@
 <profesorglava></profesorglava>
+<div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:700px;overflow:auto;">
+  <h1 style="margin:30px;">Seznam vpisanih študentov po predmetih</h1>
+  <label for"filter">Išči:</label>
+	<input id="filter" type="text" name="filter" ng-model="filterRezultatov">
 
+  <div id="modalno"class="media text-muted pt-3" ng-repeat="s in vm.data.predmeti.response | filter : filterRezultatov" data-toggle="modal" data-target="#exampleModalLong" ng-click="vm.izpis(s.sifra_predmeta,s.studijsko_letoFK)">
+    <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1628b5ddda5%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1628b5ddda5%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2211.546875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">{{ s.ime_predmeta }}</strong>
+         Šifra predmeta: {{ s.sifra_predmeta }}; Leto izvajanja: {{ s.studijsko_letoFK }}
+    </p>
+ </div>
 <noga></noga>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Seznam študentov</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
+         <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Vpisna Številka</th>
+              <th scope="col">Priimek</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Vrsta vpisa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  ng-repeat="p in vm.pod.vpisani.response">
+              <th scope="row">{{$index +1}}</th>
+              <td>{{ p.vpisna_st }}</td>
+              <td>{{ p.priimek }}</td>
+              <td>{{ p.ime }}</td>
+              <td>{{ p.opis }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$('#exampleModalLong').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+    
+</script>
+

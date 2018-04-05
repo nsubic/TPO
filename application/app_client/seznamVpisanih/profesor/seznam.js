@@ -1,10 +1,38 @@
 (function() {
   /* global angular */
   
-  seznamPro.$inject = ['$location'];
-  function seznamPro($location) {
+  seznamPro.$inject = ['$location','estudentPodatki'];
+  function seznamPro($location,estudentPodatki) {
     
     var vm = this;
+    
+
+  estudentPodatki.predmetiProfesorja(1).then(
+    function success(odgovor) {
+      vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
+      vm.data = { predmeti: odgovor.data };
+    }, 
+    function error(odgovor) {
+      vm.sporocilo = "There was an error!";
+      console.log(odgovor.e);
+    });
+
+    
+    
+    vm.izpis = function(id,conceptName) {
+      id = parseInt(id)
+      estudentPodatki.vpisaniPredmet(conceptName,id).then(
+        function success(odgovor) {
+          vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih studentov.";
+          
+          vm.pod = { vpisani: odgovor.data };
+        console.log(vm.pod.vpisani);
+        }, 
+        function error(odgovor) {
+          vm.sporocilo = "There was an error!";
+          console.log(odgovor.e);
+      });
+    };
     
   }
   

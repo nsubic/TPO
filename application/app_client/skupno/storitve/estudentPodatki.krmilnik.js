@@ -27,6 +27,9 @@
       var studijskoLeto = function() {
         return $http.get('/api/leto/');
       };
+      var predmetiProfesorja = function(id) {
+        return $http.get('/api/predmetiProfesorja/'+id);
+      };
 
       return {
         obcina: obcina,
@@ -36,7 +39,8 @@
         vpis:vpis,
         student:student,
         vpisaniPredmet:vpisaniPredmet,
-        studijskoLeto:studijskoLeto
+        studijskoLeto:studijskoLeto,
+        predmetiProfesorja:predmetiProfesorja
 
       };
     };
