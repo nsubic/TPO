@@ -26,9 +26,10 @@ Tabela OSEBA:
 
 Nosilec_predmeta
 -sifra_opcije        INT
--sifra_profesorjaFK  INT
 -sifra_predmetaFk    INT
--st_opcije           INT   -> (zaporedna številka opcije, od 1 dalje, v eni opciji je lahko več profesorjev)
+-sifra_profesorjaFK1 INT
+-sifra_profesorjaFK2 INT (could be null)
+-sifra_profesorjaFK3 INT (could be null)
 
 Profesor
 -sifra_profesorja    INT
