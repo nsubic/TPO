@@ -33,6 +33,11 @@
        controller: 'vpisniListCtrl',
        controllerAs: 'vm'
     })
+    .when('/uvozPodatkov', {
+       templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html',
+       controller: 'nalozi',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);

@@ -1,4 +1,61 @@
-<div class="upload-btn-wrapper">
-  <button class="uvozPodatkovKandidati">Naloži datoteko</button>
-  <input type="file" name="myfile" />
+<adminglava></adminglava>
+<div class="grid ">
+  <div class="upload-btn-wrapper">
+    <button class="uvozPodatkovKandidati">Izberi datoteko</button>
+    <input type="file" id="fileInput" name="myfile" multiple onchange="showname()"/>
+  </div>
+
+  <div class="row" id="fp" style="display:block;"></div>
+  <p>
+      <div class="row" id="name"></div>
+  </p>
+  <p>
+      <div class="row" id="type"></div>
+  </p>
+  <p>
+      <div  class="row" id="divTotalSize"></div>
+  </p>
+    <p>
+     <button type="button" id="buton" class="btn btn-secondary btn-lg" ng-click="vm.uvozi()">Uvozi</button>
+  </p>
+</div>
+
+<noga></noga>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Uspešno vnešeni kandidati!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
+         <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Priimek</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Mail</th>
+              <th scope="col">Vrsta vpisa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  ng-repeat="p in vm.data.osebe.kandidati">
+              <th scope="row">{{$index +1}}</th>
+              <td>{{ p.priimek }}</td>
+              <td>{{ p.ime }}</td>
+              <td>{{ p.mail }}</td>
+              <td>{{ p.vrsta }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+      </div>
+    </div>
+  </div>
 </div>

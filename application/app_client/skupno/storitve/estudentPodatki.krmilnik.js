@@ -30,6 +30,9 @@
       var predmetiProfesorja = function(id) {
         return $http.get('/api/predmetiProfesorja/'+id);
       };
+      var dodajKandidate = function(podatki) {
+        return $http.post('/api/dodajKandidate/',podatki);
+      };
 
       return {
         obcina: obcina,
@@ -40,7 +43,8 @@
         student:student,
         vpisaniPredmet:vpisaniPredmet,
         studijskoLeto:studijskoLeto,
-        predmetiProfesorja:predmetiProfesorja
+        predmetiProfesorja:predmetiProfesorja,
+        dodajKandidate:dodajKandidate
 
       };
     };
