@@ -28,6 +28,11 @@
        controller: 'podatkiOstudentu',
        controllerAs: 'vm'
     })
+    .when('/podatkiStudent', {
+       templateUrl: '/podatkiStudent/podatki.pogled.html',
+       controller: 'podatkiStudent',
+       controllerAs: 'vm'
+    })
     .when('/vpisniList', {
        templateUrl: '/vpisniList/vpisniList.pogled.html',
        controller: 'vpisniListCtrl',
