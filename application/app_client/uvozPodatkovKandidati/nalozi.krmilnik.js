@@ -29,11 +29,11 @@
             var priimek = t1[i+1]
             var vrsta = t1[i+2]
             var mail = t1[i+3]
-            prvaStevka = Math.floor(Math.random() * 10)
-            drugaStevka = Math.floor(Math.random() * 10)
-            tretjaStevka = Math.floor(Math.random() * 10)
-            cetrtaStevka = Math.floor(Math.random() * 10)
-            mail = ime[0].toLowerCase() + priimek[0].toLowerCase() + prvaStevka + drugaStevka + tretjaStevka + cetrtaStevka + "@student.uni-lj.si";
+            var prvaStevka = Math.floor(Math.random() * 10)
+            var drugaStevka = Math.floor(Math.random() * 10)
+            var tretjaStevka = Math.floor(Math.random() * 10)
+            var cetrtaStevka = Math.floor(Math.random() * 10)
+            var upIme = ime[0].toLowerCase() + priimek[0].toLowerCase() + prvaStevka + drugaStevka + tretjaStevka + cetrtaStevka + "@student.uni-lj.si";
             geslo = Math.random().toString(36).substr(2, 5);
             if(ime == undefined || priimek == undefined || vrsta == undefined || mail == undefined){}
             else{
@@ -50,8 +50,6 @@
                   zacVpisna++;
                   console.log(vpisna);
                  
-                
-                  var upIme = mail
                   console.log(upIme)
                   var geslo;
                   estudentPodatki.dodajOsebe({

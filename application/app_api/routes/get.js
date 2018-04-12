@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var ctrlAvtentikacija = require('../controllers/avtentikacija');
 //vse imajo spredaj predpono /api/
 
 router.get('/posta', function(req, res, next) {
@@ -88,10 +87,17 @@ router.get('/osebe/', function(req, res, next) {
 	});
 });
 
-
-
-
-
+router.get('/dobiOsebe/:upIme',function(req, res, next) {
+	if (req.params && req.params.upIme) { 
+     global.connection.query('SELECT * FROM Oseba WHERE upIme = ?', [req.params.upIme], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+	} else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
 
 
 module.exports = router;

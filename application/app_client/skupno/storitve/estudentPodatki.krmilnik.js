@@ -39,6 +39,9 @@
       var dobiOsebe = function() {
         return $http.get('/api/osebe/');
       };
+      var najdiUpIme = function(upIme) {
+        return $http.get('/api/dobiOsebe/'+upIme);
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -51,7 +54,8 @@
         predmetiProfesorja:predmetiProfesorja,
         dodajKandidate:dodajKandidate,
         dodajOsebe:dodajOsebe,
-        dobiOsebe:dobiOsebe
+        dobiOsebe:dobiOsebe,
+        najdiUpIme:najdiUpIme
       };
     };
 

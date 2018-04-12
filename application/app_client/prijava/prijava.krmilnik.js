@@ -1,8 +1,8 @@
 (function() {
   /* global angular */
   
-  prijavaCtrl.$inject = ['$location', 'estudentPodatki'];
-  function prijavaCtrl($location, estudentPodatki) {
+  prijavaCtrl.$inject = ['$location', '$http', 'estudentPodatki'];
+  function prijavaCtrl($location, $http, estudentPodatki) {
     
     var vm = this;
     vm.prijavniPodatki = {
@@ -15,7 +15,6 @@
     
     vm.posiljanjePodatkov = function() {
       vm.napakaNaObrazcu = "";
-      console.log("aaa")
       console.log(vm.prijavniPodatki.email)
       if (!vm.prijavniPodatki.email || !vm.prijavniPodatki.password) {
         vm.napakaNaObrazcu = "Zahtevani so vsi podatki, prosim poskusite znova!";
@@ -26,8 +25,9 @@
     };
     vm.izvediPrijavo = function() {
       vm.napakaNaObrazcu = "";
-      console.log(estudentPodatki.dobiOsebe);
-      
+      var oseba = estudentPodatki.najdiUpIme(vm.prijavniPodatki.email);
+      oseba = $http.get('/api/dobiOsebe/' + vm.prijavniPodatki.email);
+      console.log(oseba)
     };
   }
   

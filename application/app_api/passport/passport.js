@@ -20,8 +20,8 @@ module.exports = function(passport) {
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-		global.connection.query("select * from Oseba where id = "+id,function(err,rows){	
+    passport.deserializeUser(function(upIme, done) {
+		global.connection.query("select * from Oseba where upIme = "+upIme,function(err,rows){	
 			done(err, rows[0]);
 		});
     });
