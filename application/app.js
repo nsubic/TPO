@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
+require('./app_api/passport/passport.js');
 
 //var index = require('./app_server/routes/index');
 var indexApiGet = require('./app_api/routes/get');
@@ -27,6 +28,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
+
+//Passport
+app.use(passport.initialize());
 
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({

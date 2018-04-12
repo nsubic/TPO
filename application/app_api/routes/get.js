@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var ctrlAvtentikacija = require('../controllers/avtentikacija');
 //vse imajo spredaj predpono /api/
 
 router.get('/posta', function(req, res, next) {
@@ -79,6 +79,16 @@ router.get('/predmetiProfesorja/:sifra/', function(req, res, next) {
         res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
     }
 });
+
+router.get('/osebe/', function(req, res, next) {
+     global.connection.query('SELECT * FROM Oseba', function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
+
+
 
 
 

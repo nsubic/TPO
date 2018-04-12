@@ -33,7 +33,12 @@
       var dodajKandidate = function(podatki) {
         return $http.post('/api/dodajKandidate/',podatki);
       };
-
+      var dodajOsebe = function(podatki) {
+        return $http.post('/api/dodajOsebe/',podatki);
+      };
+      var dobiOsebe = function() {
+        return $http.get('/api/osebe/');
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -44,8 +49,9 @@
         vpisaniPredmet:vpisaniPredmet,
         studijskoLeto:studijskoLeto,
         predmetiProfesorja:predmetiProfesorja,
-        dodajKandidate:dodajKandidate
-
+        dodajKandidate:dodajKandidate,
+        dodajOsebe:dodajOsebe,
+        dobiOsebe:dobiOsebe
       };
     };
 
