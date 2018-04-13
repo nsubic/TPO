@@ -26,6 +26,8 @@
           var t1=text.split("\n")
           for(var i = 0;i < t1.length;i=i+4){
             var ime = t1[i]
+            console.log(ime)
+            console.log(ime[0])
             var priimek = t1[i+1]
             var vrsta = t1[i+2]
             var mail = t1[i+3]

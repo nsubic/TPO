@@ -25,9 +25,36 @@
     };
     vm.izvediPrijavo = function() {
       vm.napakaNaObrazcu = "";
-      var oseba = estudentPodatki.najdiUpIme(vm.prijavniPodatki.email);
-      oseba = $http.get('/api/dobiOsebe/' + vm.prijavniPodatki.email);
-      console.log(oseba)
+      var oseba = estudentPodatki.najdiUpIme(vm.prijavniPodatki.email).then(
+        function success(odgovor) {
+          vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih studentov.";
+          console.log(odgovor.data.response[0])
+          vm.pod = { vpisani: odgovor.data };
+           console.log(vm.prijavniPodatki.password);
+            console.log(odgovor.data.response[0].geslo);
+
+          if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
+            console.log("prid");
+            if(odgovor.data.response[0].vloga == 1){
+              console.log("prid2");
+              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudent");
+            }
+            if(odgovor.data.response[0].vloga == 2){
+              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudentPro");
+            }
+            if(odgovor.data.response[0].vloga == 3){
+              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudentRef");
+            }
+            if(odgovor.data.response[0].vloga == 4){
+              window.location.replace("https://tpo-van123helsing.c9users.io/"+ "/uvozPodatkov");
+            }
+          }
+        console.log(vm.pod.vpisani);
+        }, 
+        function error(odgovor) {
+          vm.sporocilo = "There was an error!";
+          console.log(odgovor.e);
+      });
     };
   }
   
