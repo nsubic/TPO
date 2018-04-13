@@ -41,7 +41,7 @@ module.exports = function(passport) {
     }, 
     function(req, upIme, geslo, done) { // callback with email and password from our form
         console.log("Prijava")
-         global.connection.query("SELECT * FROM `Oseba` WHERE `upIme` = '" + upIme + "'",function(err,rows){
+         global.connection.query('SELECT * FROM Oseba WHERE upIme = ?', [req.params.upIme],function(err,rows){
 			if (err)
                 return done(err);
 			 if (!rows.length) {

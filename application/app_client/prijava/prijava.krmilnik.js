@@ -10,9 +10,9 @@
       geslo: ""
     };
     console.log("aaa")
-    vm.prvotnaStran = $location.search().stran || '/';
+    vm.prvotnaStran = $location.host() || '/';
     
-    
+    console.log("prvotnaStran: ", vm.prvotnaStran);
     vm.posiljanjePodatkov = function() {
       vm.napakaNaObrazcu = "";
       console.log(vm.prijavniPodatki.email)
@@ -37,22 +37,25 @@
             console.log("prid");
             if(odgovor.data.response[0].vloga == 1){
               console.log("prid2");
-              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudent");
+              window.location.replace( "/podatkiStudent");
             }
             if(odgovor.data.response[0].vloga == 2){
-              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudentPro");
+              window.location.replace( "/podatkiStudentPro");
             }
             if(odgovor.data.response[0].vloga == 3){
-              window.location.replace("https://tpo-van123helsing.c9users.io/" + "/podatkiStudentRef");
+              window.location.replace("/podatkiStudentRef");
             }
             if(odgovor.data.response[0].vloga == 4){
-              window.location.replace("https://tpo-van123helsing.c9users.io/"+ "/uvozPodatkov");
+              window.location.replace("/uvozPodatkov");
             }
+          }
+          else{
+            vm.napakaNaObrazcu = "Napačno geslo!";
           }
         console.log(vm.pod.vpisani);
         }, 
         function error(odgovor) {
-          vm.sporocilo = "There was an error!";
+          vm.napakaNaObrazcu = "Napačno uporabniško ime!";
           console.log(odgovor.e);
       });
     };
