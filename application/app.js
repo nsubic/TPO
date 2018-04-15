@@ -18,6 +18,7 @@ var indexApiPut = require('./app_api/routes/put');
 
 var app = express();
 
+app.set('port', 8081);
 // view engine setup
 
 // uncomment after placing your favicon in /public
@@ -34,10 +35,10 @@ app.use(passport.initialize());
 
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({
-    host: "sql11.freemysqlhosting.net",
-    user: "sql11230633",
-    password: "WYkELlYD1B",
-    database:"sql11230633"
+    host: "127.0.0.1",
+    user: process.env.user,
+    password: "",
+    database:"mydb"
 	});
 	connection.connect()
  
