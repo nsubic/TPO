@@ -42,6 +42,9 @@
       var najdiUpIme = function(upIme) {
         return $http.get('/api/dobiOsebe/'+upIme);
       };
+      var spremeniGeslo = function(podatki) {
+        return $http.put('/api/spremeniGeslo/', podatki);
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -55,7 +58,8 @@
         dodajKandidate:dodajKandidate,
         dodajOsebe:dodajOsebe,
         dobiOsebe:dobiOsebe,
-        najdiUpIme:najdiUpIme
+        najdiUpIme:najdiUpIme,
+        spremeniGeslo:spremeniGeslo
       };
     };
 

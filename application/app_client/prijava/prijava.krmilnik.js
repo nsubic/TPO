@@ -36,7 +36,11 @@
             console.log("Ni našel");
             $window.localStorage['upIme'] = odgovor.data.response[0].upIme;
             $window.localStorage['vloga'] = odgovor.data.response[0].vloga;
-          
+            
+            
+            $http.get(vm.prvotnaStran).then(function(response) {
+              console.log("IP: ",response[0].data.ip);
+            });
             if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
               console.log("prid");
               if(odgovor.data.response[0].vloga == 1){

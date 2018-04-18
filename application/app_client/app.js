@@ -43,6 +43,11 @@
        controller: 'nalozi',
        controllerAs: 'vm'
      })
+     .when('/spremeniGeslo', {
+       templateUrl: '/spremembaGesla/spremembaGesla.pogled.html',
+       controller: 'spremembaGeslaCtrl',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);
