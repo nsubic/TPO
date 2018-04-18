@@ -1,9 +1,9 @@
 (function() {
   /* global angular */
   
-  podatkiStudent.$inject = ['$location','estudentPodatki'];
-  function podatkiStudent($location,estudentPodatki) {
-    
+  podatkiStudent.$inject = ['$window','$location','estudentPodatki'];
+  function podatkiStudent($window, $location,estudentPodatki) {
+    console.log($window.localStorage['upIme']);
     var vm = this;
     vm.izpis = function() {
 

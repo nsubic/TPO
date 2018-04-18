@@ -8,21 +8,21 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema sql11230633
+-- Schema mydb
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema sql11230633
+-- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `sql11230633` DEFAULT CHARACTER SET utf8 ;
-USE `sql11230633` ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Posta`
+-- Table `mydb`.`Posta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Posta` ;
+DROP TABLE IF EXISTS `mydb`.`Posta` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Posta` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Posta` (
   `postna_stevilka` INT NOT NULL,
   `ime_poste` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`postna_stevilka`))
@@ -30,11 +30,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Obcina`
+-- Table `mydb`.`Obcina`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Obcina` ;
+DROP TABLE IF EXISTS `mydb`.`Obcina` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Obcina` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Obcina` (
   `sifra_obcine` INT NOT NULL,
   `ime_obcine` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sifra_obcine`))
@@ -42,11 +42,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Drzava`
+-- Table `mydb`.`Drzava`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Drzava` ;
+DROP TABLE IF EXISTS `mydb`.`Drzava` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Drzava` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Drzava` (
   `dvomestna_koda` VARCHAR(2) NOT NULL,
   `trimestna_oznaka` VARCHAR(3) NOT NULL,
   `numericna_oznaka` INT NOT NULL,
@@ -62,11 +62,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Oseba`
+-- Table `mydb`.`Oseba`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Oseba` ;
+DROP TABLE IF EXISTS `mydb`.`Oseba` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Oseba` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Oseba` (
   `upIme` VARCHAR(45) NOT NULL,
   `zgoscenaVrednost` VARCHAR(45) NULL,
   `nakljucnaVrednost` VARCHAR(45) NULL,
@@ -76,11 +76,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Student`
+-- Table `mydb`.`Student`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Student` ;
+DROP TABLE IF EXISTS `mydb`.`Student` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Student` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Student` (
   `priimek` VARCHAR(45) NOT NULL,
   `ime` VARCHAR(45) NOT NULL,
   `emso` INT UNSIGNED ZEROFILL NULL,
@@ -119,69 +119,69 @@ CREATE TABLE IF NOT EXISTS `sql11230633`.`Student` (
   INDEX `fk_Student_Oseba1_idx` (`Oseba_upIme` ASC),
   CONSTRAINT `fk_Student_Posta1`
     FOREIGN KEY (`stalni_postna_stevilka`)
-    REFERENCES `sql11230633`.`Posta` (`postna_stevilka`)
+    REFERENCES `mydb`.`Posta` (`postna_stevilka`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Obcina1`
     FOREIGN KEY (`stalni_obcina_koda`)
-    REFERENCES `sql11230633`.`Obcina` (`sifra_obcine`)
+    REFERENCES `mydb`.`Obcina` (`sifra_obcine`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Drzava1`
     FOREIGN KEY (`stalni_drzava_koda`)
-    REFERENCES `sql11230633`.`Drzava` (`dvomestna_koda`)
+    REFERENCES `mydb`.`Drzava` (`dvomestna_koda`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Drzava2`
     FOREIGN KEY (`zacasni_drzava_koda`)
-    REFERENCES `sql11230633`.`Drzava` (`dvomestna_koda`)
+    REFERENCES `mydb`.`Drzava` (`dvomestna_koda`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Obcina2`
     FOREIGN KEY (`zacasni_obcina_koda`)
-    REFERENCES `sql11230633`.`Obcina` (`sifra_obcine`)
+    REFERENCES `mydb`.`Obcina` (`sifra_obcine`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Obcina3`
     FOREIGN KEY (`Obcina_rojstva`)
-    REFERENCES `sql11230633`.`Obcina` (`sifra_obcine`)
+    REFERENCES `mydb`.`Obcina` (`sifra_obcine`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Posta2`
     FOREIGN KEY (`zacasni_postna_stevilka`)
-    REFERENCES `sql11230633`.`Posta` (`postna_stevilka`)
+    REFERENCES `mydb`.`Posta` (`postna_stevilka`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Drzava3`
     FOREIGN KEY (`Drzava_rojstva`)
-    REFERENCES `sql11230633`.`Drzava` (`dvomestna_koda`)
+    REFERENCES `mydb`.`Drzava` (`dvomestna_koda`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Student_Oseba1`
     FOREIGN KEY (`Oseba_upIme`)
-    REFERENCES `sql11230633`.`Oseba` (`upIme`)
+    REFERENCES `mydb`.`Oseba` (`upIme`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Letnik`
+-- Table `mydb`.`Letnik`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Letnik` ;
+DROP TABLE IF EXISTS `mydb`.`Letnik` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Letnik` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Letnik` (
   `letnik` INT NOT NULL,
   PRIMARY KEY (`letnik`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Vrsta_vpisa`
+-- Table `mydb`.`Vrsta_vpisa`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Vrsta_vpisa` ;
+DROP TABLE IF EXISTS `mydb`.`Vrsta_vpisa` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Vrsta_vpisa` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Vrsta_vpisa` (
   `vrsta_vpisa` INT UNSIGNED ZEROFILL NOT NULL,
   `opis` MEDIUMTEXT NULL,
   PRIMARY KEY (`vrsta_vpisa`))
@@ -189,11 +189,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Nacin_studija`
+-- Table `mydb`.`Nacin_studija`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Nacin_studija` ;
+DROP TABLE IF EXISTS `mydb`.`Nacin_studija` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Nacin_studija` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Nacin_studija` (
   `nacin_studija` INT NOT NULL,
   `opis` VARCHAR(45) NULL,
   `ang_opis` VARCHAR(45) NULL,
@@ -202,11 +202,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Oblika_studija`
+-- Table `mydb`.`Oblika_studija`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Oblika_studija` ;
+DROP TABLE IF EXISTS `mydb`.`Oblika_studija` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Oblika_studija` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Oblika_studija` (
   `oblika_studija` INT NOT NULL,
   `opis` VARCHAR(45) NULL,
   `ang_opis` VARCHAR(45) NULL,
@@ -215,22 +215,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Studijsko_leto`
+-- Table `mydb`.`Studijsko_leto`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Studijsko_leto` ;
+DROP TABLE IF EXISTS `mydb`.`Studijsko_leto` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Studijsko_leto` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Studijsko_leto` (
   `studijsko_leto` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`studijsko_leto`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Studijski_program`
+-- Table `mydb`.`Studijski_program`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Studijski_program` ;
+DROP TABLE IF EXISTS `mydb`.`Studijski_program` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Studijski_program` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Studijski_program` (
   `sifra_stProgram` VARCHAR(8) NOT NULL,
   `naziv` VARCHAR(45) NOT NULL,
   `stopnja` VARCHAR(45) NULL,
@@ -241,11 +241,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Vpis`
+-- Table `mydb`.`Vpis`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Vpis` ;
+DROP TABLE IF EXISTS `mydb`.`Vpis` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Vpis` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Vpis` (
   `je_potrjen` INT NOT NULL,
   `letnikFK` INT NOT NULL,
   `vrsta_vpisaFK` INT UNSIGNED ZEROFILL NOT NULL,
@@ -263,48 +263,48 @@ CREATE TABLE IF NOT EXISTS `sql11230633`.`Vpis` (
   INDEX `fk_Vpis_Student1_idx` (`vpisna_st` ASC),
   CONSTRAINT `fk_Vpis_Letnik1`
     FOREIGN KEY (`letnikFK`)
-    REFERENCES `sql11230633`.`Letnik` (`letnik`)
+    REFERENCES `mydb`.`Letnik` (`letnik`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Vrsta_vpisa1`
     FOREIGN KEY (`vrsta_vpisaFK`)
-    REFERENCES `sql11230633`.`Vrsta_vpisa` (`vrsta_vpisa`)
+    REFERENCES `mydb`.`Vrsta_vpisa` (`vrsta_vpisa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Nacin_studija1`
     FOREIGN KEY (`nacin_studijaFK`)
-    REFERENCES `sql11230633`.`Nacin_studija` (`nacin_studija`)
+    REFERENCES `mydb`.`Nacin_studija` (`nacin_studija`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Oblika_studija1`
     FOREIGN KEY (`oblika_studijaFK`)
-    REFERENCES `sql11230633`.`Oblika_studija` (`oblika_studija`)
+    REFERENCES `mydb`.`Oblika_studija` (`oblika_studija`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Studijsko_leto1`
     FOREIGN KEY (`studijsko_letoFK`)
-    REFERENCES `sql11230633`.`Studijsko_leto` (`studijsko_leto`)
+    REFERENCES `mydb`.`Studijsko_leto` (`studijsko_leto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Studijski_program1`
     FOREIGN KEY (`sifra_stProgramFK`)
-    REFERENCES `sql11230633`.`Studijski_program` (`sifra_stProgram`)
+    REFERENCES `mydb`.`Studijski_program` (`sifra_stProgram`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Vpis_Student1`
     FOREIGN KEY (`vpisna_st`)
-    REFERENCES `sql11230633`.`Student` (`vpisna_st`)
+    REFERENCES `mydb`.`Student` (`vpisna_st`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Kandidat`
+-- Table `mydb`.`Kandidat`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Kandidat` ;
+DROP TABLE IF EXISTS `mydb`.`Kandidat` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Kandidat` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Kandidat` (
   `ime` VARCHAR(45) NOT NULL,
   `priimek` VARCHAR(45) NOT NULL,
   `Vpis_sifra_stProgramFK` VARCHAR(8) NOT NULL,
@@ -319,46 +319,46 @@ CREATE TABLE IF NOT EXISTS `sql11230633`.`Kandidat` (
   INDEX `fk_Kandidat_Oseba1_idx` (`upIme` ASC),
   CONSTRAINT `fk_Kandidat_Student1`
     FOREIGN KEY (`vpisna_st`)
-    REFERENCES `sql11230633`.`Student` (`vpisna_st`)
+    REFERENCES `mydb`.`Student` (`vpisna_st`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Kandidat_Vpis1`
     FOREIGN KEY (`Vpis_sifra_stProgramFK`)
-    REFERENCES `sql11230633`.`Vpis` (`sifra_stProgramFK`)
+    REFERENCES `mydb`.`Vpis` (`sifra_stProgramFK`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Kandidat_Oseba1`
     FOREIGN KEY (`upIme`)
-    REFERENCES `sql11230633`.`Oseba` (`upIme`)
+    REFERENCES `mydb`.`Oseba` (`upIme`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Zeton`
+-- Table `mydb`.`Zeton`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Zeton` ;
+DROP TABLE IF EXISTS `mydb`.`Zeton` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Zeton` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Zeton` (
   `vrsta_vpisa` VARCHAR(45) NOT NULL,
   `izkoriscen` INT NOT NULL,
   `vpisna_stFK` INT NOT NULL,
   PRIMARY KEY (`vpisna_stFK`),
   CONSTRAINT `fk_Zeton_Student1`
     FOREIGN KEY (`vpisna_stFK`)
-    REFERENCES `sql11230633`.`Student` (`vpisna_st`)
+    REFERENCES `mydb`.`Student` (`vpisna_st`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Predmet`
+-- Table `mydb`.`Predmet`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Predmet` ;
+DROP TABLE IF EXISTS `mydb`.`Predmet` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Predmet` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Predmet` (
   `sifra_predmeta` INT NOT NULL,
   `ime_predmeta` VARCHAR(100) NOT NULL,
   `KT_tocke` INT NULL,
@@ -367,11 +367,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Del_predmetnika`
+-- Table `mydb`.`Del_predmetnika`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Del_predmetnika` ;
+DROP TABLE IF EXISTS `mydb`.`Del_predmetnika` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Del_predmetnika` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Del_predmetnika` (
   `sifra_predmetnika` INT NOT NULL,
   `naziv` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sifra_predmetnika`))
@@ -379,11 +379,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Profesor`
+-- Table `mydb`.`Profesor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Profesor` ;
+DROP TABLE IF EXISTS `mydb`.`Profesor` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Profesor` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Profesor` (
   `sifra_profesorja` INT UNSIGNED ZEROFILL NOT NULL,
   `ime` VARCHAR(45) NOT NULL,
   `priimek` VARCHAR(45) NOT NULL,
@@ -392,11 +392,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Nosilec_predmeta`
+-- Table `mydb`.`Nosilec_predmeta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Nosilec_predmeta` ;
+DROP TABLE IF EXISTS `mydb`.`Nosilec_predmeta` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Nosilec_predmeta` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Nosilec_predmeta` (
   `sifra_opcije` INT NOT NULL,
   `sifra_predmetaFK` INT NOT NULL,
   `sifra_profesorjaFK1` INT UNSIGNED ZEROFILL NOT NULL,
@@ -409,33 +409,33 @@ CREATE TABLE IF NOT EXISTS `sql11230633`.`Nosilec_predmeta` (
   INDEX `fk_Nosilec_predmeta_Profesor2_idx` (`sifra_profesorjaFK3` ASC),
   CONSTRAINT `fk_Nosilec_predmeta_Profesor`
     FOREIGN KEY (`sifra_profesorjaFK1`)
-    REFERENCES `sql11230633`.`Profesor` (`sifra_profesorja`)
+    REFERENCES `mydb`.`Profesor` (`sifra_profesorja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Nosilec_predmeta_Predmet1`
     FOREIGN KEY (`sifra_predmetaFK`)
-    REFERENCES `sql11230633`.`Predmet` (`sifra_predmeta`)
+    REFERENCES `mydb`.`Predmet` (`sifra_predmeta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Nosilec_predmeta_Profesor1`
     FOREIGN KEY (`sifra_profesorjaFK2`)
-    REFERENCES `sql11230633`.`Profesor` (`sifra_profesorja`)
+    REFERENCES `mydb`.`Profesor` (`sifra_profesorja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Nosilec_predmeta_Profesor2`
     FOREIGN KEY (`sifra_profesorjaFK3`)
-    REFERENCES `sql11230633`.`Profesor` (`sifra_profesorja`)
+    REFERENCES `mydb`.`Profesor` (`sifra_profesorja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `sql11230633`.`Predmetnik`
+-- Table `mydb`.`Predmetnik`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `sql11230633`.`Predmetnik` ;
+DROP TABLE IF EXISTS `mydb`.`Predmetnik` ;
 
-CREATE TABLE IF NOT EXISTS `sql11230633`.`Predmetnik` (
+CREATE TABLE IF NOT EXISTS `mydb`.`Predmetnik` (
   `sifra_predmetaFK` INT NOT NULL,
   `sifra_predmetnikaFK` INT NOT NULL,
   `letnikFK` INT NOT NULL,
@@ -450,32 +450,32 @@ CREATE TABLE IF NOT EXISTS `sql11230633`.`Predmetnik` (
   INDEX `fk_Predmetnik_Nosilec_predmeta1_idx` (`Nosilec_predmeta_sifra_opcije` ASC),
   CONSTRAINT `fk_Predmetnik_Predmet1`
     FOREIGN KEY (`sifra_predmetaFK`)
-    REFERENCES `sql11230633`.`Predmet` (`sifra_predmeta`)
+    REFERENCES `mydb`.`Predmet` (`sifra_predmeta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Predmetnik_Del_predmetnika1`
     FOREIGN KEY (`sifra_predmetnikaFK`)
-    REFERENCES `sql11230633`.`Del_predmetnika` (`sifra_predmetnika`)
+    REFERENCES `mydb`.`Del_predmetnika` (`sifra_predmetnika`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Predmetnik_Letnik1`
     FOREIGN KEY (`letnikFK`)
-    REFERENCES `sql11230633`.`Letnik` (`letnik`)
+    REFERENCES `mydb`.`Letnik` (`letnik`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Predmetnik_Studijski_program1`
     FOREIGN KEY (`sifra_stProgramFK`)
-    REFERENCES `sql11230633`.`Studijski_program` (`sifra_stProgram`)
+    REFERENCES `mydb`.`Studijski_program` (`sifra_stProgram`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Predmetnik_Studijsko_leto1`
     FOREIGN KEY (`studijsko_letoFK`)
-    REFERENCES `sql11230633`.`Studijsko_leto` (`studijsko_leto`)
+    REFERENCES `mydb`.`Studijsko_leto` (`studijsko_leto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Predmetnik_Nosilec_predmeta1`
     FOREIGN KEY (`Nosilec_predmeta_sifra_opcije`)
-    REFERENCES `sql11230633`.`Nosilec_predmeta` (`sifra_opcije`)
+    REFERENCES `mydb`.`Nosilec_predmeta` (`sifra_opcije`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

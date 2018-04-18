@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({
     host: "127.0.0.1",
-    user: process.env.user,
+    user: "nsubic1",
     password: "",
     database:"mydb"
 	});

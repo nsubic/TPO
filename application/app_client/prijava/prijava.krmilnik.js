@@ -1,8 +1,8 @@
 (function() {
   /* global angular */
   
-  prijavaCtrl.$inject = ['$location', '$http', 'estudentPodatki'];
-  function prijavaCtrl($location, $http, estudentPodatki) {
+  prijavaCtrl.$inject = ['$window','$location', '$http', 'estudentPodatki'];
+  function prijavaCtrl($window, $location, $http, estudentPodatki) {
     
     var vm = this;
     vm.prijavniPodatki = {
@@ -27,35 +27,43 @@
       vm.napakaNaObrazcu = "";
       var oseba = estudentPodatki.najdiUpIme(vm.prijavniPodatki.email).then(
         function success(odgovor) {
-          vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih studentov.";
-          console.log(odgovor.data.response[0])
+          console.log("data: ",odgovor.data.response[0]);
           vm.pod = { vpisani: odgovor.data };
-           console.log(vm.prijavniPodatki.password);
-            console.log(odgovor.data.response[0].geslo);
-
-          if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
-            console.log("prid");
-            if(odgovor.data.response[0].vloga == 1){
-              console.log("prid2");
-              window.location.replace( "/podatkiStudent");
+          console.log(vm.prijavniPodatki.password);
+          
+          console.log(odgovor.data.response[0]);
+          if(odgovor.data.response[0] != undefined){
+            console.log("Ni našel");
+            $window.localStorage['upIme'] = odgovor.data.response[0].upIme;
+            $window.localStorage['vloga'] = odgovor.data.response[0].vloga;
+          
+            if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
+              console.log("prid");
+              if(odgovor.data.response[0].vloga == 1){
+                console.log("prid2");
+                window.location.replace( "/podatkiStudent");
+              }
+              if(odgovor.data.response[0].vloga == 2){
+                window.location.replace( "/podatkiStudentPro");
+              }
+              if(odgovor.data.response[0].vloga == 3){
+                window.location.replace("/podatkiStudentRef");
+              }
+              if(odgovor.data.response[0].vloga == 4){
+                window.location.replace("/uvozPodatkov");
+              }
             }
-            if(odgovor.data.response[0].vloga == 2){
-              window.location.replace( "/podatkiStudentPro");
+            else{
+              vm.napakaNaObrazcu = "Napačno geslo!";
             }
-            if(odgovor.data.response[0].vloga == 3){
-              window.location.replace("/podatkiStudentRef");
-            }
-            if(odgovor.data.response[0].vloga == 4){
-              window.location.replace("/uvozPodatkov");
-            }
-          }
-          else{
-            vm.napakaNaObrazcu = "Napačno geslo!";
-          }
+         }
+         else{
+           vm.napakaNaObrazcu = "Uporabniško ime ne obstaja!";
+         }
         console.log(vm.pod.vpisani);
         }, 
         function error(odgovor) {
-          vm.napakaNaObrazcu = "Napačno uporabniško ime!";
+          vm.napakaNaObrazcu = "Ni dostopa do baze!";
           console.log(odgovor.e);
       });
     };
