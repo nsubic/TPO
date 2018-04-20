@@ -39,7 +39,7 @@
             
             
             $http.get(vm.prvotnaStran).then(function(response) {
-              console.log("IP: ",response[0].data.ip);
+              console.log("IP: ",response.data.ip);
             });
             if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
               console.log("prid");
