@@ -2,14 +2,15 @@ import mysql.connector
 from mysql.connector import (connection);
 import time
 import csv
+import os
 
-connString = "DRIVER={MySQL ODBC 5.3 Unicode Driver};SERVER=localhost;DATABASE=mydb;UID=van123helsing;"
 
+print(os.environ['C9_USER'])
 
 def connect():
     conn = None
     try:
-        conn = connection.MySQLConnection(user = 'van123helsing',password = '',host = '127.0.0.1', database = 'mydb')
+        conn = connection.MySQLConnection(user=os.environ['C9_USER'],password = '',host = '127.0.0.1', database = 'mydb')
     except mysql.connector.Error as err:
         print(err)
 
@@ -285,20 +286,20 @@ def Oseba():
 
     try:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme1","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme2","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme3","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme4","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme5","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme6","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme7","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme8","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme9","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme10","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme11","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme12","zgoscena","nakljucna",1 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme13", "zgoscena", "nakljucna", 1))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s,%s)", ("upIme14", "zgoscena", "nakljucna", 1))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme1","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme2","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme3","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme4","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme5","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme6","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme7","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme8","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme9","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme10","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme11","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme12","nakljucna",1 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme13", "nakljucna", 1))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("upIme14", "nakljucna", 1))
 
         conn.commit()
         cursor.close()
@@ -323,15 +324,15 @@ def Nosilec():
 
 
 
-#posta()
-#drzava()
-#obcina()
-#vrstaNacinOblika()
-#Studijski_program()
+posta()
+drzava()
+obcina()
+vrstaNacinOblika()
+Studijski_program()
 delPredmetnika()
-#predmet()
-#Nosilec()
+predmet()
+Nosilec()
 predmetnik()
-#Oseba()
-#Student()
+Oseba()
+Student()
 Vpis()
