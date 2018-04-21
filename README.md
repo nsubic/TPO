@@ -1,5 +1,7 @@
 # TPO
 
+aplikacija teče na portu 8081: https://tpo-van123helsing.c9users.io:8081/
+
 Aplikacijo zaženemo s telimi ukazi v cloud9
 ```
 git clone https://github.com/nsubic/TPO.git
@@ -7,20 +9,30 @@ cd TPO
 cd application
 npm install
 npm install -g nodemon
+mysql-ctl install
+phpmyadmin-ctl install
 nodemon
+```
 
-baza dostopna na: http://www.phpmyadmin.co/
-server: sql11.freemysqlhosting.net
-Username: sql11230633
-Password: WYkELlYD1B
-Port number: 3306
-DB Name: sql11230633
+baza dostopna na: 
+```
+https://{{ime projekta}}-{{uporabniško ime c9}}.c9users.io/phpmyadmin/
+server: 127.0.0.1
+Username: uporabniško ime za c9
+Password: 
+DB Name: mydb
 
+V phpmyadmin kreiraj zbitko poatkov z imenom mydb in kodiranjem utf8. Nato klikni na SQL, prilepi noti SQL skripto in da izvedi.
+za dodajanje podatkov v bazo izvedi ukaze naštete na https://mycodememo.com/set-up-python3-and-mysql-in-cloud9/
+nato v mapi /TPO/application/TPO  poženi ukaz:  'python3  socasni_dostop_do_pb.py'
 
+```
+
+Struktura nekaterih tabel:
+```
 Tabela OSEBA:
 -upIme
--zgoscenaVrednost
--nakljucnaVrednost
+-geslo
 -vloga  (številka od 1 do 4: 1-student, 2-profesr, 3-referentka, 4-admin)
 
 
@@ -35,3 +47,5 @@ Profesor
 -sifra_profesorja    INT
 -ime                 VARCHAR
 -priimek             VARCHAR
+```
+
