@@ -19,12 +19,12 @@
 
     
     
-    vm.izpis = function(id,conceptName) {
+    vm.izpis = function(id,conceptName,ime) {
       id = parseInt(id)
       estudentPodatki.vpisaniPredmet(conceptName,id).then(
         function success(odgovor) {
           vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih studentov.";
-          
+          vm.ime=ime;
           vm.pod = { vpisani: odgovor.data };
         console.log(vm.pod.vpisani);
         }, 

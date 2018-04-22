@@ -48,6 +48,15 @@
       var spremeniGeslo = function(podatki) {
         return $http.put('/api/spremeniGeslo/', podatki);
       };
+      var studenti = function() {
+        return $http.get('/api/studenti/');
+      };
+      var studentiVpis = function(vpisna) {
+        return $http.get('/api/vpisStudent/'+vpisna);
+      };
+      var student2 = function(upime) {
+        return $http.get('/api/student2/'+upime);
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -63,7 +72,10 @@
         dodajOsebe:dodajOsebe,
         dobiOsebe:dobiOsebe,
         najdiUpIme:najdiUpIme,
-        spremeniGeslo:spremeniGeslo
+        spremeniGeslo:spremeniGeslo,
+        studenti:studenti,
+        studentiVpis:studentiVpis,
+        student2:student2
       };
     };
 
