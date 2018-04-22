@@ -33,6 +33,9 @@
       var dodajKandidate = function(podatki) {
         return $http.post('/api/dodajKandidate/',podatki);
       };
+      var dodajStudenta = function(podatki) {
+        return $http.post('/api/dodajStudenta/',podatki);
+      };
       var dodajOsebe = function(podatki) {
         return $http.post('/api/dodajOsebe/',podatki);
       };
@@ -56,6 +59,7 @@
         studijskoLeto:studijskoLeto,
         predmetiProfesorja:predmetiProfesorja,
         dodajKandidate:dodajKandidate,
+        dodajStudenta: dodajStudenta,
         dodajOsebe:dodajOsebe,
         dobiOsebe:dobiOsebe,
         najdiUpIme:najdiUpIme,
