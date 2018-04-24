@@ -1,6 +1,6 @@
 <referentkaglava></referentkaglava>
 <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:700px;overflow:auto;">
-  <h1 style="margin:30px;">Seznam vpisanih študentov po predmetih</h1>
+  <h1 style="margin:30px;">&nbsp;&nbsp;&nbsp;&nbsp;Seznam vpisanih študentov po predmetih&nbsp;&nbsp;&nbsp;&nbsp;</h1>
   <label for"filter">Izberi leto:</label>
 	<select name="show-filter" ng-model="letoFilter" 
     ng-options="leto as leto.studijsko_leto for leto in vm.l.leto.response">
@@ -18,5 +18,9 @@
       <strong class="d-block text-gray-dark">{{ s.ime_predmeta }}</strong>
          Šifra predmeta: {{ s.sifra_predmetaFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Leto izvajanja: {{ s.studijsko_letoFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Število vpisanih: <b>{{ s.stVpisanih }}</b>
     </p>
+ </div>
+ <div style="align:right; position: fixed;bottom: 6%;right: 60%;">
+   <button type="button" class="btn btn-primary" onclick="shraniPDF()"  style="margin:10px">Shrani kot pdf</button>
+   <button type="button" class="btn btn-primary" onclick="shraniCSV()" style="margin:10px">Shrani kot csv</button>
  </div>
 <noga></noga>
