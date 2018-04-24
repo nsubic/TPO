@@ -1,0 +1,22 @@
+<referentkaglava></referentkaglava>
+<div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:700px;overflow:auto;">
+  <h1 style="margin:30px;">Seznam vpisanih študentov po predmetih</h1>
+  <label for"filter">Izberi leto:</label>
+	<select name="show-filter" ng-model="letoFilter" 
+    ng-options="leto as leto.studijsko_leto for leto in vm.l.leto.response">
+  </select>
+  <label for"filter">Izberi študijski program:</label>
+	<select name="show-filter" ng-model="programFilter" 
+    ng-options="program as program.naziv for program in vm.p.program.response">
+  </select>
+    <label for"filter">Izberi letnik:</label>
+	<select name="show-filter" ng-model="letnikFilter" 
+    ng-options="letnik as letnik.letnik for letnik in vm.g.letnik.response">
+  </select>
+  <div id="modalno"class="media text-muted pt-3" ng-repeat="s in vm.z.vpisani.response | filter : {studijsko_letoFK: letoFilter.studijsko_leto, Vpis_sifra_stProgramFK: programFilter.sifra_stProgram, Predmetnik_letnikFK: letnikFilter.letnik}" >
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">{{ s.ime_predmeta }}</strong>
+         Šifra predmeta: {{ s.sifra_predmetaFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Leto izvajanja: {{ s.studijsko_letoFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Število vpisanih: <b>{{ s.stVpisanih }}</b>
+    </p>
+ </div>
+<noga></noga>

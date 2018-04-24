@@ -43,6 +43,11 @@
        controller: 'nalozi',
        controllerAs: 'vm'
      })
+     .when('/steviloVpisanih', {
+       templateUrl: '/steviloVpisanih/seznam.html',
+       controller: 'steviloVpisanih',
+       controllerAs: 'vm'
+     })
      .when('/spremeniGeslo', {
        templateUrl: '/spremembaGesla/spremembaGesla.pogled.html',
        controller: 'spremembaGeslaCtrl',

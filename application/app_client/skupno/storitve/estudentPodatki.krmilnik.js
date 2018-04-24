@@ -5,6 +5,12 @@
       var obcina = function() {
         return $http.get('/api/obcina/');
       };
+      var studijskiProgram = function() {
+        return $http.get('/api/studijskiProgram/');
+      };
+      var letnik = function() {
+        return $http.get('/api/letnik/');
+      };
       var drzava = function() {
         return $http.get('/api/drzava/');
       };
@@ -57,6 +63,9 @@
       var student2 = function(upime) {
         return $http.get('/api/student2/'+upime);
       };
+      var stVpisanih = function() {
+        return $http.get('/api/stVpisanih/');
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -75,7 +84,10 @@
         spremeniGeslo:spremeniGeslo,
         studenti:studenti,
         studentiVpis:studentiVpis,
-        student2:student2
+        student2:student2,
+        studijskiProgram:studijskiProgram,
+        letnik:letnik,
+        stVpisanih:stVpisanih
       };
     };
 

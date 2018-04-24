@@ -27,6 +27,18 @@ router.get('/predmet', function(req, res, next) {
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 });
+router.get('/studijskiProgram', function(req, res, next) {
+     global.connection.query('SELECT * FROM Studijski_program', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
+router.get('/letnik', function(req, res, next) {
+     global.connection.query('SELECT * FROM Letnik', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
 
 router.get('/leto', function(req, res, next) {
      global.connection.query('SELECT * FROM Studijsko_leto', function (error, results, fields) {
@@ -87,7 +99,25 @@ router.get('/vpisaniPredmet/:sifra/:leto1/:leto2', function(req, res, next) {
      if (req.params && req.params.sifra && req.params.leto1) { 
          var leto=req.params.leto1+'/'+req.params.leto2
          console.log(leto)
-     global.connection.query('SELECT * FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Letnik ON Vpis.letnikFK = Letnik.letnik INNER JOIN Predmetnik ON Letnik.letnik = Predmetnik.letnikFK INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE Vpis.studijsko_letoFK = ? AND  Predmetnik.studijsko_letoFK = ? AND Predmetnik.sifra_predmetaFK = ? AND Vpis.je_potrjen = 1 ORDER BY Student.priimek, Student.ime DESC', [leto,leto,req.params.sifra], function (error, results, fields) {
+     global.connection.query('SELECT * FROM Izbrani_predmeti \
+							INNER JOIN Vpis 	\
+								ON Izbrani_predmeti.Vpis_studijsko_letoFK = Vpis.studijsko_letoFK \
+								AND Izbrani_predmeti.Vpis_sifra_stProgramFK = Vpis.sifra_stProgramFK \
+								AND Izbrani_predmeti.Vpis_vpisna_st = Vpis.vpisna_st \
+							INNER JOIN Predmetnik \
+								ON Izbrani_predmeti.Predmetnik_sifra_predmetaFK = Predmetnik.sifra_predmetaFK \
+								AND Izbrani_predmeti.Predmetnik_sifra_predmetnikaFK = Predmetnik.sifra_predmetnikaFK \
+								AND Izbrani_predmeti.Predmetnik_letnikFK = Predmetnik.letnikFK \
+								AND Izbrani_predmeti.Vpis_sifra_stProgramFK = Predmetnik.sifra_stProgramFK \
+								AND Izbrani_predmeti.Vpis_studijsko_letoFK = Predmetnik.studijsko_letoFK \
+							INNER JOIN Predmet \
+								ON Predmetnik.sifra_predmetaFK = Predmet.sifra_predmeta \
+							INNER JOIN Studijski_program \
+								ON Predmetnik.sifra_stProgramFK = Studijski_program.sifra_stProgram \
+							INNER JOIN Student \
+								ON Vpis.vpisna_st = Student.vpisna_st \
+							WHERE Vpis.je_potrjen = 1 AND Vpis.studijsko_letoFK = ? AND  Predmetnik.studijsko_letoFK = ? AND Predmetnik.sifra_predmetaFK = ? \
+							ORDER BY Student.priimek, Student.ime DESC', [leto,leto,req.params.sifra], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
@@ -128,6 +158,29 @@ router.get('/dobiOsebe/:upIme',function(req, res, next) {
     }
 });
 
+router.get('/stVpisanih', function(req, res, next) {
+     global.connection.query('SELECT *, COUNT(Izbrani_predmeti.Vpis_vpisna_st) AS stVpisanih FROM Izbrani_predmeti \
+							INNER JOIN Vpis 	\
+								ON Izbrani_predmeti.Vpis_studijsko_letoFK = Vpis.studijsko_letoFK \
+								AND Izbrani_predmeti.Vpis_sifra_stProgramFK = Vpis.sifra_stProgramFK \
+								AND Izbrani_predmeti.Vpis_vpisna_st = Vpis.vpisna_st \
+							INNER JOIN Predmetnik \
+								ON Izbrani_predmeti.Predmetnik_sifra_predmetaFK = Predmetnik.sifra_predmetaFK \
+								AND Izbrani_predmeti.Predmetnik_sifra_predmetnikaFK = Predmetnik.sifra_predmetnikaFK \
+								AND Izbrani_predmeti.Predmetnik_letnikFK = Predmetnik.letnikFK \
+								AND Izbrani_predmeti.Vpis_sifra_stProgramFK = Predmetnik.sifra_stProgramFK \
+								AND Izbrani_predmeti.Vpis_studijsko_letoFK = Predmetnik.studijsko_letoFK \
+							INNER JOIN Predmet \
+								ON Predmetnik.sifra_predmetaFK = Predmet.sifra_predmeta \
+							INNER JOIN Studijski_program \
+								ON Predmetnik.sifra_stProgramFK = Studijski_program.sifra_stProgram \
+							WHERE Vpis.je_potrjen = 1 \
+							GROUP BY Izbrani_predmeti.Predmetnik_sifra_predmetaFK  \
+							ORDER BY stVpisanih DESC', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
 
 module.exports = router;
 
