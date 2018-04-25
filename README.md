@@ -24,7 +24,10 @@ DB Name: mydb
 
 V phpmyadmin kreiraj zbitko poatkov z imenom mydb in kodiranjem utf8. Nato klikni na SQL, prilepi noti SQL skripto in da izvedi.
 za dodajanje podatkov v bazo izvedi ukaze naštete na https://mycodememo.com/set-up-python3-and-mysql-in-cloud9/
-nato v mapi /TPO/application/TPO  poženi ukaz:  'python3  socasni_dostop_do_pb.py'
+nato v mapi /TPO/application/TPO  poženi ukaz:  'python3  socasni_dostop_do_pb.py'. 
+
+
+Izvedi ukaze na https://mycodememo.com/set-up-python3-and-mysql-in-cloud9/ ter nato se napiši v terminal ukaz sudo pip install mysql-connector-python
 
 ```
 
