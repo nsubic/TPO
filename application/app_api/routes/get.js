@@ -147,6 +147,7 @@ router.get('/osebe/', function(req, res, next) {
 });
 
 router.get('/dobiOsebe/:upIme',function(req, res, next) {
+	console.log(req.params.upIme)
 	if (req.params && req.params.upIme) { 
      global.connection.query('SELECT * FROM Oseba WHERE upIme = ?', [req.params.upIme], function (error, results, fields) {
 		if (error) throw error;

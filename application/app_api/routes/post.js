@@ -7,11 +7,18 @@ var jwt = require('jsonwebtoken');
 
 
 router.post('/dodajKandidate', function(req, res, next) {
-     global.connection.query('INSERT INTO Kandidat VALUES (?,?,?,?,?,?,?,?)',[req.body.ime,req.body.priimek,req.body.vrsta,req.body.mail,req.body.vpisna,req.body.geslo,0,req.body.upIme], function (error, results, fields) {
+    global.connection.query("SET FOREIGN_KEY_CHECKS=0;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
+    global.connection.query('INSERT INTO Kandidat VALUES (?,?,?,?,?,?,?,?)',[req.body.ime,req.body.priimek,req.body.vrsta,req.body.mail,req.body.vpisna,req.body.geslo,0,req.body.upIme], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
-    	});
-    	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
+    });
+    global.connection.query("SET FOREIGN_KEY_CHECKS=1;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
 });
 router.post('/dodajStudenta', function(req, res, next) {
      global.connection.query('INSERT INTO Student VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',["erzin",req.body.ime,req.body.emso,req.body.vpisna,req.body.stalnaPostnaSt,req.body.stalniPostniNaslov,req.body.stalnaPostnaDrzava, req.body.stalniNaslovUlica, req.body.stalniNaslovSt, req.body.davcna, req.body.mail, req.body.telSt, req.body.spol, req.body.datumRojstva, req.body.krajRojstva, req.body.zacasnaPostnaSt, req.body.zacasniPostniNaslov, req.body.zacasnaPostnaDrzava, req.body.zacasniNaslovUlica, req.body.zacasniNaslovSt, req.body.drzavaRojstva, req.body.obcinaRojstva, req.body.naslovVrocanja, req.body.upIme], function (error, results, fields) {

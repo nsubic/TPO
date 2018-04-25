@@ -26,7 +26,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Uspešno vnešeni kandidati!</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Seznam kandidatov vnešenih v bazo!</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -43,7 +43,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr  ng-repeat="p in vm.data.osebe.kandidati">
+            <tr  ng-repeat="p in vm.data.osebe1.kandidati1">
               <th scope="row">{{$index +1}}</th>
               <td>{{ p.priimek }}</td>
               <td>{{ p.ime }}</td>

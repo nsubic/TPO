@@ -53,6 +53,11 @@
        controller: 'spremembaGeslaCtrl',
        controllerAs: 'vm'
      })
+     .when('/izberiPredmete', {
+       templateUrl: '/izberiPredmete/izberiPredmete.html',
+       controller: 'izberiPredmete',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);
