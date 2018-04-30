@@ -112,6 +112,8 @@ router.get('/vpisaniPredmet/:sifra/:leto1/:leto2', function(req, res, next) {
 								AND Izbrani_predmeti.Vpis_studijsko_letoFK = Predmetnik.studijsko_letoFK \
 							INNER JOIN Predmet \
 								ON Predmetnik.sifra_predmetaFK = Predmet.sifra_predmeta \
+							INNER JOIN Vrsta_vpisa \
+								ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa \
 							INNER JOIN Studijski_program \
 								ON Predmetnik.sifra_stProgramFK = Studijski_program.sifra_stProgram \
 							INNER JOIN Student \
@@ -176,7 +178,7 @@ router.get('/stVpisanih', function(req, res, next) {
 							INNER JOIN Studijski_program \
 								ON Predmetnik.sifra_stProgramFK = Studijski_program.sifra_stProgram \
 							WHERE Vpis.je_potrjen = 1 \
-							GROUP BY Izbrani_predmeti.Predmetnik_sifra_predmetaFK  \
+							GROUP BY Izbrani_predmeti.Predmetnik_sifra_predmetaFK, Izbrani_predmeti.Vpis_studijsko_letoFK  \
 							ORDER BY stVpisanih DESC', function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));

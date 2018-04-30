@@ -58,6 +58,16 @@
        controller: 'izberiPredmete',
        controllerAs: 'vm'
      })
+     .when('/vnosIzpitaRef', {
+       templateUrl: '/vnosIzpita/referentka/vnos.html',
+       controller: 'vnosIzpitaRef',
+       controllerAs: 'vm'
+     })
+     .when('/vnosIzpitaPro', {
+       templateUrl: '/vnosIzpita/profesor/vnos.html',
+       controller: 'vnosIzpitaPro',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);
