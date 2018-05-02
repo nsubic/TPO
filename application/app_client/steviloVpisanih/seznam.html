@@ -13,15 +13,18 @@
 	<select name="show-filter" ng-model="letnikFilter" 
     ng-options="letnik as letnik.letnik for letnik in vm.g.letnik.response">
   </select>
-  <div id="modalno"class="media text-muted pt-3" ng-repeat="s in vm.z.vpisani.response | filter : {studijsko_letoFK: letoFilter.studijsko_leto, Vpis_sifra_stProgramFK: programFilter.sifra_stProgram, Predmetnik_letnikFK: letnikFilter.letnik}" >
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+  <div id="source" >
+<link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <div class="media text-muted pt-3" ng-repeat="s in vm.z.vpisani.response | filter : {studijsko_letoFK: letoFilter.studijsko_leto, Vpis_sifra_stProgramFK: programFilter.sifra_stProgram, Predmetnik_letnikFK: letnikFilter.letnik}" >
+    <p id = "ena" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
       <strong class="d-block text-gray-dark">{{ s.ime_predmeta }}</strong>
          Šifra predmeta: {{ s.sifra_predmetaFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Leto izvajanja: {{ s.studijsko_letoFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Število vpisanih: <b>{{ s.stVpisanih }}</b>
     </p>
  </div>
+ </div>
 </div>
  <div style="align:right; position: fixed;bottom: 6%;right: 60%;">
-   <button type="button" class="btn btn-primary" onclick="shraniPDF()"  style="margin:10px">Shrani kot pdf</button>
-   <button type="button" class="btn btn-primary" onclick="shraniCSV()" style="margin:10px">Shrani kot csv</button>
+   <button type="button" class="btn btn-primary" onclick="demoFromHTML()"  style="margin:10px">Shrani kot pdf</button>
+   <button type="button" class="btn btn-primary" onclick="myFunction1()" style="margin:10px">Shrani kot csv</button>
  </div>
 <noga></noga>
