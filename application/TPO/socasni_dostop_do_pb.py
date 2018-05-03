@@ -667,9 +667,9 @@ def Oseba():
         cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("admin@admin","admin",4 ))
         cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("pro@pro","pro",2 ))
         
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("28@pro","pro",2 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("2@pro","pro",2 ))
-        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("3@pro","pro",2 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("630028@profesor.uni-lj.si","pro",2 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("630013@profesor.uni-lj.si","pro",2 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("630011@profesor.uni-lj.si","pro",2 ))
 
         conn.commit()
         cursor.close()
