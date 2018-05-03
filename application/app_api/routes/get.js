@@ -47,6 +47,21 @@ router.get('/leto', function(req, res, next) {
 	});
 });
 
+router.get('/profesor', function(req, res, next) {
+     global.connection.query('SELECT * FROM Profesor', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
+
+router.get('/izpit', function(req, res, next) {
+     global.connection.query('SELECT * FROM Izpit', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
+
+
 router.get('/vpis', function(req, res, next) {
      global.connection.query('SELECT * FROM Vpis', function (error, results, fields) {
 		if (error) throw error;
