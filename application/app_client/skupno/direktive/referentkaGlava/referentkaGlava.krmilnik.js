@@ -1,17 +1,17 @@
 (function() {
   /* global angular */
   
-  var referentkaglava = function() {
+  var referentkaGlava = function() {
     return {
       restrict: 'EA',
       replace:true,
       templateUrl: "/skupno/direktive/referentkaGlava/referentkaGlava.html",
-      controller: 'referentkaglavaCtrl',
+      controller: 'referentkaGlavaCtrl',
       controllerAs: 'navvm'
     };
   };
   
   angular
     .module('estudent')
-    .directive('referentkaglava', referentkaglava);
+    .directive('referentkaglava', referentkaGlava);
 })();

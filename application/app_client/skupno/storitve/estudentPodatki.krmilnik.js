@@ -69,6 +69,12 @@
       var izpiti = function(sifra) {
         return $http.get('/api/izpiti/'+sifra);
       };
+      var profesorji = function(sifra) {
+        return $http.get('/api/profesor/');
+      };
+      var izpit = function(sifra) {
+        return $http.get('/api/izpit/');
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -91,7 +97,9 @@
         studijskiProgram:studijskiProgram,
         letnik:letnik,
         stVpisanih:stVpisanih,
-        izpiti:izpiti
+        izpiti:izpiti,
+        profesorji:profesorji,
+        izpit:izpit
       };
     };
 

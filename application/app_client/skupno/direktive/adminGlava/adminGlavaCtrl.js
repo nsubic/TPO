@@ -4,7 +4,7 @@
   adminGlavaCtrl.$inject = ['$location', '$route', '$odjava'];
   function adminGlavaCtrl($location, odjava, $route) {
     var navvm = this;
-     navvm.odjava = function() {
+    navvm.odjava = function() {
      odjava.odjava();
      $location.path('/');
      $route.reload();
