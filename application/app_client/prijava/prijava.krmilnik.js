@@ -4,6 +4,7 @@
   prijavaCtrl.$inject = ['$window','$location', '$http', 'estudentPodatki'];
   function prijavaCtrl($window, $location, $http, estudentPodatki) {
     $window.localStorage['steviloNapacnih'] = 0;
+    console.log("tukaj si")
     var vm = this;
     vm.prijavniPodatki = {
       elektronskiNaslov: "",
@@ -57,12 +58,12 @@
               console.log("Ni našel");
               $window.localStorage['upIme'] = odgovor.data.response[0].upIme;
               $window.localStorage['vloga'] = odgovor.data.response[0].vloga;
-              $window.localStorage['steviloNapacnih'] = 0;
+              
               
               $http.get(vm.prvotnaStran).then(function(response) {
-                console.log("IP: ",response.data.ip);
               });
               if(vm.prijavniPodatki.password == odgovor.data.response[0].geslo){
+                $window.localStorage['steviloNapacnih'] = 0;
                 console.log("prid");
                 if(odgovor.data.response[0].vloga == 1){
                   console.log("prid2");
@@ -79,6 +80,7 @@
                 }
               }
               else{
+                console.log("napake: ", $window.localStorage['steviloNapacnih'])
                 vm.napakaNaObrazcu = "Napačno geslo!";
                 $window.localStorage['steviloNapacnih']++;
               }

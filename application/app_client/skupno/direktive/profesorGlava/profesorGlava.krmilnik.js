@@ -5,7 +5,9 @@
     return {
       restrict: 'EA',
       replace:true,
-      templateUrl: "/skupno/direktive/profesorGlava/profesorGlava.html"
+      templateUrl: "/skupno/direktive/profesorGlava/profesorGlava.html",
+      controller: 'profesorGlavaCtrl',
+      controllerAs: 'navvm'
     };
   };
   

@@ -5,7 +5,9 @@
     return {
       restrict: 'EA',
       replace:true,
-      templateUrl: "/skupno/direktive/referentkaGlava/referentkaGlava.html"
+      templateUrl: "/skupno/direktive/referentkaGlava/referentkaGlava.html",
+      controller: 'referentkaglavaCtrl',
+      controllerAs: 'navvm'
     };
   };
   

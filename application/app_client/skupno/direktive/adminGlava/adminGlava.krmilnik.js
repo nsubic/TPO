@@ -5,7 +5,9 @@
     return {
       restrict: 'EA',
       replace:true,
-      templateUrl: "/skupno/direktive/adminGlava/adminGlava.html"
+      templateUrl: "/skupno/direktive/adminGlava/adminGlava.html",
+      controller: 'adminGlavaCtrl',
+     controllerAs: 'navvm'
     };
   };
   
