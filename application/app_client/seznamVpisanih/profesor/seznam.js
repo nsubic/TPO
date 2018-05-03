@@ -1,13 +1,13 @@
 (function() {
   /* global angular */
   
-  seznamPro.$inject = ['$location','estudentPodatki'];
-  function seznamPro($location,estudentPodatki) {
+  seznamPro.$inject = ['$window','$location','estudentPodatki'];
+  function seznamPro($window, $location,estudentPodatki) {
     
     var vm = this;
     
 
-  estudentPodatki.predmetiProfesorja(1).then(
+  estudentPodatki.predmetiProfesorja($window.localStorage['upIme'].split("@")[0]).then(
     function success(odgovor) {
       vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
       vm.data = { predmeti: odgovor.data };

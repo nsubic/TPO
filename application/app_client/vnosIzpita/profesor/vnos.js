@@ -1,12 +1,12 @@
 (function() {
   /* global angular */
   
-  vnosIzpitaPro.$inject = ['$location','estudentPodatki'];
-  function vnosIzpitaPro($location,estudentPodatki) {
-    
+  vnosIzpitaPro.$inject = ['$location','estudentPodatki', '$scope'];
+  function vnosIzpitaPro($location,estudentPodatki, $scope) {
     var vm = this;
     
-
+ 
+  
   estudentPodatki.predmetiProfesorja(1).then(
     function success(odgovor) {
       vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
@@ -19,14 +19,14 @@
 
     
     
-    vm.izpis = function(id,conceptName,ime) {
+    vm.izpis = function(id,ime) {
       id = parseInt(id)
-      estudentPodatki.vpisaniPredmet(conceptName,id).then(
+      estudentPodatki.izpiti(id).then(
         function success(odgovor) {
           vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih studentov.";
           vm.ime=ime;
-          vm.pod = { vpisani: odgovor.data };
-        console.log(vm.pod.vpisani);
+          vm.pod = { izpiti: odgovor.data };
+        console.log(vm.pod.izpiti);
         }, 
         function error(odgovor) {
           vm.sporocilo = "There was an error!";
@@ -40,3 +40,4 @@
     .module('estudent')
     .controller('vnosIzpitaPro', vnosIzpitaPro);
 })();
+

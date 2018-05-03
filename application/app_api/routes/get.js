@@ -185,6 +185,19 @@ router.get('/stVpisanih', function(req, res, next) {
 	});
 });
 
+
+router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
+	console.log(req.params.sifraPredmeta)
+	if (req.params && req.params.upIme) { 
+     global.connection.query('SELECT * FROM Izpiti WHERE šifra = ?', [req.params.sifraPredmeta], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+	} else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
 module.exports = router;
 
 

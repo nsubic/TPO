@@ -66,6 +66,9 @@
       var stVpisanih = function() {
         return $http.get('/api/stVpisanih/');
       };
+      var izpiti = function(sifra) {
+        return $http.get('/api/izpiti/'+sifra);
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -87,7 +90,8 @@
         student2:student2,
         studijskiProgram:studijskiProgram,
         letnik:letnik,
-        stVpisanih:stVpisanih
+        stVpisanih:stVpisanih,
+        izpiti:izpiti
       };
     };
 

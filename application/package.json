@@ -10,6 +10,7 @@
     "npm": "~3.10.10"
   },
   "dependencies": {
+    "angularjs-datepicker": "^2.1.23",
     "body-parser": "~1.18.2",
     "child_process": "^1.0.2",
     "cookie-parser": "~1.4.3",

@@ -206,6 +206,25 @@ def predmet():
         print ("EXCEPTION", exc)
     conn.close()
 
+def profesor():
+    conn = connect()
+
+    try:
+        cursor = conn.cursor()
+        i = 0;
+        with open('profesorji.csv', encoding='utf-8') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=',')
+            for row in spamreader:
+                i=i+1;
+                print(row[1])
+                data=(row[0], row[1], row[2])
+                cursor.execute("INSERT INTO Profesor VALUES (%s,%s,%s)", data)
+        conn.commit()
+        cursor.close()
+    except Exception as exc:
+        print ("EXCEPTION", exc)
+    conn.close()
+
 def predmetnik():
     conn = connect()
 
@@ -647,6 +666,10 @@ def Oseba():
         cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("ref@ref","ref",3 ))
         cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("admin@admin","admin",4 ))
         cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("pro@pro","pro",2 ))
+        
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("28@pro","pro",2 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("2@pro","pro",2 ))
+        cursor.execute("INSERT INTO Oseba VALUES (%s,%s,%s)", ("3@pro","pro",2 ))
 
         conn.commit()
         cursor.close()
@@ -656,31 +679,38 @@ def Oseba():
 
 def Nosilec():
     conn = connect()
-
+    
     try:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO Profesor VALUES (%s,%s,%s)", (1, "ime", "priimek"))
-
-        cursor.execute("INSERT INTO Nosilec_predmeta VALUES (%s,%s,%s,%s,%s)", (1,63202,1,None,None ))
-
+        i = 0;
+        with open('nosilec.csv', encoding='utf-8') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=',')
+            for row in spamreader:
+                i=i+1;
+                print(row[1])
+                data=(row[0], row[1], row[2], None, None)
+                print(data)
+                cursor.execute("INSERT INTO Nosilec_predmeta VALUES (%s,%s,%s,%s,%s)", data)
         conn.commit()
         cursor.close()
     except Exception as exc:
         print ("EXCEPTION", exc)
     conn.close()
+    
 
 
 
-posta()
-drzava()
-obcina()
-vrstaNacinOblika()
-Studijski_program()
-delPredmetnika()
-predmet()
+#posta()
+#drzava()
+#obcina()
+#vrstaNacinOblika()
+#Studijski_program()
+#delPredmetnika()
+#predmet()
+#profesor()
 Nosilec()
 predmetnik()
-Oseba()
-Student()
-Vpis()
-izbrani()
+#Oseba()
+#Student()
+#Vpis()
+#izbrani()

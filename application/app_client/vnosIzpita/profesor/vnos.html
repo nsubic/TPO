@@ -1,6 +1,6 @@
 <profesorglava></profesorglava>
 <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:700px;overflow:auto;">
-  <h1 style="margin:30px;">Seznam vpisanih študentov po predmetih</h1>
+  <h1 style="margin:30px;">Vnašanje novih izpitnih rokov</h1>
   <label for"filter">Izberi leto:</label>
 	<select name="show-filter" ng-model="catFilter" 
    ng-options="leto as leto.studijsko_letoFK for leto in vm.data.predmeti.response">
@@ -19,7 +19,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Seznam študentov</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Seznam izpitov</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -30,27 +30,40 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Vpisna št.</th>
-              <th scope="col">Priimek</th>
-              <th scope="col">Ime</th>
-              <th scope="col">Vrsta vpisa</th>
+              <th scope="col">Datum</th>
             </tr>
           </thead>
           <tbody>
-            <tr  ng-repeat="p in vm.pod.vpisani.response">
+            <tr  ng-repeat="p in vm.pod.izpti.response">
               <th scope="row">{{$index +1}}</th>
-              <td>{{ p.vpisna_st }}</td>
-              <td>{{ p.priimek }}</td>
-              <td>{{ p.ime }}</td>
-              <td>{{ p.opis }}</td>
+              <td>{{ p.datum }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
-        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
-        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
+        <div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'ru'
+                });
+            });
+        </script>
+    </div>
+</div>
       </div>
     </div>
   </div>
