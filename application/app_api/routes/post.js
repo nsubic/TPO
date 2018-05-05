@@ -35,6 +35,14 @@ router.post('/dodajOsebe', function(req, res, next) {
     	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
 });
 
+router.post('/dodajIzpit', function(req, res, next) {
+     global.connection.query('INSERT INTO Izpit VALUES (?,?,?,?,?)',[req.body.sifra,req.body.rok,req.body.Predmet_sifra_predmeta, req.body.lokacija, req.body.datum ], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    	});
+    	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
+});
+
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {
   odgovor.status(status);
   odgovor.json(vsebina);

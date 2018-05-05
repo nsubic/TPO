@@ -69,11 +69,14 @@
       var izpiti = function(sifra) {
         return $http.get('/api/izpiti/'+sifra);
       };
-      var profesorji = function(sifra) {
+      var profesorji = function() {
         return $http.get('/api/profesor/');
       };
-      var izpit = function(sifra) {
+      var izpit = function() {
         return $http.get('/api/izpit/');
+      };
+      var dodajIzpit = function() {
+        return $http.post('/api/dodajIzpit/');
       };
       return {
         obcina: obcina,
@@ -99,7 +102,8 @@
         stVpisanih:stVpisanih,
         izpiti:izpiti,
         profesorji:profesorji,
-        izpit:izpit
+        izpit:izpit,
+        dodajIzpit,dodajIzpit
       };
     };
 

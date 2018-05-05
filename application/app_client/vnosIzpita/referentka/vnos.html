@@ -1,28 +1,26 @@
+
 <referentkaglava></referentkaglava>
 
-<div class="container mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-  <div class="row">
-    <h2>Create a new exam</h2>
-    <p>The form below contains three dropdown menus (select lists):</p>
-    <form ng-submit="vm.posiljanjePodatkov()">
+<div class="container mainbox fixed-top col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" >
+    <h2>Vnos novega izpita</h2>
+      <div class="row">
+    <form ng-submit="vm.dodajIzpit()">
       <div class="form-group">
-        <label for="sel1">Select professor:</label>
-        <select id="sel1" class="form-control" ng-model="vm.podatkiObrazca.professor">
-           <option  ng-repeat="p in vm.dataProf.prof" value="{{p.ime}}{{' '}}{{p.priimek}}" >{{p.ime}} {{p.priimek}}</option>
+        <label for="sel1">Izberi profesorja:</label>
+        <select id="sel1" class="form-control" ng-model="vm.podatki.profesor">
+           <option  ng-repeat="p in vm.dataProf.prof" value="{{p.sifra_profesorja}}{{' '}}{{p.ime}}{{' '}}{{p.priimek}}" >{{p.sifra_profesorja}}, {{p.ime}} {{p.priimek}} </option>
         </select>
-        <label for="sel2">Select subject:</label>
-        <select id="sel2" class="form-control"ng-model="vm.podatkiObrazca.subject">
-           <option  ng-repeat="p in vm.dataSub.subjects" value="{{p.sifra_predmeta}}{{' '}}{{p.ime_predmeta}}" >{{p.sifra_predmeta}} {{p.ime_predmeta}}</option>
+        <label for="sel2">Izberi predmet:</label>
+        <select id="sel2" class="form-control"ng-model="vm.podatki.predmet">
+           <option  ng-repeat="p in vm.dataSub.subjects" value="{{p.sifra_predmeta}}{{' '}}{{p.ime_predmeta}}" >{{p.sifra_predmeta}}, {{p.ime_predmeta}}</option>
         </select>
-        <label for="sel3">Select date:</label>
-        <select id="sel3" class="form-control" ng-model="vm.podatkiObrazca.date">
-          <option selected="" disabled="" hidden=""></option>
-          <option value="{{'2017.12.11'}}">11.12.2017</option>
-          <option value="{{'2018.01.15'}}">15.01.2018</option>
-          <option value="{{'2018.01.27'}}">27.01.2018</option>
-        </select>
-        <label for="sel4">Select location:</label>
-        <select id="sel4" class="form-control" ng-model="vm.podatkiObrazca.location">
+        <div class="form-group">
+          <label for="izberiDatum">Izberi datum:</label>
+            <input id="izberiDatum" name="izberiDatum"class="form-control" type="date" placeholder="geslo" ng-model="vm.podatki.datum">
+          </label>
+        </div>
+        <label for="sel4">Izberi lokacijo:</label>
+        <select id="sel4" class="form-control" ng-model="vm.podatki.lokacija">
           <option selected="" disabled="" hidden=""></option>
           <option value="{{'P1'}}">P1</option>
           <option value="{{'PA'}}">PA</option>
@@ -30,18 +28,19 @@
           <option value="{{'ucilnice'}}">ucilnice</option>
         </select>
       </div>
-      <button id="listAdd" type="submit" class="btn btn-default">Add exam</button>
+      <button id="listAdd" type="submit" class="btn btn-default">Dodaj izpit</button>
     </form>
   </div><br/>
   <div class="row"></div>
-  <h2>List of all exams</h2>
+  <h2>Seznam vseh izpitov</h2>
   <table id="ena" class="table table-striped table-hover table-bordered">
 	  <thead class="thead-dark">
 		<tr>
-		  <th>Name</th>
-		  <th>Location</th>
-		  <th>Date</th>
-		  <th>Action</th>
+		  <th>Šifra predmeta</th>
+		  <th>Ime predmeta</th>
+		  <th>Datum</th>
+		  <th>Kraj</th>
+		  <th></th>
 		</tr>
 	  </thead>
 	  <tbody>
@@ -50,13 +49,15 @@
 			<td style="vertical-align: middle;">
 			  {{s.location}}
 			</td>
+			<td style="vertical-align: middle;">
+			  {{s.datum}}
+			</td>
 			<td style="vertical-align: middle;">{{s.date}} </td>
-			 <td><a data-to-view="{{s._id}}" class="view">View</a> | <a data-to-edit="{{s._id}}" class="edit">Edit</a> | <a ng-click="vm.izbrisi(s._id)" class="delete">Delete</a></td>
+			 <td><button ng-click="vm.izbrisi(s._id)" class="delete">Izbriši izpit</button></td>
 			</td>
 		  </tr>
 	  </tbody>
 	</table>
-  <noga></noga>
+  
 </div>
-
 
