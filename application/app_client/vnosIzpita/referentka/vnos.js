@@ -54,7 +54,7 @@
       vm.napakaNaObrazcu = "";
       console.log("profesor", vm.podatki.datum)
       var sifraProfesorja = vm.podatki.profesor.substring(0, 6);
-      var sifraPredmeta = vm.podatki.predmeta.substring(0, 5);
+      var sifraPredmeta = vm.podatki.predmet.substring(0, 5);
       var oseba = estudentPodatki.dodajIzpit({
                             rok:1,
                             Predmet_sifra_predmeta:sifraPredmeta,

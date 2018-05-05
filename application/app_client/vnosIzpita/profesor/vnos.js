@@ -7,7 +7,6 @@
     vm.sporocilo = "Loading professors.";
     
     vm.podatki = {
-      profesor: "",
       predmet: "",
       datum:"",
       lokacija:""
@@ -65,9 +64,8 @@
     vm.dodajIzpit = function(napaka) {
       vm.napakaNaObrazcu = "";
       console.log("profesor", vm.podatki.datum)
-      var sifraProfesorja = vm.podatki.profesor.substring(0, 6);
-      var sifraPredmeta = vm.podatki.predmeta.substring(0, 5);
-      var oseba = estudentPodatki.dodajIzpit({
+      var sifraPredmeta = vm.podatki.predmet.substring(0, 5);
+      var izpit= estudentPodatki.dodajIzpit({
                             rok:1,
                             Predmet_sifra_predmeta:sifraPredmeta,
                             datum:vm.podatki.datum,
