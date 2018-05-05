@@ -75,8 +75,14 @@
       var izpit = function() {
         return $http.get('/api/izpit/');
       };
+      var nosilecPri = function(sifra) {
+        return $http.get('/api/nosilecPri/'+sifra);
+      };
+      var imePredmeta = function(sifra) {
+        return $http.get('/api/imePredmeta/'+sifra);
+      };
       var dodajIzpit = function() {
-        return $http.post('/api/dodajIzpit/');
+        return $http.post('/api/izpit/');
       };
       return {
         obcina: obcina,
@@ -103,7 +109,9 @@
         izpiti:izpiti,
         profesorji:profesorji,
         izpit:izpit,
-        dodajIzpit,dodajIzpit
+        dodajIzpit,dodajIzpit,
+        nosilecPri:nosilecPri,
+        imePredmeta:imePredmeta
       };
     };
 
