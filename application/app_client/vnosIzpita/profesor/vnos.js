@@ -115,7 +115,7 @@
       }
       else if(predmet != undefined && date != undefined && options.length != 0){
         estudentPodatki.dodajIzpit({
-                              rok:1,
+                              rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
                               datum:date,
                               lokacija:options.toString()

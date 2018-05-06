@@ -11,6 +11,7 @@
     vm.podatki = {
       profesor: "",
       predmet: "",
+      rok: "",
       datum:"",
       lokacija:""
     };
@@ -40,6 +41,7 @@
     estudentPodatki.izpit().then(
     function success(res) {
       vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+      console.log(res.data.response)
       vm.dataExam = { exams: res.data.response };
     }, 
     function error(res) {
@@ -71,6 +73,7 @@
       console.log(profesor)
       console.log(predmet)
       console.log(vm.podatki.datum)
+      console.log(vm.podatki.rok)
       if(vm.podatki.datum == ""){
         vm.uspesno = ""
          vm.napakaNaObrazcu ="Izberite datum in čas izvajanja izpita!";
@@ -102,7 +105,7 @@
       }
       else if(predmet != undefined && date != undefined && options.length != 0){
         estudentPodatki.dodajIzpit({
-                              rok:1,
+                              rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
                               datum:date,
                               lokacija:options.toString()
