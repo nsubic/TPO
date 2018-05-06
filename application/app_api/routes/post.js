@@ -25,22 +25,20 @@ router.post('/dodajStudenta', function(req, res, next) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     	});
-    	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
 });
 router.post('/dodajOsebe', function(req, res, next) {
      global.connection.query('INSERT INTO Oseba VALUES (?,?,?)',[req.body.upIme,req.body.geslo,req.body.vloga], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     	});
-    	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
 });
 
 router.post('/dodajIzpit', function(req, res, next) {
-     global.connection.query('INSERT INTO Izpit VALUES (?,?,?,?,?)',[req.body.sifra,req.body.rok,req.body.Predmet_sifra_predmeta, req.body.lokacija, req.body.datum ], function (error, results, fields) {
+    console.log(req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija)
+     global.connection.query('INSERT INTO Izpit( rok, Predmet_sifra_predmeta, datum, lokacija ) VALUES (?,?,?,?)',[req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     	});
-    	//res.send(JSON.stringify({"status": 200, "error": null, "response": ""}));
 });
 
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {

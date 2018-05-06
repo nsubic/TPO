@@ -27,6 +27,13 @@ router.get('/predmet', function(req, res, next) {
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 });
+
+router.get('/predmet2', function(req, res, next) {
+     global.connection.query('SELECT * FROM Predmet INNER JOIN Nosilec_predmeta ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta GROUP BY sifra_predmeta', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
 router.get('/studijskiProgram', function(req, res, next) {
      global.connection.query('SELECT * FROM Studijski_program', function (error, results, fields) {
 		if (error) throw error;
@@ -55,7 +62,7 @@ router.get('/profesor', function(req, res, next) {
 });
 
 router.get('/izpit', function(req, res, next) {
-     global.connection.query('SELECT * FROM Izpit', function (error, results, fields) {
+     global.connection.query('SELECT * FROM Izpit INNER JOIN Predmet ON Izpit.Predmet_sifra_predmeta = Predmet.sifra_predmeta', function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});

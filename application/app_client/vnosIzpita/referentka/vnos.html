@@ -1,63 +1,88 @@
-
 <referentkaglava></referentkaglava>
 
-<div class="container mainbox fixed-top col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" >
-    <h2>Vnos novega izpita</h2>
-      <div class="row">
-    <form ng-submit="vm.dodajIzpit()">
+
+   <div class="container" style"width:100%;height:100%" >
+      <div class="row" style"width:100%;top:100;position: absolute;margin-top:100px">
+         <h2  style="margin:30px;margin-top:150px" align="center">Vnos novega izpita</h2>
+    <form ng-submit="" style="width:100%">
       <div class="form-group">
         <label for="sel1">Izberi profesorja:</label>
-        <select id="sel1" class="form-control" ng-model="vm.podatki.profesor">
-           <option  ng-repeat="p in vm.dataProf.prof" value="{{p.sifra_profesorja}}{{' '}}{{p.ime}}{{' '}}{{p.priimek}}" >{{p.sifra_profesorja}}, {{p.ime}} {{p.priimek}} </option>
-        </select>
+        	<select id="sel1" name="show-filter" ng-model="profesorFilter"  class="form-control" style="width:100%"
+    ng-options="profesor as profesor.sifra_profesorja + ', ' + profesor.ime + ' ' +  profesor.priimek for profesor in vm.dataProf.prof | filterzaOR: predmetFilter.sifra_profesorjaFK1:predmetFilter.sifra_profesorjaFK2:predmetFilter.sifra_profesorjaFK3">           <option selected="">izberi</option></select>
         <label for="sel2">Izberi predmet:</label>
-        <select id="sel2" class="form-control"ng-model="vm.podatki.predmet">
-           <option  ng-repeat="p in vm.dataSub.subjects" value="{{p.sifra_predmeta}}{{' '}}{{p.ime_predmeta}}" >{{p.sifra_predmeta}}, {{p.ime_predmeta}}</option>
-        </select>
+        <select id="sel2" name="show-filter" ng-model="predmetFilter"  class="form-control" style="width:100%"
+    ng-options="p as p.sifra_predmeta + ', ' + p.ime_predmeta for p in vm.dataSub.subjects | filterzaORpro: profesorFilter.sifra_profesorja:profesorFilter.sifra_profesorja:profesorFilter.sifra_profesorja"></select>
         <div class="form-group">
           <label for="izberiDatum">Izberi datum:</label>
-            <input id="izberiDatum" name="izberiDatum"class="form-control" type="date" placeholder="geslo" ng-model="vm.podatki.datum">
+            <input id="izberiDatum" name="izberiDatum"class="form-control" type="datetime-local" placeholder="geslo" ng-model="vm.podatki.datum">
           </label>
         </div>
         <label for="sel4">Izberi lokacijo:</label>
-        <select id="sel4" class="form-control" ng-model="vm.podatki.lokacija">
+         <div class="row" style="z-index:2000">
+         <div class="col-lg-12" >
+         <div class="button-group">
+          <button type="button" id="sel4" style="" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ng-model="vm.podatki.lokacija"><span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
+          <ul class="dropdown-menu"   style="z-index:2000">
           <option selected="" disabled="" hidden=""></option>
-          <option value="{{'P1'}}">P1</option>
-          <option value="{{'PA'}}">PA</option>
-          <option value="{{'P22'}}">P22</option>
-          <option value="{{'ucilnice'}}">ucilnice</option>
-        </select>
+          <li><a href="#"  data-value="PA" tabIndex="-1"><input type="checkbox"/>&nbsp;PA</a></li>
+          <li><a href="#"  data-value="PB" tabIndex="-1"><input type="checkbox"/>&nbsp;PB</a></li>
+          <li><a href="#"  data-value="P1" tabIndex="-1"><input type="checkbox"/>&nbsp;P1</a></li>
+          <li><a href="#"  data-value="P2" tabIndex="-1"><input type="checkbox"/>&nbsp;P2</a></li>
+          <li><a href="#"  data-value="P3" tabIndex="-1"><input type="checkbox"/>&nbsp;P3</a></li>
+          <li><a href="#"  data-value="P4" tabIndex="-1"><input type="checkbox"/>&nbsp;P4</a></li>
+          <li><a href="#"  data-value="P5" tabIndex="-1"><input type="checkbox"/>&nbsp;P5</a></li>
+          <li><a href="#"  data-value="P6" tabIndex="-1"><input type="checkbox"/>&nbsp;P6</a></li>
+          <li><a href="#"  data-value="P7" tabIndex="-1"><input type="checkbox"/>&nbsp;P7</a></li>
+          <li><a href="#"  data-value="P8" tabIndex="-1"><input type="checkbox"/>&nbsp;P8</a></li>
+          <li><a href="#"  data-value="P9" tabIndex="-1"><input type="checkbox"/>&nbsp;P9</a></li>
+          <li><a href="#"  data-value="P10" tabIndex="-1"><input type="checkbox"/>&nbsp;P10</a></li>
+          <li><a href="#"  data-value="P11" tabIndex="-1"><input type="checkbox"/>&nbsp;P11</a></li>
+          <li><a href="#"  data-value="P12" tabIndex="-1"><input type="checkbox"/>&nbsp;P12</a></li>
+          <li><a href="#"  data-value="P13" tabIndex="-1"><input type="checkbox"/>&nbsp;P13</a></li>
+          <li><a href="#"  data-value="P14" tabIndex="-1"><input type="checkbox"/>&nbsp;P14</a></li>
+          <li><a href="#"  data-value="P15" tabIndex="-1"><input type="checkbox"/>&nbsp;P15</a></li>
+          <li><a href="#"  data-value="P16" tabIndex="-1"><input type="checkbox"/>&nbsp;P16</a></li>
+          <li><a href="#"  data-value="P17" tabIndex="-1"><input type="checkbox"/>&nbsp;P17</a></li>
+          <li><a href="#"  data-value="P18" tabIndex="-1"><input type="checkbox"/>&nbsp;P18</a></li>
+          <li><a href="#"  data-value="P19" tabIndex="-1"><input type="checkbox"/>&nbsp;P19</a></li>
+          <li><a href="#"  data-value="P20" tabIndex="-1"><input type="checkbox"/>&nbsp;P20</a></li>
+          <li><a href="#"  data-value="P21" tabIndex="-1"><input type="checkbox"/>&nbsp;P21</a></li>
+          <li><a href="#"  data-value="P22" tabIndex="-1"><input type="checkbox"/>&nbsp;P22</a></li>
+        </ul>
+          </div>
+        </div>
+          </div>
       </div>
-      <button id="listAdd" type="submit" class="btn btn-default">Dodaj izpit</button>
+      <div role="alert" ng-show="vm.napakaNaObrazcu" class="alert alert-danger">{{ vm.napakaNaObrazcu }}</div>
+      <button id="listAdd" type="submit" class="btn btn-default" ng-click="vm.dodajIzpit(profesorFilter.sifra_profesorja,predmetFilter.sifra_predmeta)">Dodaj izpit</button>
     </form>
-  </div><br/>
-  <div class="row"></div>
-  <h2>Seznam vseh izpitov</h2>
-  <table id="ena" class="table table-striped table-hover table-bordered">
+  </div>
+  
+  <div class="row " style="width:100%;position: static;">
+  <h2 style="margin:30px" align="center">Seznam vseh izpitov</h2>
+  <div role="alert" ng-show="vm.izbris2" class="alert alert-danger row" style="width:100%">{{ vm.izbris2 }}</div>
+  <table id="ena" class="table table-striped table-hover table-bordered" >
 	  <thead class="thead-dark">
 		<tr>
 		  <th>Šifra predmeta</th>
 		  <th>Ime predmeta</th>
 		  <th>Datum</th>
-		  <th>Kraj</th>
+		  <th>Lokacija</th>
+		  <th>Rok</th>
 		  <th></th>
 		</tr>
 	  </thead>
 	  <tbody>
-		  <tr ng-repeat="s in vm.dataExam.exams">
-			<td style="vertical-align: middle;">{{s.subject[0].name}}</td>
-			<td style="vertical-align: middle;">
-			  {{s.location}}
-			</td>
-			<td style="vertical-align: middle;">
-			  {{s.datum}}
-			</td>
-			<td style="vertical-align: middle;">{{s.date}} </td>
-			 <td><button ng-click="vm.izbrisi(s._id)" class="delete">Izbriši izpit</button></td>
-			</td>
+		  <tr ng-repeat="s in vm.dataExam.exams | filterIzpitovProfesor">
+  			<td style="vertical-align: middle;">{{s.Predmet_sifra_predmeta}}</td>
+  			<td style="vertical-align: middle;">{{s.ime_predmeta}}</td>
+  			<td style="vertical-align: middle;"> {{s.datum | filterDATUMinURA}}</td>
+  			<td style="vertical-align: middle;">{{s.lokacija}} </td>
+  			<td style="vertical-align: middle;">{{s.rok}} </td>
+  			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Izbriši izpit</button></td>
 		  </tr>
 	  </tbody>
 	</table>
-  
+  </div>
 </div>
 

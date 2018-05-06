@@ -1,6 +1,4 @@
-.container {
-    height:0;
-}
+
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
@@ -33,4 +31,9 @@
 }
 #buton{
   display: none;
+}
+
+.dropdown-menu li:hover{
+  
+  background-color: #e1e6ef;
 }

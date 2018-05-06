@@ -81,8 +81,14 @@
       var imePredmeta = function(sifra) {
         return $http.get('/api/imePredmeta/'+sifra);
       };
-      var dodajIzpit = function() {
-        return $http.post('/api/izpit/');
+      var dodajIzpit = function(podatki) {
+        return $http.post('/api/dodajIzpit/', podatki);
+      };
+      var predmet2 = function() {
+        return $http.get('/api/predmet2/');
+      };
+      var izbrisiIzpit = function(sifra) {
+        return $http.delete('/api/izpit/'+sifra);
       };
       return {
         obcina: obcina,
@@ -111,7 +117,9 @@
         izpit:izpit,
         dodajIzpit,dodajIzpit,
         nosilecPri:nosilecPri,
-        imePredmeta:imePredmeta
+        imePredmeta:imePredmeta,
+        predmet2:predmet2,
+        izbrisiIzpit:izbrisiIzpit
       };
     };
 

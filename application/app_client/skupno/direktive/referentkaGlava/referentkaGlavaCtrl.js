@@ -2,7 +2,7 @@
   /* global angular */
   
   referentkaGlavaCtrl.$inject = ['$location', '$route', '$odjava'];
-  function referentkaGlavaCtrl($location, odjava, $route) {
+  function referentkaGlavaCtrl($location, $route,odjava) {
     var navvm = this;
      navvm.odjava = function() {
      odjava.odjava();

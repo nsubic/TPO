@@ -38,7 +38,8 @@ app.use(function(req, res, next){
     host: "127.0.0.1",
     user: process.env.C9_USER,
     password: "",
-    database:"mydb"
+    database:"mydb",
+    connectionLimit: 1000
 	});
 	connection.connect()
  
