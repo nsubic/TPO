@@ -68,6 +68,11 @@
        controller: 'vnosIzpitaPro',
        controllerAs: 'vm'
      })
+     .when('/prijavaIzpit', {
+       templateUrl: '/prijavaIzpit/prijavaIzpit.pogled.html',
+       controller: 'prijavaIzpit',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);

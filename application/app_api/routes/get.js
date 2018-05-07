@@ -120,6 +120,28 @@ router.get('/imePredmeta/:sifraPredmeta', function(req, res, next) {
     }
 });
 
+router.get('/studentUpIme/:upIme', function(req, res, next) {
+     if (req.params.upIme) { 
+     global.connection.query('SELECT * FROM Student WHERE Oseba_upIme = ?', [req.params.upIme], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
+router.get('/izpiti/:vpisnaSt', function(req, res, next) {
+     if (req.params.vpisnaSt) { 
+     global.connection.query('SELECT * FROM Izbrani_predmeti WHERE Vpis_vpisna_st = ?', [req.params.vpisnaSt], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
 router.get('/student2/:upime', function(req, res, next) {
      if (req.params && req.params.upime) { 
      global.connection.query('SELECT *,Nacin_studija.opis AS eins FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE Student.Oseba_upIme = ?', [req.params.upime], function (error, results, fields) {
