@@ -12,19 +12,45 @@
       datum:"",
       lokacija:""
     };
- 
-
-    vm.izbrisi = function(sifra) {
-       console.log(sifra)
-        estudentPodatki.izbrisiIzpit(sifra).then(
+    
+    vm.dataPredmet = new Array;
+    
+    estudentPodatki.student2($window.localStorage['upIme']).then(
         function success(res) {
-          alert("Uspešno izbrisan izpit!")
-            location.reload();
+          var counter = 0;
+          var vpisna = res.data.response[0].vpisna_st;
+          console.log(res.data.response[0].vpisna_st)
+            estudentPodatki.dobiVsePredmete(vpisna).then(
+              function success(res) {
+                console.log(vpisna)
+                console.log(res.data.response)
+                vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+                vm.dataSifrePr = { sifrePr: res.data.response };
+              
+              for(var a in vm.dataSifrePr.sifrePr){
+                console.log(vm.dataSifrePr.sifrePr[a].Predmetnik_sifra_predmetaFK)
+                estudentPodatki.izpiti(vm.dataSifrePr.sifrePr[a].Predmetnik_sifra_predmetaFK).then(
+                  function success(res) {
+                    vm.dataImena = { imena: res.data.response };
+                    vm.dataPredmet.push({predmet : vm.dataImena})
+                  },
+                  function error(res) {
+                    vm.sporocilo = "There was an error!";
+                    console.log(res.e);
+                });
+              }
+              },
+              function error(res) {
+            vm.sporocilo = "There was an error!";
+            console.log(res.e);
+            });
+            counter++;
         }, 
         function error(res) {
-          vm.izbris2 = "Napaka pri brisanju izpita."
+          vm.sporocilo = "There was an error!";
+          console.log(res.e);
         });
-    };
+
 
     vm.prikaziNapako = function(napaka) {
       $scope.$apply(function() {

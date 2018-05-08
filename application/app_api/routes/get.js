@@ -131,7 +131,8 @@ router.get('/studentUpIme/:upIme', function(req, res, next) {
     }
 });
 
-router.get('/izpiti/:vpisnaSt', function(req, res, next) {
+router.get('/predmetiStudenta/:vpisnaSt', function(req, res, next) {
+	console.log("tukaj", req.params.vpisnaSt)
      if (req.params.vpisnaSt) { 
      global.connection.query('SELECT * FROM Izbrani_predmeti WHERE Vpis_vpisna_st = ?', [req.params.vpisnaSt], function (error, results, fields) {
 		if (error) throw error;
@@ -254,8 +255,8 @@ router.get('/stVpisanih', function(req, res, next) {
 
 router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
 	console.log(req.params.sifraPredmeta)
-	if (req.params && req.params.upIme) { 
-     global.connection.query('SELECT * FROM Izpiti WHERE šifra = ?', [req.params.sifraPredmeta], function (error, results, fields) {
+	if (req.params.sifraPredmeta) { 
+     global.connection.query('SELECT * FROM Izpit WHERE Predmet_sifra_predmeta = ?', [req.params.sifraPredmeta], function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));

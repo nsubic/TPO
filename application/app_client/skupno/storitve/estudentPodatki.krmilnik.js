@@ -90,11 +90,9 @@
       var izbrisiIzpit = function(sifra) {
         return $http.delete('/api/izpit/'+sifra);
       };
-      var dobiStudentaZupIme = function(upIme) {
-        return $http.get('/studentUpIme/'+ upIme);
-      };
-      var dobiVseIzpite = function(vpisna) {
-        return $http.get('/izpiti/'+vpisna);
+      var dobiVsePredmete = function(vpisna) {
+        console.log(vpisna)
+        return $http.get('/api/predmetiStudenta/'+vpisna);
       };
       return {
         obcina: obcina,
@@ -126,8 +124,7 @@
         imePredmeta:imePredmeta,
         predmet2:predmet2,
         izbrisiIzpit:izbrisiIzpit,
-        dobiStudentaZupIme:dobiStudentaZupIme,
-        
+        dobiVsePredmete:dobiVsePredmete
       };
     };
 
