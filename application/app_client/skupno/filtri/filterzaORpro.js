@@ -4,18 +4,18 @@
 
   var filterzaORpro = function() {
 
-  return function(items, firstArgument,secondArgument,thirdArgument){
-
+  return function(items, firstArgument){
+console.log(firstArgument)
     var filtered = [];
     angular.forEach(items, function(value, key) {
 
-      if(value.sifra_profesorjaFK1 == firstArgument || value.sifra_profesorjaFK2 == secondArgument || value.sifra_profesorjaFK3 == thirdArgument){//logic for filtering
-
+      if(value.sifra_predmeta == firstArgument ){//logic for filtering
+        console.log(value)
         this.push(value);
       }
     }, filtered);
 
-    if(firstArgument==undefined && secondArgument == undefined && thirdArgument == undefined) return items
+    if(firstArgument==undefined ) return items
     return filtered;
     };
   };

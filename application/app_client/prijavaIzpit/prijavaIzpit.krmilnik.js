@@ -32,7 +32,10 @@
                 estudentPodatki.izpiti(vm.dataSifrePr.sifrePr[a].Predmetnik_sifra_predmetaFK).then(
                   function success(res) {
                     vm.dataImena = { imena: res.data.response };
-                    vm.dataPredmet.push({predmet : vm.dataImena})
+                    console.log(res.data.response)
+                    if(res.data.response.length != 0){
+                      vm.dataPredmet.push({predmet : vm.dataImena})
+                    }
                   },
                   function error(res) {
                     vm.sporocilo = "There was an error!";

@@ -72,6 +72,9 @@
       var profesorji = function() {
         return $http.get('/api/profesor/');
       };
+      var profesor = function(sifra) {
+        return $http.get('/api/profesor/'+sifra);
+      };
       var izpit = function() {
         return $http.get('/api/izpit/');
       };
@@ -93,6 +96,9 @@
       var dobiVsePredmete = function(vpisna) {
         console.log(vpisna)
         return $http.get('/api/predmetiStudenta/'+vpisna);
+      };
+       var nosilciInPredmeti = function() {
+        return $http.get('/api/nosilciInPredmeti/');
       };
       return {
         obcina: obcina,
@@ -124,7 +130,9 @@
         imePredmeta:imePredmeta,
         predmet2:predmet2,
         izbrisiIzpit:izbrisiIzpit,
-        dobiVsePredmete:dobiVsePredmete
+        dobiVsePredmete:dobiVsePredmete,
+        nosilciInPredmeti:nosilciInPredmeti,
+        profesor:profesor
       };
     };
 

@@ -4,11 +4,11 @@
 
   var filterzaOR = function() {
 
-  return function(items, firstArgument,secondArgument,thirdArgument){
+  return function(items, firstArgument,secondArgument,thirdArgument,forthArgument){
 
     var filtered = [];
     angular.forEach(items, function(value, key) {
-      if(value.sifra_profesorja == firstArgument || value.sifra_profesorja == secondArgument || value.sifra_profesorja == thirdArgument){//logic for filtering
+      if((value.sifra_profesorja == firstArgument || value.sifra_profesorja == secondArgument || value.sifra_profesorja == thirdArgument)&&value.sifra_predmeta ==forthArgument){//logic for filtering
         this.push(value);
       }
     }, filtered);

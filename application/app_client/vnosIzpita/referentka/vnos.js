@@ -5,15 +5,15 @@
     var vm = this;
     vm.sporocilo = "Loading professors.";
     
-    var today = new Date().toISOString().split('.')[0];
-    document.getElementsByName("izberiDatum")[0].setAttribute('min', today);
+
 
     vm.podatki = {
       profesor: "",
       predmet: "",
       rok: "",
       datum:"",
-      lokacija:""
+      lokacija:"",
+      ura:""
     };
     
     estudentPodatki.predmet2().then(
@@ -26,16 +26,60 @@
       console.log(res.e);
     });
     
-    
-    estudentPodatki.profesorji().then(
+    estudentPodatki.studijskoLeto().then(
     function success(res) {
-      vm.sporocilo = res.data.length > 0 ? "" : "No professors found.";
-      vm.dataProf = { prof: res.data.response };
+      vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+      vm.leto = { leto: res.data.response };
     }, 
     function error(res) {
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
+    
+    estudentPodatki.profesorji().then(
+    function success(res) {
+      vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+      vm.yolo = { solo: res.data.response };
+          estudentPodatki.nosilciInPredmeti().then(
+    function success(res) {
+      vm.sporocilo = res.data.length > 0 ? "" : "No professors found.";
+      vm.dataProf = { prof: res.data.response };
+      for(var i=0; i<vm.dataProf.prof.length; i++){
+        if(vm.dataProf.prof[i].sifra_profesorjaFK2 == null)
+          delete vm.dataProf.prof[i].sifra_profesorjaFK2
+        else{
+          for(var j=0; j<vm.yolo.solo.length; j++){
+            if(vm.yolo.solo[j].sifra_profesorja == vm.dataProf.prof[i].sifra_profesorjaFK2){
+              vm.dataProf.prof[i].ime_profesorja2= vm.yolo.solo[j].ime 
+              vm.dataProf.prof[i].priimek_profesorja2= vm.yolo.solo[j].priimek 
+            }
+          }
+        }
+        if(vm.dataProf.prof[i].sifra_profesorjaFK3 == null)
+          delete vm.dataProf.prof[i].sifra_profesorjaFK3
+        else{
+          for(var j=0; j<vm.yolo.solo.length; j++){
+            if(vm.yolo.solo[j].sifra_profesorja == vm.dataProf.prof[i].sifra_profesorjaFK3){
+              vm.dataProf.prof[i].ime_profesorja3=  vm.yolo.solo[j].ime 
+              vm.dataProf.prof[i].priimek_profesorja3= vm.yolo.solo[j].priimek 
+            }
+          }
+        }
+      }
+    }, 
+    function error(res) {
+      vm.sporocilo = "There was an error!";
+      console.log(res.e);
+    });
+    }, 
+    function error(res) {
+      vm.sporocilo = "There was an error!";
+      console.log(res.e);
+    });
+    
+    
+    
+
     
     
     estudentPodatki.izpit().then(
@@ -74,9 +118,10 @@
       console.log(predmet)
       console.log(vm.podatki.datum)
       console.log(vm.podatki.rok)
+      console.log(vm.podatki.ura)
       if(vm.podatki.datum == ""){
         vm.uspesno = ""
-         vm.napakaNaObrazcu ="Izberite datum in čas izvajanja izpita!";
+         vm.napakaNaObrazcu ="Izberite datum izvajanja izpita!";
       }
       var date1 = vm.podatki.datum.toISOString().split('T')
       var date = date1[0] + " " + date1[1].split('.')[0]
@@ -98,17 +143,37 @@
          console.log(predmet)
          vm.napakaNaObrazcu = "Izberite predmet iz seznama!";
       }
+      else if(vm.podatki.rok == undefined)
+      { 
+         vm.uspesno = ""
+         console.log(vm.podatki.rok)
+         vm.napakaNaObrazcu = "Izberite kateri rok izpita je!";
+      }
+      else if(profesor == undefined)
+      { 
+         vm.uspesno = ""
+         console.log(profesor)
+         vm.napakaNaObrazcu = "Izberite profesorja iz seznama!";
+      }
       else if( options.length == 0)
       { 
          vm.uspesno = ""
          vm.napakaNaObrazcu = "Izberite lokacijo izvajanja izpita!";
       }
       else if(predmet != undefined && date != undefined && options.length != 0){
+        var pro_ime
+        if(profesor.sifra_profesorjaFK2== null)
+          pro_ime =  profesor.sifra_profesorja  +' '+profesor.ime+' '+profesor.priimek
+        else
+        pro_ime = profesor.sifra_profesorja  +' '+profesor.ime+' '+profesor.priimek+'; '+profesor.sifra_profesorjaFK2 +  ' ' + profesor.ime_profesorja2 + ' ' + profesor.priimek_profesorja2 + '; ' + profesor.sifra_profesorjaFK3 + ' ' + profesor.ime_profesorja3 + ' ' + profesor.priimek_profesorja3
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
                               datum:date,
-                              lokacija:options.toString()
+                              lokacija:options.toString(),
+                              ura: vm.podatki.ura,
+                              profesor_ime: pro_ime
+                              
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")

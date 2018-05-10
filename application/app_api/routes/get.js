@@ -61,6 +61,13 @@ router.get('/profesor', function(req, res, next) {
 	});
 });
 
+router.get('/profesor/:sifra', function(req, res, next) {
+     global.connection.query('SELECT * FROM Profesor WHERE Profesor.sifra_profesorja = ?', [req.params.sifra], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
+
 router.get('/izpit', function(req, res, next) {
      global.connection.query('SELECT * FROM Izpit INNER JOIN Predmet ON Izpit.Predmet_sifra_predmeta = Predmet.sifra_predmeta', function (error, results, fields) {
 		if (error) throw error;
@@ -265,6 +272,23 @@ router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
         res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
     }
 });
+
+router.get('/nosilciInPredmeti/', function(req, res, next) {
+     global.connection.query('SELECT * \
+							FROM Predmetnik\
+							INNER JOIN Nosilec_predmeta ON Predmetnik.Nosilec_predmeta_sifra_opcije = Nosilec_predmeta.sifra_opcije\
+							AND Predmetnik.sifra_predmetaFK = Nosilec_predmeta.sifra_predmetaFK\
+							INNER JOIN Predmet ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta\
+							INNER JOIN Profesor ON Nosilec_predmeta.sifra_profesorjaFK1 = Profesor.sifra_profesorja\
+							GROUP BY Predmetnik.sifra_predmetaFK, Predmetnik.studijsko_letoFK',function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+
+});
+
+
 module.exports = router;
 
 

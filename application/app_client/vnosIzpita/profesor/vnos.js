@@ -6,7 +6,8 @@
     var vm = this;
     vm.sporocilo = "Loading professors.";
     var today = new Date().toISOString().split('.')[0];
-    document.getElementsByName("izberiDatum")[0].setAttribute('min', today);
+    console.log(today)
+    document.getElementById("izberiDatum").setAttribute("min", today);
     
     vm.podatki = {
       predmet: "",
@@ -53,6 +54,17 @@
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
+    
+  estudentPodatki.profesor($window.localStorage['upIme'].split("@")[0]).then(
+    function success(res) {
+      vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+      vm.profesor = { pro: res.data.response };
+      console.log(vm.profesor.pro)
+    }, 
+    function error(res) {
+      vm.sporocilo = "There was an error!";
+      console.log(res.e);
+    });
 
     vm.izbrisi = function(sifra) {
        console.log(sifra)
@@ -84,6 +96,7 @@
       vm.napakaNaObrazcu = "";
       console.log(predmet)
       console.log(vm.podatki.datum)
+      console.log(vm.dataPred.subjects[0])
       if(vm.podatki.datum == ""){
         vm.uspesno = ""
          vm.napakaNaObrazcu ="Izberite datum in čas izvajanja izpita!";
@@ -108,6 +121,12 @@
          console.log(predmet)
          vm.napakaNaObrazcu = "Izberite predmet iz seznama!";
       }
+      else if(vm.podatki.rok == undefined)
+      { 
+         vm.uspesno = ""
+         console.log(vm.podatki.rok)
+         vm.napakaNaObrazcu = "Izberite kateri rok izpita je!";
+      }
       else if( options.length == 0)
       { 
          vm.uspesno = ""
@@ -118,7 +137,9 @@
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
                               datum:date,
-                              lokacija:options.toString()
+                              lokacija:options.toString(),
+                              ura: vm.podatki.ura,
+                              profesor_ime:vm.profesor.pro.sifra_profesorja + ' '+ vm.profesor.pro.ime +' ' +vm.profesor.pro.priimek
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")

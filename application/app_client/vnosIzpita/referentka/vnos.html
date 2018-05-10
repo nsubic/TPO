@@ -4,23 +4,37 @@
          <h2  style="margin:30px;margin-top:0px" align="center">Vnos novega izpita</h2>
     <form ng-submit="">
       <div class="form-group">
+        <label for="filter">Izberi študijsko leto:</label>
+        	<select id="filter" name="show-filter" ng-model="letoFilter"  class="form-control" style="width:100%"
+    ng-options="leto as leto.studijsko_leto  for leto in vm.leto.leto "></select>
+        
         <label for="sel1">Izberi profesorja:</label>
         	<select id="sel1" name="show-filter" ng-model="profesorFilter"  class="form-control" style="width:100%"
-    ng-options="profesor as profesor.sifra_profesorja + ', ' + profesor.ime + ' ' +  profesor.priimek for profesor in vm.dataProf.prof | filterzaOR: predmetFilter.sifra_profesorjaFK1:predmetFilter.sifra_profesorjaFK2:predmetFilter.sifra_profesorjaFK3">           <option selected="">izberi</option></select>
+    ng-options="profesor as profesor.sifra_profesorjaFK1 + ' ' + profesor.ime + ' ' +  profesor.priimek + ' ' +  profesor.sifra_profesorjaFK2 +  ' ' + profesor.ime_profesorja2 + ' ' + profesor.priimek_profesorja2 + ' ' + profesor.sifra_profesorjaFK3 + ' ' + profesor.ime_profesorja3 + ' ' + profesor.priimek_profesorja3
+    for profesor in vm.dataProf.prof | filter: {studijsko_letoFK: letoFilter.studijsko_leto} 
+    | filterzaOR: predmetFilter.sifra_profesorjaFK1:predmetFilter.sifra_profesorjaFK2:predmetFilter.sifra_profesorjaFK3:predmetFilter.sifra_predmeta  ">
+       </select>        
         <label for="sel2">Izberi predmet:</label>
         <select id="sel2" name="show-filter" ng-model="predmetFilter"  class="form-control" style="width:100%"
-    ng-options="p as p.sifra_predmeta + ', ' + p.ime_predmeta for p in vm.dataSub.subjects | filterzaORpro: profesorFilter.sifra_profesorja:profesorFilter.sifra_profesorja:profesorFilter.sifra_profesorja"></select>
+    ng-options="p as p.sifra_predmeta + ', ' + p.ime_predmeta for p in vm.dataSub.subjects | filterzaORpro: profesorFilter.sifra_predmeta"></select>
         <label for="sel3">Izberi rok:</label>
-        <select id="sel3" class="form-control" ng-model="vm.podatki.rok">
-          <option selected="" disabled="" hidden=""></option>
-          <option value="{{'1'}}">1.</option>
-          <option value="{{'2'}}">2.</option>
-          <option value="{{'3'}}">3.</option>
-        </select>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input type="number" min="1" max="10" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" ng-model="vm.podatki.rok">
+          </div>
         <div class="form-group">
           <label for="izberiDatum">Izberi datum:</label>
-            <input id="izberiDatum" name="izberiDatum"class="form-control" type="datetime-local" placeholder="geslo" ng-model="vm.podatki.datum">
+            <input id="izberiDatum" name="izberiDatum"class="form-control" type="date" placeholder="geslo" ng-model="vm.podatki.datum">
           </label>
+        </div>
+        <div class="form-group" >
+          <label for="izberiCas">Čas izvajanja izpita:</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            </div>
+            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" ng-model="vm.podatki.ura">
+          </div>
         </div>
         <label for="sel4">Izberi lokacijo:</label>
          <div class="row" style="z-index:2000">
@@ -59,7 +73,7 @@
           </div>
       </div>
       <div role="alert" ng-show="vm.napakaNaObrazcu" class="alert alert-danger">{{ vm.napakaNaObrazcu }}</div>
-      <button id="listAdd" type="submit" class="btn btn-default" ng-click="vm.dodajIzpit(profesorFilter.sifra_profesorja,predmetFilter.sifra_predmeta)">Dodaj izpit</button>
+      <button id="listAdd" type="submit" class="btn btn-default" ng-click="vm.dodajIzpit(profesorFilter,predmetFilter.sifra_predmeta)">Dodaj izpit</button>
     </form>
   </div>
   
@@ -72,8 +86,9 @@
 		  <th>Šifra predmeta</th>
 		  <th>Ime predmeta</th>
 		  <th>Datum</th>
+		  <th>Ura</th>
 		  <th>Lokacija</th>
-		  <th>Rok</th>
+		  <th>Profesor</th>
 		  <th></th>
 		</tr>
 	  </thead>
@@ -82,8 +97,10 @@
   			<td style="vertical-align: middle;">{{s.Predmet_sifra_predmeta}}</td>
   			<td style="vertical-align: middle;">{{s.ime_predmeta}}</td>
   			<td style="vertical-align: middle;"> {{s.datum | filterDATUMinURA}}</td>
+  			<td style="vertical-align: middle;">{{s.ura}} </td>
   			<td style="vertical-align: middle;">{{s.lokacija}} </td>
-  			<td style="vertical-align: middle;">{{s.rok}} </td>
+  			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
+  			
   			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Izbriši izpit</button></td>
 		  </tr>
 	  </tbody>
