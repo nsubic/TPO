@@ -5,13 +5,12 @@
   var filterzaORpro = function() {
 
   return function(items, firstArgument,secondArgument,thirdArgument){
-console.log(firstArgument,secondArgument,thirdArgument)
-console.log(items)
+
     var filtered = [];
     angular.forEach(items, function(value, key) {
 
       if(value.sifra_profesorjaFK1 == firstArgument && (value.sifra_profesorjaFK2 == secondArgument || secondArgument==undefined) && (value.sifra_profesorjaFK3 == thirdArgument || thirdArgument==undefined)){//logic for filtering
-        console.log(value)
+
         this.push(value);
       }
     }, filtered);
