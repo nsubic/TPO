@@ -19,6 +19,15 @@
         function success(res) {
           var counter = 0;
           var vpisna = res.data.response[0].vpisna_st;
+               
+          // Ta funkcija je za odjavo v View-u 
+          vm.odjava = function(sifra) {
+            estudentPodatki
+              .odjavaIzpit({
+                sifra: sifra,
+                vpisna_st: vpisna,
+              });
+          }
           console.log(res.data.response[0].vpisna_st)
             estudentPodatki.dobiVsePredmete(vpisna).then(
               function success(res) {
@@ -69,6 +78,8 @@
       return false
     };
       
+      
+
 
 
   }

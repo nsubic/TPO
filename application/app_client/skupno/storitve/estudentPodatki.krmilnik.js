@@ -103,6 +103,9 @@
       var vrsteVpisa = function() {
         return $http.get('/api/vrsteVpisa');
       }
+      var odjavaIzpit = function(data) {
+        return $http.put('/api/izpit/odjava', JSON.stringify(data));
+      }
       return {
         obcina: obcina,
         drzava:drzava,
@@ -137,6 +140,7 @@
         nosilciInPredmeti:nosilciInPredmeti,
         profesor:profesor,
         vrsteVpisa:vrsteVpisa,
+        odjavaIzpit:odjavaIzpit,
       };
     };
 
