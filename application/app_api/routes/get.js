@@ -280,7 +280,7 @@ router.get('/nosilciInPredmeti/', function(req, res, next) {
 							AND Predmetnik.sifra_predmetaFK = Nosilec_predmeta.sifra_predmetaFK\
 							INNER JOIN Predmet ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta\
 							INNER JOIN Profesor ON Nosilec_predmeta.sifra_profesorjaFK1 = Profesor.sifra_profesorja\
-							GROUP BY Predmetnik.sifra_predmetaFK, Predmetnik.studijsko_letoFK',function (error, results, fields) {
+							GROUP BY Predmetnik.studijsko_letoFK, Profesor.sifra_profesorja',function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));

@@ -123,16 +123,20 @@
         vm.uspesno = ""
          vm.napakaNaObrazcu ="Izberite datum izvajanja izpita!";
       }
-      var date1 = vm.podatki.datum.toISOString().split('T')
-      var date = date1[0] + " " + date1[1].split('.')[0]
-      var datum =date.split(' ')[0].split('-')[1]+'-'+date.split(' ')[0].split('-')[2]
-      var datum2 =  new Date(date1[0]) 
-      if(datum == '01-01' || datum == '01-02' || datum == '02-08' || datum == '04-27' || datum == '05-01' || datum == '05-02' || datum == '06-25'|| datum == '11-01'|| datum == '12-26' || datum == '08-15'|| datum == '10-31'|| datum == '12-25')
+
+
+      var date = vm.podatki.datum.getMonth()+1
+      var datum =date+'-'+vm.podatki.datum.getDate()
+      console.log(datum)
+
+      console.log(vm.podatki.datum.getDay())
+      
+      if(datum == '1-1' || datum == '1-2' || datum == '2-8' || datum == '4-27' || datum == '5-01' || datum == '5-2' || datum == '6-25'|| datum == '11-1'|| datum == '12-26' || datum == '8-15'|| datum == '10-31'|| datum == '12-25')
       { 
         vm.uspesno = ""
          vm.napakaNaObrazcu = datum.split('-')[1]+'.'+datum.split('-')[0] + " je praznik!";
       }
-      else if(datum2.getDay() == 0 || datum2.getDay() == 6)
+      else if(vm.podatki.datum.getDay() == 0 || vm.podatki.datum.getDay() == 6)
       { 
          vm.uspesno = ""
          vm.napakaNaObrazcu = datum.split('-')[1]+'.'+datum.split('-')[0] + " je vikend!";

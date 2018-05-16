@@ -16,7 +16,7 @@
        </select>        
         <label for="sel2">Izberi predmet:</label>
         <select id="sel2" name="show-filter" ng-model="predmetFilter"  class="form-control" style="width:100%"
-    ng-options="p as p.sifra_predmeta + ', ' + p.ime_predmeta for p in vm.dataSub.subjects | filterzaORpro: profesorFilter.sifra_predmeta"></select>
+    ng-options="p as p.sifra_predmeta + ', ' + p.ime_predmeta for p in vm.dataSub.subjects | filterzaORpro: profesorFilter.sifra_profesorjaFK1:profesorFilter.sifra_profesorjaFK2:profesorFilter.sifra_profesorjaFK3"></select>
         <label for="sel3">Izberi rok:</label>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
