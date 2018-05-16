@@ -15,7 +15,7 @@
         return $http.get('/api/drzava/');
       };
       var posta = function() {
-        return $http.post('/api/posta/');
+        return $http.get('/api/posta/');
       };
       var predmet = function() {
         return $http.get('/api/predmet/');
@@ -100,6 +100,9 @@
        var nosilciInPredmeti = function() {
         return $http.get('/api/nosilciInPredmeti/');
       };
+      var vrsteVpisa = function() {
+        return $http.get('/api/vrsteVpisa');
+      }
       return {
         obcina: obcina,
         drzava:drzava,
@@ -132,7 +135,8 @@
         izbrisiIzpit:izbrisiIzpit,
         dobiVsePredmete:dobiVsePredmete,
         nosilciInPredmeti:nosilciInPredmeti,
-        profesor:profesor
+        profesor:profesor,
+        vrsteVpisa:vrsteVpisa,
       };
     };
 

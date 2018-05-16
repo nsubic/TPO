@@ -3,31 +3,33 @@
     <form ng-submit="vm.izvediVpis()">
       <div class="form-group">
         <label for="ime">Ime:</label>
-        <input type="text" class="form-control" id="ime" placeholder="Janez">
+        <input type="text" class="form-control" id="ime" ng-model="vpis.ime" placeholder="Janez">
       </div>
       <div class="form-group">
         <label for="priimek">Priimek:</label>
-        <input type="text" class="form-control" id="priimek" placeholder="Novak">
+        <input type="text" class="form-control" id="priimek" ng-model="vpis.priimek" placeholder="Novak">
       </div>
       <div class="form-group">
         <label for="datum_rojstva">Datum rojstva:</label>
-        <input id="datum_rojstva" class="form-control" type="date">
+        <input id="datum_rojstva" class="form-control" type="date" ng-model="vpis.datum_rojstva">
       </div>
       <div class="form-group">
         <label for="kraj_rojstva">Kraj rojstva:</label>
-        <input type="text" class="form-control" id="kraj_rojstva" placeholder="Ljubljana">
+        <input type="text" class="form-control" id="kraj_rojstva" placeholder="Ljubljana" ng-model="vpis.kraj_rojstva">
       </div>
       <div class="form-group">
-        <label for="drzava-rojstva">Drzava rojstva:</label>
-        <input type="text" class="form-control" id="drzava-rojstva" placeholder="Slovenija">
+        <label for="drzava_rojstva">Drzava rojstva:</label>
+        <select placeholder="Slovenija" class="form-control" id="drzava_rojstva" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.drzava_rojstva">
+          <option value="" selected="selected">Država rojstva</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="emso">EMŠO:</label>
-        <input type="text" class="form-control" id="emso" placeholder="0000000000">
+        <input type="text" class="form-control" id="emso" placeholder="0000000000" ng-model="vpis.emso">
       </div>
       <div class="form-group">
         <label for="davcna">Davčna številka:</label>
-        <input type="text" class="form-control" id="davcna" placeholder="11942432">
+        <input type="text" class="form-control" id="davcna" placeholder="11942432" ng-model="vpis.davcna">
       </div>
       <div class="form-group">
         <label for="spol">Spol:</label>
@@ -52,89 +54,61 @@
       
       <div class="form-group">
         <label for="stalni_postna_stevilka">Poštna številka:</label>
-        <input type="text" class="form-control" id="stalni_postna_stevilka" placeholder="1000">
+        <input type="text" class="form-control" id="stalni_postna_stevilka" placeholder="4212" ng-model="vpis.stalni_postna_stevilka">
       </div>
       <div class="form-group">
         <label for="stalni_obcina_koda">Kraj pošte:</label>
-        <input type="text" class="form-control" id="stalni_obcina_koda" placeholder="Ljubljana">
+        <input type="text" class="form-control" id="stalni_obcina_koda" placeholder="Ljubljana" ng-model="vpis.stalni_obcina_koda">
       </div>
       <div class="form-group">
         <label for="stalni_drzava_koda">Država pošte:</label>
-        <input type="text" class="form-control" id="stalni_drzava_koda" placeholder="Slovenija">
+        <select placeholder="Slovenija" class="form-control" id="stalni_drzava_koda" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.stalni_drzava_koda">
+          <option value="">Izberi državo</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="zacasni_naslov_ulica">Ulica začasnega bivanja:</label>
         <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_naslov_ulica" placeholder="Ulica Janezov">
+        <input type="text" class="form-control" id="zacasni_naslov_ulica" placeholder="Ulica Janezov" ng-model="zacasni_naslov_ulica">
         
       </div>
       <div class="form-group">
         <label for="zacasni_naslov_hisnast">Hišna številka začasnega bivanja:</label>
         <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_naslov_hisnast" placeholder="2">
+        <input type="text" class="form-control" id="zacasni_naslov_hisnast" placeholder="2" ng-model="zacasni_naslov_hisnast">
       </div>
       <div class="form-group">
-        <label for="zacasna-postna-stevilka">Začasna poštna številka:</label>
+        <label for="zacasni_postna_stevilka">Začasna poštna številka:</label>
         <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasna-postna-stevilka" placeholder="4212">
+        <input type="text" class="form-control" id="zacasni_postna_stevilka" placeholder="4212" ng-model="vpis.zacasni_postna_stevilka">
       </div>
       <div class="form-group">
-        <label for="zacasni-kraj-posta">Začasni kraj pošte:</label>
+        <label for="zacasni_kraj_posta">Začasni kraj pošte:</label>
         <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni-kraj-posta" placeholder="Visoko">
+        <input type="text" class="form-control" id="zacasni_kraj_posta" placeholder="Visoko" ng-model="vpis.zacasni_kraj_posta">
       </div>
       <div class="form-group">
-        <label for="zacasna-drzava-posta">Začasna država pošte:</label>
+        <label for="zacasni_drzava_posta">Začasna država pošte:</label>
         <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasna-drzava-posta" placeholder="Slovenija">
-      </div>
-      <div class="form-group">
-        <label for="program">Študijski program:</label>
-        <select id="program" class="form-control">
-          <option value="selected">Izberi študijski program</option>
-          <option value="1">RAČUNALN. IN INFORM. -VIS</option>
-          <option value="2">RAČUNALN. IN INFORM. -VŠ</option>
-          <option value="3">PEDAGOŠKO RAČ . IN INF. MAG-2. st.</option>
-          <option value="4">RAČUNALN. IN INFORM. -MAG</option>
-          <option value="5">RAČUNALN. IN INFORM. -DR</option>
-          <option value="6">RAČUNAL. IN INFORMATIKA VS</option>
-          <option value="7">Predmetnik za tuje študente na izmenjavi</option>
-          <option value="8">Računalništvo in matematika MAG 2. st.</option>
-          <option value="9">RAČUNALN. IN INFORM. MAG 2 .ST</option>
-          <option value="10">RAČUNAL.IN INFORMATIKA UN</option>
-          <option value="11">INFORMAC. SISTEMI IN ODLOČANJE</option>
-          <option value="12">INF. SISTEMI IN ODLOČANJE - DR</option>
-          <option value="13">Multimedija UN 1. st.</option>
-          <option value="14">RAČUNAL. IN MATEMATIKA UN</option>
-          <option value="15">RAČUNALN. IN INFORM. UN-1.ST</option>
-          <option value="16">RAČUNALN. IN INFORM. VS-1.ST</option>
-          <option value="17">RAČUNAL. IN MATEMA. UN-1. ST.</option>
-          <option value="18">Kognitivna znanost MAG 2. st.</option>
-          <option value="19">RAČUNALN. IN INFORM. DR-3 ST.</option>
-          <option value="20">Humanistika in družb.-DR. 3</option>
-          <option value="21">Upravna informatika UN 1. st.</option>
+        <select class="form-control" id="zacasni_drzava_posta" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.zacasni_drzava_posta">
+          <option value="">Izberi državo</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="vrsta-vpisa">Vrsta vpisa:</label>
-        <select id="vrsta-vpisa" class="form-control">
-            <option value="selected">Izberi vrsto vpisa</option>
-          <option value="1">Prvi vpis v letnik</option>
-          <option value="2">Ponavljanje letnika</option>
+        <label for="program">Študijski program:</label>
+        <select id="program" class="form-control" ng-options="item as item.naziv for item in programi track by item.sifra_stProgram" ng-model="vpis.program">
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="vrsta_vpisa">Vrsta vpisa:</label>
+        <select id="vrsta_vpisa" class="form-control" ng-options="item as item.opis for item in vrste_vpisov track by item.vrsta_vpisa" ng-model="vpis.vrsta_vpisa">
+          <option value="selected">Izberi vrsto vpisa</option>
         </select>
       </div>
       <div class="form-group">
         <label for="letnik">Letnik:</label>
-        <select id="letnik" class="form-control">
+        <select id="letnik" class="form-control" ng-options="item as item.letnik for item in letniki track by item.letnik" ng-model="vpis.letnik">
           <option value="selected">Izberi letnik vpisa</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>

@@ -288,6 +288,16 @@ router.get('/nosilciInPredmeti/', function(req, res, next) {
 
 });
 
+router.get('/vrsteVpisa', function(req, res, next) {
+	global.connection.query('SELECT * FROM Vrsta_vpisa', function(error, results, fields) {
+		if(error) {
+			throw error;		
+		}
+		console.log(results);
+		res.json({"status": 200, "error": null, "response": results});
+	});
+})
+
 
 module.exports = router;
 
