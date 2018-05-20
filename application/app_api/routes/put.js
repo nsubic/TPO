@@ -28,7 +28,26 @@ router.put('/izpit/odjava', function(req, res, next) {
             .status(204)
             .json({"status": 200, "error": null, "response": results});
     })
+});
+
+router.put('/PrijavljeniNaIzpit/dodajOceno', function(req, res, next) {
+    
+    if(!req.body.sifra) {
+        throw new Error("manjka šifra izpita (sifra)");
+    }
+        
+    if(!req.body.vpisna_st) {
+        throw new Error("manjka vpisna številka (vpisna_st)");
+    }
+
+    global.connection.query('UPDATE Prijavljeni_na_izpit SET ocena = ? AND tocke_na_izpitu = ?  AND odjava = ? WHERE Izpit_šifra = ? AND Student_vpisna_st = ?', [req.body.ocena, req.body.tocke_na_izpitu, req.body.odjava, req.body.sifra, req.body.vpisna_st], function(error, results, fields) {
+        if(error) throw error;
+        res
+            .status(204)
+            .json({"status": 200, "error": null, "response": results});
+    })
 })
+
 
 
 
