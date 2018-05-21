@@ -49,7 +49,15 @@
      console.log(vm.dataPredmet)
         // Ta funkcija je za odjavo v View-u 
     vm.odjava = function(sifra) {
-
+      estudentPodatki
+        .odjavaIzpit({
+          vpisna_st: vm.vpisnaSt,
+          sifra: sifra,
+        })
+        .then(function() {
+          alert("Uspešno prijava na izpit!")
+            location.reload();
+        })
     }
 
     estudentPodatki.predmet().then(
@@ -65,7 +73,7 @@
   
     vm.preveriPrijava = function(izpit) {
       for(var i=0; i<vm.podatki.izpiti.length; i++){  
-        if(vm.podatki.izpiti[i].Izpit_šifra == izpit.sifra && vm.podatki.izpiti[i].odjava==0){
+        if(vm.podatki.izpiti[i].Izpit_šifra == izpit.sifra && vm.podatki.izpiti[i].odjava==1){
           return false;
         }
       }
