@@ -1,23 +1,25 @@
 <studentglava></studentglava>
 <div class="my-3 p-3 bg-white rounded box-shadow" style="height:100%;width:100%;overflow:auto;">
   <h2 style="margin:30px" align="center">Seznam vseh izpitov</h2>
+  <div role="alert" ng-show="vm.napakaNaObrazcu" class="alert alert-danger">{{ vm.napakaNaObrazcu }}</div>
   <table id="ena" class="table table-striped table-hover table-bordered" >
 	  <thead class="thead-dark">
 		<tr>
 		  <th>Šifra predmeta</th>
+		  <th>Profesor</th>
 		  <th>Datum</th>
 		  <th>Lokacija</th>
-		  <th>Rok</th>
 		  <th></th>
 		</tr>
 	  </thead>
 	  <tbody>
-		  <tr ng-repeat="s in vm.dataPredmet">
-  			<td style="vertical-align: middle;">{{s.predmet.imena[0].Predmet_sifra_predmeta}}</td>
-  			<td style="vertical-align: middle;">{{s.predmet.imena[0].datum}}</td>
-  			<td style="vertical-align: middle;">{{s.predmet.imena[0].lokacija}}</td>
-  			<td style="vertical-align: middle;">{{s.predmet.imena[0].rok}}</td>
-  			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Prijavi se</button><button ng-click="vm.izbrisi(s.sifra)" class="delete">Odjavi se</button></td>
+		  <tr ng-repeat="s in vm.dataPredmet | filterIzpitov">
+  			<td style="vertical-align: middle;">{{s.predmet.Predmet_sifra_predmeta | predmetiSifre:vm.predmeti.imena}}</td>
+  			<td style="vertical-align: middle;">{{s.predmet.profesor_ime}}</td>
+  			<td style="vertical-align: middle;">{{s.predmet.datum | filterDATUMinURA}}</td>
+  			<td style="vertical-align: middle;">{{s.predmet.lokacija}}</td>
+  			<td><button ng-click="vm.prijavi(s.predmet)" class="delete" ng-if="vm.preveriPrijava(s.predmet)" data-ng-disabled="vm.preveriOpravljen(s.predmet)">Prijavi se</button>
+  			<button ng-click="vm.izbrisi()" class="delete" ng-if="vm.preveriOdjava(s.predmet)">Odjavi se</button></td>
 		  </tr>
 	  </tbody>
 	</table>

@@ -94,7 +94,6 @@
         return $http.delete('/api/izpit/'+sifra);
       };
       var dobiVsePredmete = function(vpisna) {
-        console.log(vpisna)
         return $http.get('/api/predmetiStudenta/'+vpisna);
       };
        var nosilciInPredmeti = function() {
@@ -111,6 +110,12 @@
       }
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
+      };
+      var podatkiIzpitovZaStudenta = function(sifraStudenta) {
+        return $http.get('/api/podatkiIzpitovZaStudenta/' + sifraStudenta);
+      };
+      var prijavaNaIzpit = function(podatki) {
+        return $http.post('/api/prijavaNaIzpit/', podatki);
       };
       return {
         obcina: obcina,
@@ -148,7 +153,9 @@
         vrsteVpisa:vrsteVpisa,
         odjavaIzpit:odjavaIzpit,
         prijavljeniNaIzpit:prijavljeniNaIzpit,
-        updateOceno:updateOceno
+        updateOceno:updateOceno,
+        podatkiIzpitovZaStudenta:podatkiIzpitovZaStudenta,
+        prijavaNaIzpit:prijavaNaIzpit
       };
     };
 

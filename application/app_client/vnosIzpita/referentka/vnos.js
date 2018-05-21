@@ -173,7 +173,7 @@
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
-                              datum:date,
+                              datum:vm.podatki.datum,
                               lokacija:options.toString(),
                               ura: vm.podatki.ura,
                               profesor_ime: pro_ime
