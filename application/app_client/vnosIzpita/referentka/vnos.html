@@ -90,6 +90,7 @@
 		  <th>Lokacija</th>
 		  <th>Profesor</th>
 		  <th></th>
+		  <th></th>
 		</tr>
 	  </thead>
 	  <tbody>
@@ -102,9 +103,68 @@
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
   			
   			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Izbriši izpit</button></td>
+  			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene</button></td>
 		  </tr>
 	  </tbody>
 	</table>
   </div>
 </div>
 
+
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Seznam študentov</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
+        <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <h3>{{ vm.ime }}</h3>
+         <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Vpisna št.</th>
+              <th scope="col">Št. točk</th>
+              <th scope="col">Ocena</th>
+              <th scope="col">Odjava</th>
+              <th scope="col">Posodobi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <form name="vnosOcen">
+            <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu" >
+                <th scope="row">{{$index +1}}</th>
+                <ng-form name="vnosOcenPosamezno">
+                <td>{{ p.Student_vpisna_st  }}</td>
+                 <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
+                <td><input type="text" id="ocenaNova" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
+                <td><input type="text" id="tockeNove" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
+                <td>{{ p.odjava  }}</td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
+              </ng-form>
+            </tr>
+            </form>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$('#exampleModalLong').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+
+
+</script>

@@ -101,7 +101,6 @@
 </div>
 
 
-
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -122,19 +121,23 @@
               <th scope="col">Št. točk</th>
               <th scope="col">Ocena</th>
               <th scope="col">Odjava</th>
+              <th scope="col">Posodobi</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="p in vm.prijavljeni.stu">
-              <form  onsubmit="dodajanjeOcen(p.Student_vpisna_st)" method="post"> <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
+            <form name="vnosOcen">
+            <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu" >
                 <th scope="row">{{$index +1}}</th>
-                <td>{{ p.Student_vpisna_st }}</td>
-                <td><input type="text" name="ocenaNova" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td><input type="text" name="tockeNove" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
-                <td><input type="text"  name="odjavaNova" style="width:110%;" value="{{ p.odjava }}"><br></td>
-                <input type="submit" value="Submit">
-              </form>
+                <ng-form name="vnosOcenPosamezno">
+                <td>{{ p.Student_vpisna_st  }}</td>
+                 <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
+                <td><input type="text" id="ocenaNova" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
+                <td><input type="text" id="tockeNove" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
+                <td>{{ p.odjava  }}</td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
+              </ng-form>
             </tr>
+            </form>
           </tbody>
         </table>
       </div>
@@ -145,11 +148,14 @@
   </div>
 </div>
 
+
 <script>
 $('#exampleModalLong').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
-    
+
+
+
 </script>
 
 

@@ -65,21 +65,6 @@
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
-    vm.prijavljeniStudenti = function(sifraIzpita) {
-      $window.localStorage.setItem("sifraI", sifraIzpita);
-      console.log("SIFRAAA: ", $window.localStorage.getItem("sifraI"));
-      console.log(sifraIzpita);
-      estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
-        function success(res) {
-          vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
-          vm.prijavljeni = { stu: res.data.response };
-          console.log(vm.prijavljeni.stu);
-        }, 
-        function error(res) {
-          vm.sporocilo = "There was an error!";
-          console.log(res.e);
-      });
-    };
     
     vm.dodajanjeOcen = function(p) {
       estudentPodatki.updateOceno({
