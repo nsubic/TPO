@@ -20,7 +20,7 @@
   			<td style="vertical-align: middle;">{{s.predmet.lokacija}}</td>
   			<td>
   				<button ng-click="vm.prijavi(s.predmet)" class="delete" ng-if="vm.preveriPrijava(s.predmet)" data-ng-disabled="vm.preveriOpravljen(s.predmet)">Prijavi se</button>
-  			<button ng-click="vm.odjava(s.predmet.sifra)" class="delete" ng-if="vm.preveriOdjava(s.predmet)">Odjavi se</button></td>
+  				<button ng-click="vm.odjava(s.predmet.sifra)" class="delete" ng-if="vm.preveriOdjava(s.predmet)">Odjavi se</button></td>
 		  </tr>
 	  </tbody>
 	</table>
