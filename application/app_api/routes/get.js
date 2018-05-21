@@ -152,7 +152,7 @@ router.get('/predmetiStudenta/:vpisnaSt', function(req, res, next) {
 
 router.get('/student2/:upime', function(req, res, next) {
      if (req.params && req.params.upime) { 
-     global.connection.query('SELECT *,Nacin_studija.opis AS eins FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE Student.Oseba_upIme = ?', [req.params.upime], function (error, results, fields) {
+     global.connection.query('SELECT *,Nacin_studija.opis AS eins FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa INNER JOIN Studijski_program ON Vpis.sifra_stProgramFK = Studijski_program.sifra_stProgram WHERE Student.Oseba_upIme = ?', [req.params.upime], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
@@ -297,7 +297,21 @@ router.get('/vrsteVpisa', function(req, res, next) {
 		res.json({"status": 200, "error": null, "response": results});
 	});
 })
+router.get('/PrijavljeniNaIzpit/:sifraIzpita', function(req, res, next) {
+     global.connection.query('SELECT * FROM Prijavljeni_na_izpit WHERE Izpit_šifra = ?', [req.params.sifraIzpita], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	}); 
+});
 
+router.get('/podatkiIzpitovZaStudenta/:sifraStudenta', function(req, res, next) {
+     global.connection.query('SELECT * FROM Prijavljeni_na_izpit INNER JOIN Izpit ON Izpit.sifra = Prijavljeni_na_izpit.Izpit_šifra WHERE Student_vpisna_st = ?', [req.params.sifraStudenta], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	}); 
+});
 
 module.exports = router;
 

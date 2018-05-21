@@ -41,7 +41,13 @@ router.post('/dodajIzpit', function(req, res, next) {
     	});
 });
 
-
+router.post('/prijavaNaIzpit', function(req, res, next) {
+    console.log(req.body.Izpit_sifra,req.body.Student_vpisna_st)
+     global.connection.query('INSERT INTO Prijavljeni_na_izpit( Izpit_šifra, Student_vpisna_st,odjava ) VALUES (?,?,?)',[req.body.Izpit_sifra,req.body.Student_vpisna_st,0], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    	});
+});
 
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {
   odgovor.status(status);

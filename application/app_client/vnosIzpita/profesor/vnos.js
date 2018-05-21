@@ -65,7 +65,37 @@
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
-
+    
+    vm.dodajanjeOcen = function(p) {
+      estudentPodatki.updateOceno({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        ocena: parseInt(p.ocena),
+        tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
+      }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                  alert("Uspešno posodobljena ocena/st.tock!");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+      });
+    };
+    vm.prijavljeniStudenti = function(sifraIzpita) {
+      console.log(sifraIzpita);
+      estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
+        function success(res) {
+          vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
+          vm.prijavljeni = { stu: res.data.response };
+          console.log(vm.prijavljeni.stu);
+        }, 
+        function error(res) {
+          vm.sporocilo = "There was an error!";
+          console.log(res.e);
+      });
+    };
+    
     vm.izbrisi = function(sifra) {
        console.log(sifra)
         estudentPodatki.izbrisiIzpit(sifra).then(
@@ -138,7 +168,7 @@
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
-                              datum:date,
+                              datum:vm.podatki.datum,
                               lokacija:options.toString(),
                               ura: vm.podatki.ura,
                               profesor_ime:vm.profesor.pro.sifra_profesorja + ' '+ vm.profesor.pro.ime +' ' +vm.profesor.pro.priimek

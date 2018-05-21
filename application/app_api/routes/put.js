@@ -28,7 +28,15 @@ router.put('/izpit/odjava', function(req, res, next) {
             .status(204)
             .json({"status": 200, "error": null, "response": results});
     })
+});
+
+router.put('/dodajOceno', function(req, res, next) {
+    global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `ocena`=?, `tocke_na_izpitu`=?  WHERE `Izpit_šifra`=? and `Student_vpisna_st`=? ', [req.body.ocena, req.body.tocke_na_izpitu, req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    })
 })
+
 
 
 
