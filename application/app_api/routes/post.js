@@ -41,6 +41,8 @@ router.post('/dodajIzpit', function(req, res, next) {
     	});
 });
 
+
+
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {
   odgovor.status(status);
   odgovor.json(vsebina);
