@@ -75,6 +75,7 @@
     vm.preveriOpravljen = function(izpit) {
       for(var i=0; i<vm.podatki.izpiti.length; i++){  
         if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == izpit.Predmet_sifra_predmeta && vm.podatki.izpiti[i].ocena > 5){
+          $(':disabled').attr('title', 'Ta predmet ste ze pisali pozitivno.');
           return true;
         }
       }
@@ -169,8 +170,6 @@
       // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
       return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
     }
-      
-
 
 
   }
