@@ -106,7 +106,8 @@
         return $http.put('/api/izpit/odjava', JSON.stringify(data));
       }
       var updateOceno = function(data) {
-        return $http.put('/api/PrijavljeniNaIzpit/dodajOceno', JSON.stringify(data));
+        console.log("data", data);
+        return $http.put('/api/dodajOceno/',data);
       }
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
