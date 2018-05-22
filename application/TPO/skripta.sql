@@ -483,8 +483,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Izpit` (
   `sifra` INT NOT NULL AUTO_INCREMENT,
   `rok` INT NOT NULL,
   `Predmet_sifra_predmeta` INT NOT NULL,
-  `datum` DATETIME NOT NULL,
+  `datum` DATE NOT NULL,
   `lokacija` VARCHAR(45) NULL,
+  `ura` VARCHAR(45) NULL,
+  `profesor_ime` VARCHAR(100) NULL,
   PRIMARY KEY (`sifra`),
   UNIQUE INDEX `šifra_UNIQUE` (`sifra` ASC),
   CONSTRAINT `fk_Izpit_Predmet1`

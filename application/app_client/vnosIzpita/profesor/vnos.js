@@ -59,7 +59,7 @@
     function success(res) {
       vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
       vm.profesor = { pro: res.data.response };
-      console.log(vm.profesor.pro)
+      console.log(vm.profesor.pro[0].ime)
     }, 
     function error(res) {
       vm.sporocilo = "There was an error!";
@@ -165,13 +165,14 @@
          vm.napakaNaObrazcu = "Izberite lokacijo izvajanja izpita!";
       }
       else if(predmet != undefined && date != undefined && options.length != 0){
+        console.log("profesor", vm.profesor.pro)
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
                               datum:vm.podatki.datum,
                               lokacija:options.toString(),
                               ura: vm.podatki.ura,
-                              profesor_ime:vm.profesor.pro.sifra_profesorja + ' '+ vm.profesor.pro.ime +' ' +vm.profesor.pro.priimek
+                              profesor_ime:vm.profesor.pro[0].sifra_profesorja + ' '+ vm.profesor.pro[0].ime +' ' +vm.profesor.pro[0].priimek
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")
