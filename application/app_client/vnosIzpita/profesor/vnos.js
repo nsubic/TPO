@@ -59,19 +59,30 @@
     function success(res) {
       vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
       vm.profesor = { pro: res.data.response };
-      console.log(vm.profesor.pro[0].ime)
+      console.log(vm.profesor.pro)
     }, 
     function error(res) {
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
-    
+    vm.jeOdjavljen = function(odjavljen) {
+      if (odjavljen == 1)
+        return true;
+      else
+      return false;
+    };
     vm.dodajanjeOcen = function(p) {
-      estudentPodatki.updateOceno({
+      if (p.odjava == "1")
+      {
+        
+        estudentPodatki.updateOceno({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
         ocena: parseInt(p.ocena),
-        tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
+        tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
+        odjava: parseInt(p.odjava),
+        cas_odjave: p.cas_odjave,
+        odjavitelj: p.odjavitelj
       }).then(
                 function success(odgovor) {
                   console.log("Uspelo");
@@ -81,6 +92,26 @@
                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
                   console.log(odgovor.e);
       });
+      }
+      else
+      {
+        
+      estudentPodatki.updateOceno1({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        ocena: parseInt(p.ocena),
+        tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
+        odjava: parseInt(p.odjava)
+      }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                  alert("Uspešno posodobljena ocena/st.tock!");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+      });
+      }
     };
     vm.prijavljeniStudenti = function(sifraIzpita) {
       console.log(sifraIzpita);
@@ -88,14 +119,12 @@
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
-          console.log(vm.prijavljeni.stu);
         }, 
         function error(res) {
           vm.sporocilo = "There was an error!";
           console.log(res.e);
       });
     };
-    
     vm.izbrisi = function(sifra) {
        console.log(sifra)
         estudentPodatki.izbrisiIzpit(sifra).then(
@@ -107,7 +136,6 @@
           vm.izbris2 = "Napaka pri brisanju izpita."
         });
     };
-
     vm.prikaziNapako = function(napaka) {
       $scope.$apply(function() {
         vm.sporocilo = napaka.message;
@@ -165,14 +193,13 @@
          vm.napakaNaObrazcu = "Izberite lokacijo izvajanja izpita!";
       }
       else if(predmet != undefined && date != undefined && options.length != 0){
-        console.log("profesor", vm.profesor.pro)
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
-                              datum:vm.podatki.datum,
+                              datum:date,
                               lokacija:options.toString(),
                               ura: vm.podatki.ura,
-                              profesor_ime:vm.profesor.pro[0].sifra_profesorja + ' '+ vm.profesor.pro[0].ime +' ' +vm.profesor.pro[0].priimek
+                              profesor_ime:vm.profesor.pro.sifra_profesorja + ' '+ vm.profesor.pro.ime +' ' +vm.profesor.pro.priimek
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")

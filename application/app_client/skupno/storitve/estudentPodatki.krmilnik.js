@@ -109,6 +109,9 @@
         console.log("data", data);
         return $http.put('/api/dodajOceno/',data);
       }
+      var updateOceno1 = function(data) {
+        return $http.put('/api/dodajOceno1/',data);
+      }
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
       };
@@ -155,6 +158,7 @@
         odjavaIzpit:odjavaIzpit,
         prijavljeniNaIzpit:prijavljeniNaIzpit,
         updateOceno:updateOceno,
+        updateOceno1:updateOceno1,
         podatkiIzpitovZaStudenta:podatkiIzpitovZaStudenta,
         prijavaNaIzpit:prijavaNaIzpit
       };

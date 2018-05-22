@@ -121,9 +121,12 @@
               <th scope="col">Št. točk</th>
               <th scope="col">Ocena</th>
               <th scope="col">Odjava</th>
+              <th scope="col">Odjavitelj</th>
+              <th scope="col">Datum in ura odjave</th>
               <th scope="col">Posodobi</th>
             </tr>
           </thead>
+</div>
           <tbody>
             <form name="vnosOcen">
             <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu" >
@@ -131,10 +134,13 @@
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
-                <td><input type="text" id="ocenaNova" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
-                <td><input type="text" id="tockeNove" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td>{{ p.odjava  }}</td>
-                <td><input type="submit" class="btn btn-primary" ng-click="vm.dodajanjeOcen(p)" value="Posodobi"></td>
+                <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
+                <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
+                <td><input type="text" id="odjavaNova" ng-model="p.odjava" value="{{ p.odjava }}" style="width:110%;"><br></td>
+  
+                <td><input  type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
+                <td><input type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
               </ng-form>
             </tr>
             </form>
@@ -143,6 +149,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
       </div>
     </div>
   </div>
@@ -153,8 +161,6 @@
 $('#exampleModalLong').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
-
-
 
 </script>
 

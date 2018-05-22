@@ -29,9 +29,15 @@ router.put('/izpit/odjava', function(req, res, next) {
             .json({"status": 200, "error": null, "response": results});
     })
 });
-
+router.put('/dodajOceno1', function(req, res, next) {
+    global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `ocena`=?, `tocke_na_izpitu`=? WHERE  `Izpit_šifra`=? and `Student_vpisna_st`=?', [req.body.ocena, req.body.tocke_na_izpitu,  req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    })
+})
 router.put('/dodajOceno', function(req, res, next) {
-    global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `ocena`=?, `tocke_na_izpitu`=?  WHERE `Izpit_šifra`=? and `Student_vpisna_st`=? ', [req.body.ocena, req.body.tocke_na_izpitu, req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {
+    console.log(req.body.cas_odjave);
+    global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `ocena`=?, `tocke_na_izpitu`=?,  `odjava`=?, `cas_odjave`=?, `odjavitelj`=? WHERE  `Izpit_šifra`=? and `Student_vpisna_st`=?', [req.body.ocena, req.body.tocke_na_izpitu, req.body.odjava, req.body.cas_odjave, req.body.odjavitelj, req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     })
