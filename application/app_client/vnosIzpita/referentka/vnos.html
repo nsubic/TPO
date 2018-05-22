@@ -111,7 +111,6 @@
 </div>
 
 
-
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -124,6 +123,7 @@
       <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <h3>{{ vm.ime }}</h3>
+        <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
          <table class="table">
           <thead>
             <tr>
@@ -132,20 +132,28 @@
               <th scope="col">Št. točk</th>
               <th scope="col">Ocena</th>
               <th scope="col">Odjava</th>
+              <th scope="col">Odjavitelj</th>
+              <th scope="col">Datum in ura odjave</th>
               <th scope="col">Posodobi</th>
             </tr>
           </thead>
+</div>
           <tbody>
             <form name="vnosOcen">
-            <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu" >
+            <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu">
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
-                <td><input type="text" id="ocenaNova" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
-                <td><input type="text" id="tockeNove" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td>{{ p.odjava  }}</td>
-                <td><input type="submit" class="btn btn-primary" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
+                <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
+                <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
+                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjava }}</td>
+                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjavitelj }}</td>
+                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.cas_odjave }}</td>
+                <td><input ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavaNova" ng-model="p.odjava" value="{{ p.odjava }}" style="width:110%;"><br></td>
+                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
+                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st,  'zadnji')" type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
               </ng-form>
             </tr>
             </form>
@@ -154,6 +162,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
       </div>
     </div>
   </div>
@@ -164,7 +174,6 @@
 $('#exampleModalLong').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
-
 
 
 </script>

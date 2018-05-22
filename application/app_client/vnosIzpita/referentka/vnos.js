@@ -1,7 +1,7 @@
 (function() {
   /* global angular */
-  vnosIzpitaRef.$inject = ['$scope', 'estudentPodatki','$route'];
-  function vnosIzpitaRef($scope, estudentPodatki,$route) {
+  vnosIzpitaRef.$inject = ['$scope', 'estudentPodatki','$route', '$location'];
+  function vnosIzpitaRef($scope, estudentPodatki,$route, $location) {
     var vm = this;
     vm.sporocilo = "Loading professors.";
     
@@ -99,13 +99,94 @@
         vm.sporocilo = napaka.message;
       });
     };
-    
+     var odjave = [];
+    var i = 0;
+    var vpisne = [];
+    vm.jeOdjavljen = function(odjavljen, vpisna, cek) {
+        var flag = false;
+        var index = 0;
+          for (var k = 0; k < odjave.length; k++)
+          {
+            if (vpisna == vpisne[k])
+            {
+              index = k;
+              flag = true;
+              break;
+            }
+          }
+          if (flag)
+          {
+            
+            if (odjave[index] == 1)
+            {
+                return true;
+            }
+              else
+              {
+                return false;
+              }
+          }
+          else
+          {
+            if (true)
+            {
+              if (odjavljen == 1)
+                {
+                    vpisne.push(vpisna);
+                    odjave.push(odjavljen);
+                    i++;
+                    return true;
+                }
+                else
+                {
+                  vpisne.push(vpisna);
+                    odjave.push(odjavljen);
+                    i++;
+                  return false;
+                }
+            }
+          }
+          
+    };
     vm.dodajanjeOcen = function(p) {
+      vm.napakaNaObrazcu1 = "";
+      if (p.ocena == undefined)
+      {
+        vm.napakaNaObrazcu1 = "Ocene niste vnesli";
+        return;
+      }
+      if (p.tocke_na_izpitu == undefined)
+      {
+        vm.napakaNaObrazcu1 = "Tock niste vnesli";
+        return;
+      }
+      if (p.odjava == 1)
+      {
+        if (p.odjavitelj == undefined)
+        {
+          vm.napakaNaObrazcu1 = "Odjavitelja niste vnesli";
+           return;
+        }
+        if (p.cas_odjave == undefined)
+        {
+          vm.napakaNaObrazcu1 = "Cas odjave niste vnesli";
+            return;
+        }
+      }
+      if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
+      {
+        vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
+        return;
+      }
+      
       estudentPodatki.updateOceno({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
         ocena: parseInt(p.ocena),
-        tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
+        tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
+        odjava: parseInt(p.odjava),
+        cas_odjave: p.cas_odjave,
+        odjavitelj: p.odjavitelj
       }).then(
                 function success(odgovor) {
                   console.log("Uspelo");
@@ -122,20 +203,18 @@
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
-          console.log(vm.prijavljeni.stu);
         }, 
         function error(res) {
           vm.sporocilo = "There was an error!";
           console.log(res.e);
       });
     };
-    
      vm.izbrisi = function(sifra) {
        console.log(sifra)
         estudentPodatki.izbrisiIzpit(sifra).then(
         function success(res) {
           alert("Uspešno izbrisan izpit!")
-            location.reload();
+            $location.reload();
         }, 
         function error(res) {
           vm.izbris2 = "Napaka pri brisanju izpita."

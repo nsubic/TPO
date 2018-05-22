@@ -65,17 +65,87 @@
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
-    vm.jeOdjavljen = function(odjavljen) {
-      if (odjavljen == 1)
-        return true;
-      else
-      return false;
+    var odjave = [];
+    var i = 0;
+    var vpisne = [];
+    vm.jeOdjavljen = function(odjavljen, vpisna, cek) {
+        var flag = false;
+        var index = 0;
+          for (var k = 0; k < odjave.length; k++)
+          {
+            if (vpisna == vpisne[k])
+            {
+              index = k;
+              flag = true;
+              break;
+            }
+          }
+          if (flag)
+          {
+            
+            if (odjave[index] == 1)
+            {
+                return true;
+            }
+              else
+              {
+                return false;
+              }
+          }
+          else
+          {
+            if (true)
+            {
+              if (odjavljen == 1)
+                {
+                    vpisne.push(vpisna);
+                    odjave.push(odjavljen);
+                    i++;
+                    return true;
+                }
+                else
+                {
+                  vpisne.push(vpisna);
+                    odjave.push(odjavljen);
+                    i++;
+                  return false;
+                }
+            }
+          }
+          
     };
     vm.dodajanjeOcen = function(p) {
-      if (p.odjava == "1")
+      vm.napakaNaObrazcu1 = "";
+      if (p.ocena == undefined)
       {
-        
-        estudentPodatki.updateOceno({
+        vm.napakaNaObrazcu1 = "Ocene niste vnesli";
+        return;
+      }
+      if (p.tocke_na_izpitu == undefined)
+      {
+        vm.napakaNaObrazcu1 = "Tock niste vnesli";
+        return;
+      }
+      if (p.odjava == 1)
+      {
+        if (p.odjavitelj == undefined)
+        {
+          vm.napakaNaObrazcu1 = "Odjavitelja niste vnesli";
+           return;
+        }
+        if (p.cas_odjave == undefined)
+        {
+          vm.napakaNaObrazcu1 = "Cas odjave niste vnesli";
+            return;
+        }
+      }
+      if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
+      {
+        vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
+        return;
+      }
+      
+      estudentPodatki.updateOceno({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
         ocena: parseInt(p.ocena),
@@ -92,26 +162,6 @@
                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
                   console.log(odgovor.e);
       });
-      }
-      else
-      {
-        
-      estudentPodatki.updateOceno1({
-        Izpit_šifra: p.Izpit_šifra,
-        Student_vpisna_st: p.Student_vpisna_st,
-        ocena: parseInt(p.ocena),
-        tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
-        odjava: parseInt(p.odjava)
-      }).then(
-                function success(odgovor) {
-                  console.log("Uspelo");
-                  alert("Uspešno posodobljena ocena/st.tock!");
-                }, 
-                function error(odgovor) {
-                  vm.napakaNaObrazcu = "Ni dostopa do baze!";
-                  console.log(odgovor.e);
-      });
-      }
     };
     vm.prijavljeniStudenti = function(sifraIzpita) {
       console.log(sifraIzpita);
