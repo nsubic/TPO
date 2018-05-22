@@ -55,7 +55,7 @@
           sifra: sifra,
         })
         .then(function() {
-          alert("Uspešno prijava na izpit!")
+          alert("Odjava uspela!");
             location.reload();
         })
     }
