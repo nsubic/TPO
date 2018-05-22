@@ -73,7 +73,7 @@
   
     vm.preveriPrijava = function(izpit) {
       for(var i=0; i<vm.podatki.izpiti.length; i++){  
-        if(vm.podatki.izpiti[i].Izpit_šifra == izpit.sifra && vm.podatki.izpiti[i].odjava==1){
+        if(vm.podatki.izpiti[i].Izpit_šifra == izpit.sifra && vm.podatki.izpiti[i].odjava==0){
           return false;
         }
       }
