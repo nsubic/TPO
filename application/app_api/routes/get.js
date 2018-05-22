@@ -313,7 +313,7 @@ router.get('/podatkiIzpitovZaStudenta/:sifraStudenta', function(req, res, next) 
 	}); 
 });
 
-router.get('/zetoni', function(req, res, next) {
+router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	var cb = function(error, results, fields) {
 		
@@ -328,7 +328,7 @@ router.get('/zetoni', function(req, res, next) {
 		});
 	}
 	
-	if(req.body.vpisna_st) {
+	if(req.params.vpisnaSt) {
 		global.connection.query('SELECT * FROM Zeton WHERE vpisna_stFK = ?', [req.body.vpisna_st], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
