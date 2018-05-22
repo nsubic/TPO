@@ -313,6 +313,29 @@ router.get('/podatkiIzpitovZaStudenta/:sifraStudenta', function(req, res, next) 
 	}); 
 });
 
+router.get('/zetoni', function(req, res, next) {
+	
+	var cb = function(error, results, fields) {
+		
+		if(error) {
+			throw error;
+		}
+		
+		res.json({
+			status: 200,
+			error: null,
+			response: results,
+		});
+	}
+	
+	if(req.body.vpisna_st) {
+		global.connection.query('SELECT * FROM Zeton WHERE vpisna_stFK = ?', [req.body.vpisna_st], cb);	
+	} else {
+		global.connection.query('SELECT * FROM Zeton', cb);
+	}
+	
+})
+
 module.exports = router;
 
 

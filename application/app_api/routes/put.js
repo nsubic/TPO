@@ -43,7 +43,31 @@ router.put('/dodajOceno', function(req, res, next) {
     })
 })
 
-
+router.put('/zeton', function(req, res, next) {
+    if(!req.body.vpisna_st) {
+        throw new Error("manjka vpisna številka (vpisna_st)");
+    }
+    
+    if(!req.body.izkoriscen) {
+        throw new Error("manjka izkoriščen žeton (izkoriscen)");
+    }
+    
+    if(!req.body.vrsta_vpisa) {
+        throw new Error("manjka vrsta vpisa (vrsta_vpisa)");
+    }
+    
+    global.connection.query('UPDATE Zeton SET vrsta_vpisa = ?, izkoriscen = ?, visoko_povprecje = ? WHERE vpisna_stFK = ?', [req.body.vrsta_vpisa, req.body.izkoriscen, req.body.visoko_povprecje, req.body.vpisna_st], function(error, results, fields) {
+        if(error) {
+            throw error;
+        }
+        
+        res.json({
+            status: 200,
+            error: null,
+            response: results,
+        })
+    });
+})
 
 
 module.exports = router;
