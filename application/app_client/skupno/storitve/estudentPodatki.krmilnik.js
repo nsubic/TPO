@@ -121,6 +121,12 @@
       var prijavaNaIzpit = function(podatki) {
         return $http.post('/api/prijavaNaIzpit/', podatki);
       };
+      var pridobiZeton = function(vpisna_st) {
+        return $http.get('/api/zetoni/' + vpisna_st);
+      };
+      var posodobiZeton = function(data) {
+        return $http.put('/api/zeton', JSON.stringify(data));
+      };
       return {
         obcina: obcina,
         drzava:drzava,
@@ -160,7 +166,9 @@
         updateOceno:updateOceno,
         updateOceno1:updateOceno1,
         podatkiIzpitovZaStudenta:podatkiIzpitovZaStudenta,
-        prijavaNaIzpit:prijavaNaIzpit
+        prijavaNaIzpit:prijavaNaIzpit,
+        dobiZeton: pridobiZeton,
+        updateZeton: posodobiZeton,
       };
     };
 
