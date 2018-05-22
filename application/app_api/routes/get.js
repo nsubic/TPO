@@ -329,7 +329,7 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	}
 	
 	if(req.params.vpisnaSt) {
-		global.connection.query('SELECT * FROM Zeton WHERE vpisna_stFK = ?', [req.body.vpisna_st], cb);	
+		global.connection.query('SELECT * FROM Zeton WHERE vpisna_stFK = ?', [req.params.vpisnaSt], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
 	}

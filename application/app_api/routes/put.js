@@ -44,28 +44,45 @@ router.put('/dodajOceno', function(req, res, next) {
 })
 
 router.put('/zeton', function(req, res, next) {
-    if(!req.body.vpisna_st) {
-        throw new Error("manjka vpisna številka (vpisna_st)");
-    }
     
-    if(!req.body.izkoriscen) {
-        throw new Error("manjka izkoriščen žeton (izkoriscen)");
+    console.log("input", req.body);
+    
+    if(!req.body.vpisna_stFK) {
+        res
+            .status(400)
+            .send(JSON.stringify({
+                status: 400,
+                error: "manjka vpisna številka (vpisna_stFK)",
+                response: null,
+            }));
+        return;
     }
     
     if(!req.body.vrsta_vpisa) {
-        throw new Error("manjka vrsta vpisa (vrsta_vpisa)");
+        res
+            .status(400)
+            .send(JSON.stringify({
+                status: 400,
+                error: "manjka vrsta vpisa (vrsta_vpisa)",
+                response: null,
+            }));
+        return;
     }
     
-    global.connection.query('UPDATE Zeton SET vrsta_vpisa = ?, izkoriscen = ?, visoko_povprecje = ? WHERE vpisna_stFK = ?', [req.body.vrsta_vpisa, req.body.izkoriscen, req.body.visoko_povprecje, req.body.vpisna_st], function(error, results, fields) {
+    console.log("validation ok");
+    global.connection.query('UPDATE Zeton SET vrsta_vpisa = ?, izkoriscen = ?, visoko_povprecje = ? WHERE vpisna_stFK = ?', [req.body.vrsta_vpisa, req.body.izkoriscen, req.body.visoko_povprecje, req.body.vpisna_stFK], function(error, results, fields) {
+        
+        console.log("query updated");
+        
         if(error) {
             throw error;
         }
         
-        res.json({
+        res.send(JSON.stringify({
             status: 200,
             error: null,
             response: results,
-        })
+        }));
     });
 })
 
