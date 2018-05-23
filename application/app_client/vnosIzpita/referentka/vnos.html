@@ -103,7 +103,7 @@
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
   			
   			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Izbriši izpit</button></td>
-  			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene</button></td>
+  			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene/ Odjavi Studenta</button></td>
 		  </tr>
 	  </tbody>
 	</table>
@@ -124,6 +124,7 @@
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
+        <div role="alert" ng-show="vm.napakaNaObrazcu3" class="alert alert-danger">{{ vm.napakaNaObrazcu3 }}</div>
          <table class="table1">
           <thead>
             <tr>
@@ -135,6 +136,7 @@
               <th scope="col">Odjavitelj</th>
               <th scope="col">Datum in ura odjave</th>
               <th scope="col">Posodobi</th>
+              <th scope="col">Posodobi brez ocen</th>
             </tr>
           </thead>
 </div>
@@ -154,6 +156,7 @@
                 <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
                 <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st,  'zadnji')" type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
                 <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen1(p)" value="Odjava studenta"></td>
               </ng-form>
             </tr>
             </form>

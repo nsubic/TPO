@@ -148,6 +148,57 @@
           }
           
     };
+    vm.dodajanjeOcen1 = function(p) {
+      vm.napakaNaObrazcu3 = "";
+      if (p.ocena != undefined)
+      {
+        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisana ocena ali st tock, oz. ne smete vpisovati tock/ocen pri odjavi studenta.";
+        return;
+      }
+      if (p.tocke_na_izpitu != undefined)
+      {
+        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisana ocena ali st tock, oz. ne smete vpisovati tock/ocen pri odjavi studenta.";
+        return;
+      }
+      if (p.odjava == 1)
+      {
+        if (p.odjavitelj == undefined)
+        {
+          vm.napakaNaObrazcu3 = "Odjavitelja niste vnesli";
+           return;
+        }
+        if (p.cas_odjave == undefined)
+        {
+          vm.napakaNaObrazcu3 = "Cas odjave niste vnesli";
+            return;
+        }
+      }
+      
+      if (p.odjava == "1")
+      {
+        
+        estudentPodatki.odjaviStudentaRef({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        odjava: parseInt(p.odjava),
+        cas_odjave: p.cas_odjave,
+        odjavitelj: p.odjavitelj
+      }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                  alert("Uspešna ojdava");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+      });
+      }
+      else
+      {
+        vm.napakaNaObrazcu3 = "Odjavo dajte na 1.";
+            return;
+      }
+    };
     vm.dodajanjeOcen = function(p) {
       vm.napakaNaObrazcu1 = "";
       if (p.ocena == undefined)

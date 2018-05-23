@@ -112,6 +112,10 @@
         console.log("data", data);
         return $http.put('/api/dodajOceno/',data);
       }
+      var odjaviStudentaRef = function(data) {
+        console.log("data", data);
+        return $http.put('/api/odjaviStudentaRef/',data);
+      }
       var updateOceno1 = function(data) {
         return $http.put('/api/dodajOceno1/',data);
       }
@@ -172,7 +176,8 @@
         prijavaNaIzpit:prijavaNaIzpit,
         dobiZeton: pridobiZeton,
         updateZeton: posodobiZeton,
-        IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri
+        IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri,
+        odjaviStudentaRef:odjaviStudentaRef
       };
     };
 

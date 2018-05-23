@@ -42,6 +42,13 @@ router.put('/dodajOceno', function(req, res, next) {
         res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     })
 })
+router.put('/odjaviStudentaRef', function(req, res, next) {
+    console.log(req.body.cas_odjave);
+    global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `odjava`=?, `cas_odjave`=?, `odjavitelj`=? WHERE  `Izpit_šifra`=? and `Student_vpisna_st`=?', [req.body.odjava, req.body.cas_odjave, req.body.odjavitelj, req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    })
+})
 
 router.put('/zeton', function(req, res, next) {
     
