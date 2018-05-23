@@ -144,8 +144,10 @@
         vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
         return;
       }
-      
-      estudentPodatki.updateOceno({
+      if (p.odjava == "1")
+      {
+        
+        estudentPodatki.updateOceno({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
         ocena: parseInt(p.ocena),
@@ -162,6 +164,25 @@
                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
                   console.log(odgovor.e);
       });
+      }
+      else
+      {
+        
+      estudentPodatki.updateOceno1({
+         Izpit_šifra: p.Izpit_šifra,
+         Student_vpisna_st: p.Student_vpisna_st,
+         ocena: parseInt(p.ocena),
+        tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
+       }).then(
+                 function success(odgovor) {
+                   console.log("Uspelo");
+                   alert("Uspešno posodobljena ocena/st.tock!");
+                 }, 
+                 function error(odgovor) {
+                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                   console.log(odgovor.e);
+       });
+      }
     };
     vm.prijavljeniStudenti = function(sifraIzpita) {
       console.log(sifraIzpita);
@@ -175,16 +196,28 @@
           console.log(res.e);
       });
     };
-    vm.izbrisi = function(sifra) {
-       console.log(sifra)
-        estudentPodatki.izbrisiIzpit(sifra).then(
+    vm.izbrisi1 = function(sifra) {
+      console.log(sifra)
+      estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
-          alert("Uspešno izbrisan izpit!")
-            location.reload();
+          alert("Uspešno izbrisan izpit in prijavljeni studentje!")
+        }, 
+        function error(res) {
+          
+          vm.izbris2 = "Napaka pri brisanju izpita."
+        });
+    }
+     vm.izbrisi = function(sifra) {
+       console.log(sifra)
+       estudentPodatki.izbrisiIzpit(sifra).then(
+        function success(res) {
+          vm.izbrisi1(sifra);
         }, 
         function error(res) {
           vm.izbris2 = "Napaka pri brisanju izpita."
         });
+        
+        
     };
     vm.prikaziNapako = function(napaka) {
       $scope.$apply(function() {

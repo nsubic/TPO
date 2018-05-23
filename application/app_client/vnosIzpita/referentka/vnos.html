@@ -120,11 +120,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
+      <div id="source1" class="modal-body"  style="max-height:700px;overflow:auto;">
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
-         <table class="table">
+         <table class="table1">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -140,7 +140,7 @@
 </div>
           <tbody>
             <form name="vnosOcen">
-            <tr class="form-group" ng-repeat="p in vm.prijavljeni.stu">
+            <tr class="form-group table td" ng-repeat="p in vm.prijavljeni.stu">
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
@@ -162,18 +162,65 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
-        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
-        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1" ng-onclick="()">Shrani kot csv ali pdf</button>
       </div>
     </div>
   </div>
 </div>
 
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Seznam študentov</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
+        <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <h3>{{ vm.ime }}</h3>
+         <table class="table">
+          <thead>
+            <tr>
+              <th  class="TOTR" scope="col">#</th>
+              <th class="TOTR"  scope="col">Vpisna št.</th>
+              <th class="TOTR"  scope="col">Št. točk</th>
+              <th class="TOTR"  scope="col">Ocena</th>
+              <th class="TOTR"  scope="col">Odjava</th>
+              <th class="TOTR"  scope="col">Odjavitelj</th>
+              <th class="TOTR"  scope="col">Datum in ura odjave</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="p in vm.prijavljeni.stu">
+              <th class="TOTR"  scope="row">{{$index +1}}</th>
+              <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
+              <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
+              <td class="TOTR" >{{ p.ocena }}</td>
+              <td class="TOTR" >{{ p.odjava }}</td>
+              <td class="TOTR" >{{ p.odjavitelj }}</td>
+              <td class="TOTR" >{{ p.cas_odjave }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+        <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction1()">Shrani kot csv</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 $('#exampleModalLong').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
-
-
+$('#exampleModalLong1').on('shown.bs.modal', function () {
+  $('#exampleModalLong').on('hide', function () {
+})
+  $('#myInput').trigger('focus')
+})
 </script>

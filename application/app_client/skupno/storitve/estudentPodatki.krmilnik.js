@@ -93,6 +93,9 @@
       var izbrisiIzpit = function(sifra) {
         return $http.delete('/api/izpit/'+sifra);
       };
+      var IzbrisiPrijavePoSifri = function(sifra) {
+        return $http.delete('/api/prijavljeniIZ/'+ sifra);
+      };
       var dobiVsePredmete = function(vpisna) {
         return $http.get('/api/predmetiStudenta/'+vpisna);
       };
@@ -169,6 +172,7 @@
         prijavaNaIzpit:prijavaNaIzpit,
         dobiZeton: pridobiZeton,
         updateZeton: posodobiZeton,
+        IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri
       };
     };
 

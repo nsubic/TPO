@@ -29,21 +29,21 @@
         <h3>{{ vm.ime }}</h3>
          <table class="table">
           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Vpisna št.</th>
-              <th scope="col">Priimek</th>
-              <th scope="col">Ime</th>
-              <th scope="col">Vrsta vpisa</th>
+            <tr >
+              <th class="toTR" scope="col">#</th>
+              <th class="toTR" scope="col">Vpisna št.</th>
+              <th class="toTR" scope="col">Priimek</th>
+              <th class="toTR" scope="col">Ime</th>
+              <th class="toTR" scope="col">Vrsta vpisa</th>
             </tr>
           </thead>
           <tbody>
             <tr  ng-repeat="p in vm.pod.vpisani.response">
-              <th scope="row">{{$index +1}}</th>
-              <td>{{ p.vpisna_st }}</td>
-              <td>{{ p.priimek }}</td>
-              <td>{{ p.ime }}</td>
-              <td>{{ p.opis }}</td>
+              <th class="toTR" scope="row">{{$index +1}}</th>
+              <td class="toTR" >{{ p.vpisna_st }}</td>
+              <td class="toTR">{{ p.priimek }}</td>
+              <td class="toTR">{{ p.ime }}</td>
+              <td class="toTR">{{ p.opis }}</td>
             </tr>
           </tbody>
         </table>
@@ -51,7 +51,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
         <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
-        <button type="button" class="btn btn-primary" onclick="myFunction()">Shrani kot csv</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction1()">Shrani kot csv</button>
       </div>
     </div>
   </div>
