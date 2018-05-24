@@ -108,7 +108,7 @@ function myFunction() {
 function demoFromHTML() {
 
     var source = $('#source')[0];
-
+console.log(source)
     DocRaptor.createAndDownloadDoc("YOUR_API_KEY_HERE", {
             test: true, // test documents are free, but watermarked
             type: "pdf",

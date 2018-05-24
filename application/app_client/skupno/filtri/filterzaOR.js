@@ -5,7 +5,8 @@
   var filterzaOR = function() {
 
   return function(items, firstArgument,secondArgument,thirdArgument,forthArgument){
-            console.log(firstArgument)
+    console.log(items)
+            console.log(firstArgument,secondArgument,thirdArgument,forthArgument)
     var filtered = [];
     angular.forEach(items, function(value, key) {
       if((value.sifra_profesorja == firstArgument || value.sifra_profesorja == secondArgument || value.sifra_profesorja == thirdArgument)&&value.sifra_predmeta ==forthArgument){//logic for filtering

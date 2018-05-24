@@ -73,6 +73,21 @@
        controller: 'prijavaIzpit',
        controllerAs: 'vm'
      })
+     .when('/kartotecniListPro/:vpisna', {
+       templateUrl: '/kartotecniList/profesor/listPro.html',
+       controller: 'kartotecniListPro',
+       controllerAs: 'vm'
+     })
+     .when('/kartotecniListRef/:vpisna', {
+       templateUrl: '/kartotecniList/referentka/listRef.html',
+       controller: 'kartotecniListRef',
+       controllerAs: 'vm'
+     })
+     .when('/kartotecniListStud/:vpisna', {
+       templateUrl: '/kartotecniList/student/listStudent.html',
+       controller: 'kartotecniListStud',
+       controllerAs: 'vm'
+     })
      .otherwise({redirectTo: '/prijava'});
      
      $locationProvider.html5Mode(true);

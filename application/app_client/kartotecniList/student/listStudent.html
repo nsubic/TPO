@@ -1,0 +1,145 @@
+<studentglava></studentglava>
+
+<div class="container" style="height:100%;width:100%">
+  
+  <a  class="btn btn-primary" href="/podatkiStudent" style="margin:10px"><i class="fas fa-arrow-circle-left"></i></a>
+  <button type="button" class="btn btn-primary" onclick="demoFromHTML()"  style="margin:10px">Shrani kot pdf</button>
+  <h1 style="margin:30px;text-align:center;">Kartotečni list</h1>
+  <h5 style="text-align:center;">Pregled opravljenih izpitov</h5>
+  <h5 style="text-align:center;">{{ letoFilter.vpisna_st }} {{ letoFilter.ime | uppercase}} {{ letoFilter.priimek | uppercase }}</h5>
+  <table style="height: 97px; margin-left: auto; margin-right: auto; margin-top:70px;width: 1000px;">
+    <tbody>
+      <tr>
+        <td style="width: 144px;"><strong>Študijsko leto</strong>:</td>
+        <td style="width: 183px;"><select id="filter" name="show-filter" ng-model="letoFilter" class="form-control" style="width:85%"
+    ng-options="leto.studijsko_letoFK  for leto in vm.data.studenti "></select></td>
+        <td style="width: 129.5px;"><strong>Smer</strong>:</td>
+        <td style="width: 213.5px;">{{ letoFilter.sifra_stProgram }}, {{ letoFilter.naziv }}</td>
+      </tr>
+      <tr>
+        <td style="width: 144px;"><strong>Letnik</strong>:</td>
+        <td style="width: 183px;">{{ letoFilter.letnikFK }}</td>
+        <td style="width: 129.5px;"><strong>Vrsta vpisa</strong>:</td>
+        <td style="width: 213.5px;">{{ letoFilter.opis }}</td>
+      </tr>
+      <tr>
+        <td style="width: 144px;"><strong>Način</strong>:</td>
+        <td style="width: 183px;">{{ letoFilter.eins }} študij</td>
+        <td style="width: 129.5px;"><strong>Skupina</strong>:</td>
+        <td style="width: 213.5px;">LJUBLJANA</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <label style="margin-top: 110px">Izpiši samo zadnje polaganje izpita: <input type="checkbox" ng-model="leader"></label><br/>
+  <table class="table" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Šifra</th>
+      <th scope="col">Predmet</th>
+      <th scope="col">KT</th>
+      <th scope="col">Predavatelj(i)</th>
+      <th scope="col">Datum</th>
+      <th scope="col">Ocena</th>
+      <th scope="col">Št. polaganj</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="p in vm.pred.predmeti | filterZaKartList: letoFilter.studijsko_letoFK:leader">
+      <th scope="row"><div ng-if="p.Predmetnik_sifra_predmetaFK != null">{{p.stevec}}</div></td>
+      <td >{{p.Predmetnik_sifra_predmetaFK}}</td>
+      <td>{{p.ime}}</td>
+      <td >{{p.KT}}</td>
+      <td>{{p.izpit.profesor_ime | profIme}}</td>
+      <td>{{p.izpit.datum | filterDATUMinURA }}</td>
+      <td >{{p.izpit.ocena}}</td>
+      <td>{{p.izpit.stPolaganj}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<table style="height: 73px; float: left;margin-top:30px; background-color: #c2c2c6;" width="461">
+<tbody>
+<tr>
+<td style="width: 222px;">Skupno število kreditnih točk:</td>
+<td style="width: 223px; text-align: center;"><strong>{{letoFilter.studijsko_letoFK | skpKT:vm.pred.predmeti}} od {{letoFilter.studijsko_letoFK | KT:vm.pred.predmeti}}</strong></td>
+</tr>
+<tr>
+<td style="width: 222px;">Povprečje izpitov:</td>
+<td style="width: 223px; text-align: center;"><strong>{{letoFilter.studijsko_letoFK | povprecje:vm.pred.predmeti}}</strong></td>
+</tr>
+</tbody>
+</table>
+  
+  
+  
+  
+  
+
+  <div style="visibility: hidden">
+  <div id="source">
+<p><strong>UNIVERZA V LJUBLJANI</strong><br /><strong>Fakulteta za računalništvo in informatiko</strong></p>
+<h3><strong>KARTOTEČNI LIST</strong></h3>
+<hr />
+<h3 style="text-align:center;">Pregled opravljenih izpitov</h3>
+  <h3 style="text-align:center;">{{ letoFilter.vpisna_st }} {{ letoFilter.ime | uppercase}} {{ letoFilter.priimek | uppercase }}</h3>
+<table style="height: 68px; background-color: #c4cad3; margin-left: auto; margin-right: auto;" width="655">
+<tbody>
+<tr>
+<td style="width: 318px;"><strong>Študijsko leto</strong>: {{letoFilter.studijsko_letoFK}}</td>
+<td style="width: 321px;"><strong>Smer</strong>: {{ letoFilter.sifra_stProgram }}, {{ letoFilter.naziv }}</td>
+</tr>
+<tr>
+<td style="width: 318px;"><strong>Letnik</strong>: {{ letoFilter.letnikFK }}</td>
+<td style="width: 321px;"><strong>Vrsta vpisa</strong>: {{ letoFilter.opis }}</td>
+</tr>
+<tr>
+<td style="width: 318px;"><strong>Način</strong>: {{ letoFilter.eins }} študij</td>
+<td style="width: 321px;"><strong>Skupina</strong>: LJUBLJANA</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table style="height: 91px; width: 643px; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="width: 20px;">&nbsp;</td>
+<td style="width: 69px;"><strong>Šifra</strong></td>
+<td style="width: 144px;"><strong>Predmet</strong></td>
+<td style="width: 21px;"><strong>KT&nbsp;</strong></td>
+<td style="width: 128px;"><strong>Predavatelj(i)</strong></td>
+<td style="width: 100px;"><strong>Datum</strong></td>
+<td style="width: 51px;"><strong>Ocena</strong></td>
+<td style="width: 99px;"><strong>Št. polaganj</strong></td>
+</tr>
+<tr ng-repeat="p in vm.pred.predmeti | filterZaKartList: letoFilter.studijsko_letoFK:leader">
+<td style="width: 20px;"><div ng-if="p.Predmetnik_sifra_predmetaFK != null">{{p.stevec}}</div></td>
+<td style="width: 69px;">{{p.Predmetnik_sifra_predmetaFK}}</td>
+<td style="width: 144px;">{{p.ime}}</td>
+<td style="width: 21px;">{{p.KT}}</td>
+<td style="width: 128px;">{{p.izpit.profesor_ime | profIme}}</td>
+<td style="width: 100px;">{{p.izpit.datum | filterDATUMinURA }}</td>
+<td style="width: 51px;">{{p.izpit.ocena}}</td>
+<td style="width: 99px;">{{p.izpit.stPolaganj}}</td>
+</tr>
+</tbody>
+</table>
+</table>
+<p>&nbsp;</p>
+<table style="height: 58px; background-color: #c4cad3; margin-left: auto; margin-right: auto; width: 656px;">
+<tbody>
+<tr>
+<td style="width: 231px;">Skupno število kreditnih točk:</td>
+<td style="width: 413px; text-align: left;"><strong>{{letoFilter.studijsko_letoFK | skpKT:vm.pred.predmeti}} od {{letoFilter.studijsko_letoFK | KT:vm.pred.predmeti}}</strong></td>
+</tr>
+<tr>
+<td style="width: 231px;">Povprečje izpitov:</td>
+<td style="width: 413px; text-align: left;"><strong>{{letoFilter.studijsko_letoFK | povprecje:vm.pred.predmeti}}</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+  </div>
+  
+</div>

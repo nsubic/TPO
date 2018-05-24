@@ -35,6 +35,7 @@
     vm.izpis = function(vpisna,ime,priimek) {
       vm.ime=ime;
       vm.priimek=priimek;
+      vm.vpisna=vpisna
       
       estudentPodatki
         .dobiZeton(vpisna)

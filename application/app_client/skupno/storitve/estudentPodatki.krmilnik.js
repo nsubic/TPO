@@ -63,6 +63,9 @@
       var student2 = function(upime) {
         return $http.get('/api/student2/'+upime);
       };
+      var student3 = function(vpisna) {
+        return $http.get('/api/student3/'+vpisna);
+      };
       var stVpisanih = function() {
         return $http.get('/api/stVpisanih/');
       };
@@ -177,7 +180,8 @@
         dobiZeton: pridobiZeton,
         updateZeton: posodobiZeton,
         IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri,
-        odjaviStudentaRef:odjaviStudentaRef
+        odjaviStudentaRef:odjaviStudentaRef,
+        student3:student3
       };
     };
 
