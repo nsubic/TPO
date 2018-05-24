@@ -1,7 +1,7 @@
 (function() {
   /* global angular */
-  vnosIzpitaRef.$inject = ['$scope', 'estudentPodatki','$route', '$location'];
-  function vnosIzpitaRef($scope, estudentPodatki,$route, $location) {
+  vnosIzpitaRef.$inject = ['$scope', 'estudentPodatki','$route', '$location', '$window'];
+  function vnosIzpitaRef($scope, estudentPodatki,$route, $location, $window) {
     var vm = this;
     vm.sporocilo = "Loading professors.";
     
@@ -148,41 +148,33 @@
           }
           
     };
+    
+    vm.shraniSifroIzpit = function(sifra)
+    {
+      window.localStorage['sifraIzpita'] = sifra;
+    }
+    
     vm.dodajanjeOcen1 = function(p) {
       vm.napakaNaObrazcu3 = "";
-      if (p.ocena != undefined)
-      {
-        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisana ocena ali st tock, oz. ne smete vpisovati tock/ocen pri odjavi studenta.";
-        return;
-      }
+      
       if (p.tocke_na_izpitu != undefined)
       {
-        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisana ocena ali st tock, oz. ne smete vpisovati tock/ocen pri odjavi studenta.";
+        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisano  st tock, oz. ne smete vpisovati tock pri odjavi studenta.";
         return;
       }
-      if (p.odjava == 1)
-      {
-        if (p.odjavitelj == undefined)
-        {
-          vm.napakaNaObrazcu3 = "Odjavitelja niste vnesli";
-           return;
-        }
-        if (p.cas_odjave == undefined)
-        {
-          vm.napakaNaObrazcu3 = "Cas odjave niste vnesli";
-            return;
-        }
-      }
       
-      if (p.odjava == "1")
+      if (p.odjava)
       {
-        
+          var x = new Date()
+    var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getYear(); 
+      x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+        var odja = $window.localStorage['upIme'];
         estudentPodatki.odjaviStudentaRef({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
-        odjava: parseInt(p.odjava),
-        cas_odjave: p.cas_odjave,
-        odjavitelj: p.odjavitelj
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
       }).then(
                 function success(odgovor) {
                   console.log("Uspelo");
@@ -201,46 +193,30 @@
     };
     vm.dodajanjeOcen = function(p) {
       vm.napakaNaObrazcu1 = "";
-      if (p.ocena == undefined)
-      {
-        vm.napakaNaObrazcu1 = "Ocene niste vnesli";
-        return;
-      }
-      if (p.tocke_na_izpitu == undefined)
+      if (p.tocke_na_izpitu == undefined && !p.odjava)
       {
         vm.napakaNaObrazcu1 = "Tock niste vnesli";
         return;
-      }
-      if (p.odjava == 1)
-      {
-        if (p.odjavitelj == undefined)
-        {
-          vm.napakaNaObrazcu1 = "Odjavitelja niste vnesli";
-           return;
-        }
-        if (p.cas_odjave == undefined)
-        {
-          vm.napakaNaObrazcu1 = "Cas odjave niste vnesli";
-            return;
-        }
       }
       if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
       {
         vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
         return;
       }
-      
-      if (p.odjava == "1")
+      if (p.odjava)
       {
-        
+          var x = new Date()
+    var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getYear(); 
+      x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+        var odja = $window.localStorage['upIme'];
         estudentPodatki.updateOceno({
         Izpit_šifra: p.Izpit_šifra,
         Student_vpisna_st: p.Student_vpisna_st,
-        ocena: parseInt(p.ocena),
+        ocena: null,
         tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
-        odjava: parseInt(p.odjava),
-        cas_odjave: p.cas_odjave,
-        odjavitelj: p.odjavitelj
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
       }).then(
                 function success(odgovor) {
                   console.log("Uspelo");
@@ -257,12 +233,13 @@
       estudentPodatki.updateOceno1({
          Izpit_šifra: p.Izpit_šifra,
          Student_vpisna_st: p.Student_vpisna_st,
-         ocena: parseInt(p.ocena),
+         ocena: null,
         tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
        }).then(
                  function success(odgovor) {
-                   console.log("Uspelo");
+                   
                    alert("Uspešno posodobljena ocena/st.tock!");
+                   $location.reload();
                  }, 
                  function error(odgovor) {
                    vm.napakaNaObrazcu = "Ni dostopa do baze!";
@@ -270,7 +247,9 @@
        });
       }
     };
+    var sifraIz = 0;
     vm.prijavljeniStudenti = function(sifraIzpita) {
+      
       console.log(sifraIzpita);
       estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
         function success(res) {
@@ -283,18 +262,24 @@
       });
     };
     vm.izbrisi1 = function(sifra) {
-      console.log(sifra)
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
-          alert("Uspešno izbrisan izpit in prijavljeni studentje!")
+          alert("Uspešno izbrisan izpit in odjavljeni studentje!")
         }, 
         function error(res) {
           
           vm.izbris2 = "Napaka pri brisanju izpita."
         });
     }
-     vm.izbrisi = function(sifra) {
-       console.log(sifra)
+     vm.izbrisi = function() {
+       var sifra = window.localStorage['sifraIzpita'];
+       console.log(sifra+"jel ni nisa")
+       var pod = vm.prijavljeniStudenti(sifra);
+       if (pod != null)
+       {
+         vm.izbris2 = "Ne smete brisati izpita če so nanj že prijavljeni študentje.";
+         return;
+       }
        estudentPodatki.izbrisiIzpit(sifra).then(
         function success(res) {
           vm.izbrisi1(sifra);
@@ -375,7 +360,7 @@
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")
-            location.reload();
+            $location.reload();
             vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
             vm.res = { exams: res.data };
           }, 

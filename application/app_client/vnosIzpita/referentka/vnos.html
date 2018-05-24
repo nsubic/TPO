@@ -95,14 +95,13 @@
 	  </thead>
 	  <tbody>
 		  <tr ng-repeat="s in vm.dataExam.exams">
-  			<td style="vertical-align: middle;">{{s.Predmet_sifra_predmeta}}</td>
+  			<td style="vertical-align: middle;" >{{s.Predmet_sifra_predmeta}}</td>
   			<td style="vertical-align: middle;">{{s.ime_predmeta}}</td>
   			<td style="vertical-align: middle;"> {{s.datum | filterDATUMinURA}}</td>
   			<td style="vertical-align: middle;">{{s.ura}} </td>
   			<td style="vertical-align: middle;">{{s.lokacija}} </td>
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
-  			
-  			<td><button ng-click="vm.izbrisi(s.sifra)" class="delete">Izbriši izpit</button></td>
+  			<td><button ng-click="vm.shraniSifroIzpit(s.sifra)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
   			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene/ Odjavi Studenta</button></td>
 		  </tr>
 	  </tbody>
@@ -131,10 +130,7 @@
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
               <th scope="col">Št. točk</th>
-              <th scope="col">Ocena</th>
               <th scope="col">Odjava</th>
-              <th scope="col">Odjavitelj</th>
-              <th scope="col">Datum in ura odjave</th>
               <th scope="col">Posodobi</th>
               <th scope="col">Posodobi brez ocen</th>
             </tr>
@@ -148,15 +144,9 @@
                 <td>{{ p.Student_vpisna_st  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
-                <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjava }}</td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjavitelj }}</td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.cas_odjave }}</td>
-                <td><input ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavaNova" ng-model="p.odjava" value="{{ p.odjava }}" style="width:110%;"><br></td>
-                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
-                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st,  'zadnji')" type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
-                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
-                <td><input type="submit" ng-click="vm.dodajanjeOcen1(p)" value="Odjava studenta"></td>
+                <td><input type="checkbox" ng-model="p.odjava"></td>
+                <td><input type="submit" class="btn btn-secondary" ng-click="vm.dodajanjeOcen(p)" value="Posodobi oceno"></td>
+                <td><input type="submit" class="btn btn-secondary" ng-click="vm.dodajanjeOcen1(p)" value="Odjava studenta"></td>
               </ng-form>
             </tr>
             </form>
@@ -165,7 +155,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong1" ng-onclick="()">Shrani kot csv ali pdf</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalLong1" ng-onclick="()">Shrani kot csv ali pdf</button>
+
       </div>
     </div>
   </div>
@@ -189,10 +180,6 @@
               <th  class="TOTR" scope="col">#</th>
               <th class="TOTR"  scope="col">Vpisna št.</th>
               <th class="TOTR"  scope="col">Št. točk</th>
-              <th class="TOTR"  scope="col">Ocena</th>
-              <th class="TOTR"  scope="col">Odjava</th>
-              <th class="TOTR"  scope="col">Odjavitelj</th>
-              <th class="TOTR"  scope="col">Datum in ura odjave</th>
             </tr>
           </thead>
           <tbody>
@@ -200,10 +187,6 @@
               <th class="TOTR"  scope="row">{{$index +1}}</th>
               <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
               <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
-              <td class="TOTR" >{{ p.ocena }}</td>
-              <td class="TOTR" >{{ p.odjava }}</td>
-              <td class="TOTR" >{{ p.odjavitelj }}</td>
-              <td class="TOTR" >{{ p.cas_odjave }}</td>
             </tr>
           </tbody>
         </table>
@@ -212,6 +195,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
         <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
         <button type="button" class="btn btn-primary" onclick="myFunction1()">Shrani kot csv</button>
+        <button ng-click="vm.izbrisi()" class="delete btn btn-primary">Izbriši izpit</button>
       </div>
     </div>
   </div>
