@@ -279,10 +279,10 @@
         estudentPodatki.dodajIzpit({
                               rok:vm.podatki.rok,
                               Predmet_sifra_predmeta:predmet,
-                              datum:date,
+                              datum:vm.podatki.datum,
                               lokacija:options.toString(),
                               ura: vm.podatki.ura,
-                              profesor_ime:vm.profesor.pro.sifra_profesorja + ' '+ vm.profesor.pro.ime +' ' +vm.profesor.pro.priimek
+                              profesor_ime:vm.profesor.pro[0].sifra_profesorja + ' '+ vm.profesor.pro[0].ime +' ' +vm.profesor.pro[0].priimek
                             }).then(
           function success(res) {
             alert("Uspešno dodan izpit!")

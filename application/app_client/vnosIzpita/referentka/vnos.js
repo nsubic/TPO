@@ -264,7 +264,8 @@
     vm.izbrisi1 = function(sifra) {
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
-          alert("Uspešno izbrisan izpit in odjavljeni studentje!")
+          alert("Uspešno izbrisan izpit in odjavljeni studentje!");
+                    $location.reload();
         }, 
         function error(res) {
           
