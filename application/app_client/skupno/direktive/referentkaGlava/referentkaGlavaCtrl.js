@@ -1,14 +1,11 @@
 (function() {
   /* global angular */
   
-  referentkaGlavaCtrl.$inject = ['$location', '$route', '$odjava'];
-  function referentkaGlavaCtrl($location, $route,odjava) {
+  referentkaGlavaCtrl.$inject = ['$window','$location', '$route'];
+  function referentkaGlavaCtrl($window, $location, $route) {
     var navvm = this;
-     navvm.odjava = function() {
-     odjava.odjava();
-     $location.path('/');
-     $route.reload();
- }
+    console.log("HALLLO")
+    navvm.ime = $window.localStorage['upIme'];
   };
   
   angular

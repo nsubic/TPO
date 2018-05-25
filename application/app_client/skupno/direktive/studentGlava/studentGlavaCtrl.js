@@ -20,12 +20,7 @@
       console.log(navvm.vpisna)
     })
     
-    navvm.odjava = function() {
-        console.log($window.localStorage["odjava", 'upIme'])
-        odjava.odjava();
-        $location.path('/');
-        $route.reload();
-    }
+    navvm.ime = $window.localStorage['upIme'];
   };
   
   angular
