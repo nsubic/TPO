@@ -265,7 +265,7 @@
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
           alert("Uspešno izbrisan izpit in odjavljeni studentje!");
-                    $location.reload();
+            $location.reload();
         }, 
         function error(res) {
           

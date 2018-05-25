@@ -7,7 +7,11 @@
     
     navvm.ime = $window.localStorage['upIme'];
     console.log(navvm.ime)
-   
+     navvm.odjava = function() {
+     odjava.odjava();
+     $location.path('/');
+     $route.reload();
+    }
   };
   
   angular

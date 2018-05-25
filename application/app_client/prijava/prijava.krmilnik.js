@@ -3,6 +3,9 @@
   
   prijavaCtrl.$inject = ['$window','$location', '$http', 'estudentPodatki'];
   function prijavaCtrl($window, $location, $http, estudentPodatki) {
+    $window.localStorage.removeItem('upIme');
+    $window.localStorage.removeItem('vloga');
+    
     $window.localStorage['steviloNapacnih'] = 0;
     console.log("tukaj si")
     var vm = this;
