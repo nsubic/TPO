@@ -1,14 +1,13 @@
 (function() {
   /* global angular */
   
-  profesorGlavaCtrl.$inject = ['$location', '$route', '$odjava'];
-  function profesorGlavaCtrl($location, odjava, $route) {
+  profesorGlavaCtrl.$inject = ['$window','$location', '$route', '$odjava'];
+  function profesorGlavaCtrl($window, $location, odjava, $route) {
     var navvm = this;
-     navvm.odjava = function() {
-     odjava.odjava();
-     $location.path('/');
-     $route.reload();
- }
+    
+    navvm.ime = $window.localStorage['upIme'];
+    console.log(navvm.ime)
+   
   };
   
   angular

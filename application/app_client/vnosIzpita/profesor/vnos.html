@@ -113,7 +113,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div id="source1" class="modal-body"  style="max-height:700px;overflow:auto;">
+      <div id="source1" class="modal-body"  style="height:100%;width:100%;overflow:auto;">
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
@@ -123,11 +123,8 @@
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
               <th scope="col">Št. točk</th>
-              <th scope="col">Ocena</th>
-              <th scope="col">Odjava</th>
-              <th scope="col">Odjavitelj</th>
-              <th scope="col">Datum in ura odjave</th>
-              <th scope="col">Posodobi</th>
+              <th scope="col">Končna Ocena</th>
+
             </tr>
           </thead>
 </div>
@@ -140,13 +137,11 @@
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
                 <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjava }}</td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.odjavitelj }}</td>
-                <td ng-show="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')">{{ p.cas_odjave }}</td>
                 <td><input ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavaNova" ng-model="p.odjava" value="{{ p.odjava }}" style="width:110%;"><br></td>
                 <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
                 <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st,  'zadnji')" type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
-                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Update"></td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Odjavi"></td>
+                <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Vnesi"></td>
               </ng-form>
             </tr>
             </form>
