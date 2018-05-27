@@ -22,7 +22,7 @@ router.put('/izpit/odjava', function(req, res, next) {
         throw new Error("manjka vpisna številka (vpisna_st)");
     }
 
-    global.connection.query('UPDATE Prijavljeni_na_izpit SET odjava = 1 WHERE Izpit_šifra = ? AND Student_vpisna_st = ?', [req.body.sifra, req.body.vpisna_st], function(error, results, fields) {
+    global.connection.query('UPDATE Prijavljeni_na_izpit SET odjava = 1, cas_odjave = now(), odjavitelj = ? WHERE Izpit_šifra = ? AND Student_vpisna_st = ?', [req.body.odjavitelj, req.body.sifra, req.body.vpisna_st], function(error, results, fields) {
         if(error) throw error;
         res
             .status(204)

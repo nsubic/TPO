@@ -48,16 +48,22 @@
         
      console.log(vm.dataPredmet)
         // Ta funkcija je za odjavo v View-u 
-    vm.odjava = function(sifra) {
-      estudentPodatki
-        .odjavaIzpit({
-          vpisna_st: vm.vpisnaSt,
-          sifra: sifra,
-        })
-        .then(function() {
-          alert("Uspešno odjava iz izpita!")
-            location.reload();
-        })
+    vm.odjava = function(izpit) {
+      
+      if(preveriDatum2(izpit.datum) == 1){
+        estudentPodatki
+          .odjavaIzpit({
+            vpisna_st: vm.vpisnaSt,
+            sifra: izpit.sifra,
+            odjavitelj: $window.localStorage['upIme'],
+          })
+          .then(function() {
+            alert("Uspešna odjava od izpita!")
+              location.reload();
+          })
+      } else {
+        vm.napakaNaObrazcu = "Od tega izpita se ne morete več odjaviti!";
+      }
     }
 
     estudentPodatki.predmet().then(
@@ -72,9 +78,13 @@
     };
   
     vm.preveriPrijava = function(izpit) {
+      var now = new Date();
       for(var i=0; i<vm.podatki.izpiti.length; i++){  
-        if(vm.podatki.izpiti[i].Izpit_šifra == izpit.sifra && vm.podatki.izpiti[i].odjava==0){
-          return false;
+        var trenutniIzpit = vm.podatki.izpiti[i];
+        if(trenutniIzpit.Izpit_šifra == izpit.sifra){
+          if(trenutniIzpit.odjava==0) {
+            return false;  
+          }
         }
       }
       return true
@@ -107,7 +117,7 @@
         var leto = new Date()
         var s = leto.getFullYear();
         
-        if(preveriDatum(izpit.datum.split('T')[0]) == 1){  //vec kot 2 dni do izpita, loahko s eprijavi
+        if(preveriDatum2(izpit.datum) == 1){  //vec kot 2 dni do izpita, loahko s eprijavi
           var steviloPorabljenihRokov = 0
           var steviloPolaganjLetos = 0
           var datumZadnjegaPolaganja = '2000-01-01' //random datum da je najstarej
@@ -135,7 +145,7 @@
               Student_vpisna_st:vm.vpisnaSt
           }).then(
             function success(res) {
-            alert("Uspešno prijava na izpit!")
+            alert("Uspešna prijava na izpit!")
             location.reload();
           })
           
@@ -146,6 +156,20 @@
         }
     };
 //---------------------------------------------------------------------------------------------------------
+    function preveriDatum2 (time1) {
+      var today = new Date();
+      var parsedDate = new Date(time1); // ni potrebno komplicirat, ISO8601 ve JS parsat BP!
+      var timeDiff = parsedDate.getTime() - today.getTime(); 
+      $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      console.log("diff", $scope.dayDifference);
+      if ($scope.dayDifference > 2 ) {
+          return 1
+      }
+      else{
+          return 0
+      }
+      
+    }
     
     function preveriDatum (time1){
       var today = new Date();
@@ -162,6 +186,7 @@
       
       today = yyyy + '-' + mm + '-' + dd;
 
+      // abs ni ok, ker v preteklosti bo bug, in bo spet se lahko na 2dni strejše se prijavil :)
       var timeDiff = Math.abs(parseDate(time1).getTime() - parseDate(today).getTime()); 
       $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
       if ($scope.dayDifference >= 2 ) {
