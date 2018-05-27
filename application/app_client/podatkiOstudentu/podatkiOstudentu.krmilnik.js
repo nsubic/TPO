@@ -43,6 +43,7 @@
           console.log("zetoni", res);
           var data = res.data.response;
           if(data.length > 0) {
+            $scope.zetoni = data;
             var datum = data[0];
             console.info("zeton", datum);
             $scope.zeton.vpisna_stFK = datum.vpisna_stFK;

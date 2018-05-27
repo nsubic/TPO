@@ -34,35 +34,27 @@
         </button>
       </div>
       <div id="source" class="modal-body"  style="max-height:700px;overflow:auto;">
-        <h6>Žeton</h6>
+        <h6>Žetoni</h6>
         <table class="table">
           <thead>
             <tr>
               <th>Vrsta vpisa</th>
-              <th>Izkoriščen</th>
-              <th>Visoko povprečje</th>
+              <th>Izkoriščeno</th>
             </tr>
           </thead>
-          <tr>
-            <td>
-              <select class="form-control" id="zacasni_drzava_posta" ng-init="zeton.vrsta_vpisa = selVrstaVpisa" ng-options="vrsta.vrsta_vpisa as vrsta.opis for vrsta in vrsteVpisov" ng-model="zeton.vrsta_vpisa">
-                <option value="">Izberi vrsto vpisa</option>
-              </select>
-            </td>
-            <td>
-              <input class="form-control" type="checkbox" name="izkoriscen" ng-model="zeton.izkoriscen" />
-            </td>
-            <td>
-              <input class="form-control" type="text" name="visoko_povprecje" ng-model="zeton.visoko_povprecje" />
-            </td>
-          </tr>
-          <tfoot>
-            <tr>
-              <td colspan="3">
-                <button type="button" class="btn btn-primary" ng-click="shraniZeton()">Shrani žeton</button>
+          <tbody>
+            <tr  ng-repeat="z in zetoni">
+              <td>
+                {{ z.opis }}
+                <!-- <select class="form-control" id="zacasni_drzava_posta" ng-init="zeton.vrsta_vpisa = selVrstaVpisa" ng-options="vrsta.vrsta_vpisa as vrsta.opis for vrsta in vrsteVpisov" ng-model="zeton.vrsta_vpisa">
+                  <option value="">Izberi vrsto vpisa</option>
+                </select> -->
               </td>
-            </tr>
-          </tfoot>
+              <td>
+                {{ z.cnt }} / {{ z.na_voljo }}
+              </td>
+            </tr>  
+          </tbody>
         </table>
         <hr />
         <h6>Vpisi</h6>

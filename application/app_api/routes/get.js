@@ -341,7 +341,18 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	}
 	
 	if(req.params.vpisnaSt) {
-		global.connection.query('SELECT * FROM Zeton WHERE vpisna_stFK = ?', [req.params.vpisnaSt], cb);	
+		global.connection.query(`
+SELECT vv.opis, vv.na_voljo, COALESCE(v.cnt, 0) cnt
+FROM Vrsta_vpisa vv
+LEFT JOIN ( 
+    SELECT * FROM Zeton
+) AS z ON (z.vrsta_vpisa = vv.vrsta_vpisa and z.vpisna_stFK = ?)
+LEFT JOIN (
+    SELECT vrsta_vpisaFK, vpisna_st, COUNT(vpisna_st) cnt
+    FROM Vpis
+    GROUP BY vrsta_vpisaFK, vpisna_st
+) AS v ON (v.vrsta_vpisaFK = vv.vrsta_vpisa AND v.vpisna_st = ?)
+`, [req.params.vpisnaSt, req.params.vpisnaSt], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
 	}
