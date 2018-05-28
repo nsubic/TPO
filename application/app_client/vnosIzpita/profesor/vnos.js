@@ -116,57 +116,25 @@
     };
     vm.dodajanjeOcen = function(p) {
       vm.napakaNaObrazcu1 = "";
-      if (p.ocena == undefined)
+      if (p.ocena == undefined & p.tocke_na_izpitu == undefined)
       {
-        vm.napakaNaObrazcu1 = "Ocene niste vnesli";
+        vm.napakaNaObrazcu1 = "Vnesiti morate ali končno oceno ali točke izpita oz. oboje.";
         return;
-      }
-      if (p.tocke_na_izpitu == undefined)
-      {
-        vm.napakaNaObrazcu1 = "Tock niste vnesli";
-        return;
-      }
-      if (p.odjava == 1)
-      {
-        if (p.odjavitelj == undefined)
-        {
-          vm.napakaNaObrazcu1 = "Odjavitelja niste vnesli";
-           return;
-        }
-        if (p.cas_odjave == undefined)
-        {
-          vm.napakaNaObrazcu1 = "Cas odjave niste vnesli";
-            return;
-        }
-      }
-      if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
-      {
-        vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
-        return;
-      }
-      if (p.odjava == "1")
-      {
-        
-        estudentPodatki.updateOceno({
-        Izpit_šifra: p.Izpit_šifra,
-        Student_vpisna_st: p.Student_vpisna_st,
-        ocena: parseInt(p.ocena),
-        tocke_na_izpitu: parseInt(p.tocke_na_izpitu),
-        odjava: parseInt(p.odjava),
-        cas_odjave: p.cas_odjave,
-        odjavitelj: p.odjavitelj
-      }).then(
-                function success(odgovor) {
-                  console.log("Uspelo");
-                  alert("Uspešno posodobljena ocena/st.tock!");
-                }, 
-                function error(odgovor) {
-                  vm.napakaNaObrazcu = "Ni dostopa do baze!";
-                  console.log(odgovor.e);
-      });
       }
       else
       {
+        if (p.ocena > 10 || p.ocena < 1)
+        {
+          vm.napakaNaObrazcu1 = "Končna ocena je lahko med 1 in 10!";
+          return;
+        }
+        
+        if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
+        {
+          vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
+          return;
+        }
+      
         
       estudentPodatki.updateOceno1({
          Izpit_šifra: p.Izpit_šifra,

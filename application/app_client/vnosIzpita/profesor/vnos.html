@@ -137,9 +137,6 @@
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
                 <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
-                <td><input ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavaNova" ng-model="p.odjava" value="{{ p.odjava }}" style="width:110%;"><br></td>
-                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st, 'prvi')" type="text" id="odjavitelj" ng-model="p.odjavitelj" style="width:110%;" value="{{ p.odjavitelj }}"><br></td>
-                <td><input  ng-hide="vm.jeOdjavljen(p.odjava, p.Student_vpisna_st,  'zadnji')" type="datetime-local" id="casOdjave" ng-model="p.cas_odjave" style="width:110%;" value="{{ p.cas_odjave }}"><br></td>
                 <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Odjavi"></td>
                 <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Vnesi"></td>
               </ng-form>
