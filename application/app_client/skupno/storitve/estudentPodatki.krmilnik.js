@@ -99,6 +99,9 @@
       var vrniTocke = function(sifra) {
         return $http.get('/api/tocke/'+sifra);
       };
+      var vrniOcene = function(sifra) {
+        return $http.get('/api/ocene/'+sifra);
+      };
       var IzbrisiPrijavePoSifri = function(sifra) {
         return $http.delete('/api/prijavljeniIZ/'+ sifra);
       };
@@ -185,7 +188,8 @@
         IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri,
         odjaviStudentaRef:odjaviStudentaRef,
         student3:student3,
-        vrniTocke:vrniTocke
+        vrniTocke:vrniTocke,
+        vrniOcene:vrniOcene
       };
     };
 

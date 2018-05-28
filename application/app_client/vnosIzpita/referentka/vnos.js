@@ -352,7 +352,7 @@
           vm.izbris2 = "Napaka pri brisanju izpita."
         });
     }
-     vm.izbrisi = function() {
+      vm.izbrisi = function() {
        vm.napakaNaObrazcu4 = "";
        var sifra = window.localStorage['sifraIzpita'];
        
@@ -363,24 +363,39 @@
          {
            if (vm.tockeIzpita.tocke[i].tocke_na_izpitu != null)
             {
-              vm.napakaNaObrazcu4 = "Izpita ne smete brisati, če so že vpisane točke oz. ocena.";
+              vm.napakaNaObrazcu4 = "Izpita ne smete brisati, če so že vpisane točke.";
               return;
             }
          }
-          estudentPodatki.izbrisiIzpit(sifra).then(
-            function success(res) {
-              vm.izbrisi1(sifra);
-            }, 
-            function error(res) {
-              vm.izbris2 = "Napaka pri brisanju izpita."
-            });
+         
+         estudentPodatki.vrniOcene(sifra).then(
+           function success(res) {
+          vm.oceneIzpita = { ocene: res.data.response };
+          console.log(vm.oceneIzpita)
+             for (var i = 0; i < vm.oceneIzpita.ocene.length; i++)
+             {
+               if (vm.oceneIzpita.ocene[i].ocena != null)
+                {
+                  vm.napakaNaObrazcu4 = "Izpita ne smete brisati, če so že vpisane ocene.";
+                  return;
+                }
+             }
+             estudentPodatki.izbrisiIzpit(sifra).then(
+              function success(res) {
+                vm.izbrisi1(sifra);
+              }, 
+              function error(res) {
+                vm.izbris2 = "Napaka pri brisanju izpita."
+              });
+           }, 
+        function error(res) {
+          vm.izbris2 = "Napaka pri pridobivanju tock."
+        });
+          
         }, 
         function error(res) {
           vm.izbris2 = "Napaka pri pridobivanju tock."
         });
-       
-        
-        
     };
     
     vm.dodajIzpit = function(profesor,predmet) {
