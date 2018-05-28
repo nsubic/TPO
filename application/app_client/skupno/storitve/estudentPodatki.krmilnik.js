@@ -96,6 +96,9 @@
       var izbrisiIzpit = function(sifra) {
         return $http.delete('/api/izpit/'+sifra);
       };
+      var vrniTocke = function(sifra) {
+        return $http.get('/api/tocke/'+sifra);
+      };
       var IzbrisiPrijavePoSifri = function(sifra) {
         return $http.delete('/api/prijavljeniIZ/'+ sifra);
       };
@@ -181,7 +184,8 @@
         updateZeton: posodobiZeton,
         IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri,
         odjaviStudentaRef:odjaviStudentaRef,
-        student3:student3
+        student3:student3,
+        vrniTocke:vrniTocke
       };
     };
 

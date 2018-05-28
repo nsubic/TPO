@@ -324,7 +324,13 @@ router.get('/podatkiIzpitovZaStudenta/:sifraStudenta', function(req, res, next) 
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	}); 
 });
-
+router.get('/tocke/:sifra', function(req, res, next) {
+     global.connection.query('SELECT tocke_na_izpitu FROM Prijavljeni_na_izpit  WHERE Izpit_šifra=?', [req.params.sifra], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	}); 
+});
 router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	var cb = function(error, results, fields) {

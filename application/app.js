@@ -7,7 +7,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-
+var nodemailer = require('nodemailer');
 require('./app_api/passport/passport.js');
 
 //var index = require('./app_server/routes/index');

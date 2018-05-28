@@ -114,28 +114,165 @@
           }
           
     };
+    
+    vm.shraniSifroIzpit = function(sifra, datumIzpita, uraIzpita, imeIzpita)
+    {
+      window.localStorage['sifraIzpita'] = sifra;
+      window.localStorage['imeIzpita'] = imeIzpita;
+      vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
+    }
+    
+    vm.dodajanjeOcen1 = function(p) {
+      vm.napakaNaObrazcu3 = "";
+      var x = new Date();
+        var x1=x.getFullYear() + "-"  +(((x.getMonth()+1) < 10)?"0":"") + (x.getMonth()+1) + "-" + ((x.getDate() < 10)?"0":"") + x.getDate() + " " +x.getHours() +":"+ x.getMinutes() +":"+ x.getSeconds();
+        var odja = $window.localStorage['upIme'];
+        var datumTMP = x.getFullYear() + "-"  +(((x.getMonth()+1) < 10)?"0":"") + (x.getMonth()+1) + "-" + ((x.getDate() < 10)?"0":"") + x.getDate();
+        var uraTMP = x.getHours();
+        var minuteTMP = x.getMinutes();
+        var datumIzpita = window.localStorage['datumIzpita'];
+        var uraIzpita = window.localStorage['uraIzpita'];
+        var minutaIzpita = window.localStorage['minuteIzpita'];
+      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
+      {
+        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisano  st tock, oz. ne smete vpisovati tock pri odjavi studenta.";
+        return;
+      }
+      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
+      {
+         if (parseInt(datumIzpita.substr(0,4)) <= parseInt(datumTMP.substr(0,4)))
+        {
+          if (parseInt(datumIzpita.substr(5,7)) <= parseInt(datumTMP.substr(5,7)))
+          {
+            if (parseInt(datumIzpita.substr(8,10)) <= parseInt(datumTMP.substr(8,10)))
+            {
+              if (parseInt(uraIzpita) <= parseInt(uraTMP))
+              {
+                if (parseInt(minutaIzpita) <= parseInt(minuteTMP))
+                {
+                  // je kul
+                }
+                else
+                {
+                   vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+                }
+              }
+              else
+              {
+                vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+              }
+            }
+            else
+            {
+              vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+            }
+          }
+          else
+          {
+            vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+          }
+        }
+        else
+        {
+          vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+        }
+      }
+        var odja = $window.localStorage['upIme'];
+        estudentPodatki.odjaviStudentaRef({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
+      }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                  alert("Uspešna ojdava");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+      });
+    };
+    
+    
     vm.dodajanjeOcen = function(p) {
       vm.napakaNaObrazcu1 = "";
+      var x = new Date();
+        var x1=x.getFullYear() + "-"  +(((x.getMonth()+1) < 10)?"0":"") + (x.getMonth()+1) + "-" + ((x.getDate() < 10)?"0":"") + x.getDate() + " " +x.getHours() +":"+ x.getMinutes() +":"+ x.getSeconds();
+        var odja = $window.localStorage['upIme'];
+        var datumTMP = x.getFullYear() + "-"  +(((x.getMonth()+1) < 10)?"0":"") + (x.getMonth()+1) + "-" + ((x.getDate() < 10)?"0":"") + x.getDate();
+        var uraTMP = x.getHours();
+        var minuteTMP = x.getMinutes();
+        var datumIzpita = window.localStorage['datumIzpita'];
+        var uraIzpita = window.localStorage['uraIzpita'];
+        var minutaIzpita = window.localStorage['minuteIzpita'];
       if (p.ocena == undefined & p.tocke_na_izpitu == undefined)
       {
         vm.napakaNaObrazcu1 = "Vnesiti morate ali končno oceno ali točke izpita oz. oboje.";
         return;
       }
-      else
-      {
-        if (p.ocena > 10 || p.ocena < 1)
+        if (p.ocena != undefined && (p.ocena > 10 || p.ocena < 1))
         {
           vm.napakaNaObrazcu1 = "Končna ocena je lahko med 1 in 10!";
           return;
         }
         
-        if (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0)
+        if (p.tocke_na_izpitu != undefined && (p.tocke_na_izpitu > 100 || p.tocke_na_izpitu < 0))
         {
           vm.napakaNaObrazcu1 = "Točk pod 0 in nad 100 ni možno vnesti";
           return;
         }
       
-        
+      if (p.tocke_na_izpitu != undefined)
+      {
+         if (parseInt(datumIzpita.substr(0,4)) <= parseInt(datumTMP.substr(0,4)))
+        {
+          if (parseInt(datumIzpita.substr(5,7)) <= parseInt(datumTMP.substr(5,7)))
+          {
+            if (parseInt(datumIzpita.substr(8,10)) <= parseInt(datumTMP.substr(8,10)))
+            {
+              if (parseInt(uraIzpita) <= parseInt(uraTMP))
+              {
+                if (parseInt(minutaIzpita) <= parseInt(minuteTMP))
+                {
+                  // je kul
+                }
+                else
+                {
+                   vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+                }
+              }
+              else
+              {
+                vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+              }
+            }
+            else
+            {
+              vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+            }
+          }
+          else
+          {
+            vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+          }
+        }
+        else
+        {
+          vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
+                    return;
+        }
+      }
       estudentPodatki.updateOceno1({
          Izpit_šifra: p.Izpit_šifra,
          Student_vpisna_st: p.Student_vpisna_st,
@@ -143,17 +280,23 @@
         tocke_na_izpitu: parseInt(p.tocke_na_izpitu)
        }).then(
                  function success(odgovor) {
-                   console.log("Uspelo");
+                   
                    alert("Uspešno posodobljena ocena/st.tock!");
+                   location.reload();
                  }, 
                  function error(odgovor) {
                    vm.napakaNaObrazcu = "Ni dostopa do baze!";
                    console.log(odgovor.e);
        });
-      }
     };
-    vm.prijavljeniStudenti = function(sifraIzpita) {
-      console.log(sifraIzpita);
+    vm.prijavljeniStudenti = function(sifraIzpita, datumIzpita, uraIzpita) {
+      var datum = datumIzpita.substr(0, 10);
+      var ure = uraIzpita.substr(0,2);
+      var minute = uraIzpita.substr(3,5);
+      
+      window.localStorage['datumIzpita'] = datum;
+      window.localStorage['uraIzpita'] = ure;
+      window.localStorage['minuteIzpita'] = minute;
       estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
@@ -165,25 +308,43 @@
       });
     };
     vm.izbrisi1 = function(sifra) {
-      console.log(sifra)
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
-          alert("Uspešno izbrisan izpit in prijavljeni studentje!")
+          alert("Uspešno izbrisan izpit in odjavljeni studentje!");
+            location.reload();
         }, 
         function error(res) {
           
           vm.izbris2 = "Napaka pri brisanju izpita."
         });
     }
-     vm.izbrisi = function(sifra) {
-       console.log(sifra)
-       estudentPodatki.izbrisiIzpit(sifra).then(
+     vm.izbrisi = function() {
+       vm.napakaNaObrazcu4 = "";
+       var sifra = window.localStorage['sifraIzpita'];
+       
+       estudentPodatki.vrniTocke(sifra).then(
         function success(res) {
-          vm.izbrisi1(sifra);
+          vm.tockeIzpita = { tocke: res.data.response };
+         for (var i = 0; i < vm.tockeIzpita.tocke.length; i++)
+         {
+           if (vm.tockeIzpita.tocke[i].tocke_na_izpitu != null)
+            {
+              vm.napakaNaObrazcu4 = "Izpita ne smete brisati, če so že vpisane točke oz. ocena.";
+              return;
+            }
+         }
+          estudentPodatki.izbrisiIzpit(sifra).then(
+            function success(res) {
+              vm.izbrisi1(sifra);
+            }, 
+            function error(res) {
+              vm.izbris2 = "Napaka pri brisanju izpita."
+            });
         }, 
         function error(res) {
-          vm.izbris2 = "Napaka pri brisanju izpita."
+          vm.izbris2 = "Napaka pri pridobivanju tock."
         });
+       
         
         
     };
