@@ -45,11 +45,20 @@ router.post('/dodajIzpit', function(req, res, next) {
 });
 
 router.post('/prijavaNaIzpit', function(req, res, next) {
+    global.connection.query("SET FOREIGN_KEY_CHECKS=0;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
     console.log(req.body.Izpit_sifra,req.body.Student_vpisna_st)
-     global.connection.query('INSERT INTO Prijavljeni_na_izpit( Izpit_šifra, Student_vpisna_st,odjava ) VALUES (?,?,?)',[req.body.Izpit_sifra,req.body.Student_vpisna_st,0], function (error, results, fields) {
+    var sifraPrijave = Math.floor((Math.random() * 1000000) + 1);
+     global.connection.query('INSERT INTO Prijavljeni_na_izpit(sifra_prijave, Izpit_šifra, Student_vpisna_st,odjava ) VALUES (?, ?,?,?)',[sifraPrijave, req.body.Izpit_sifra,req.body.Student_vpisna_st,0], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     	});
+    global.connection.query("SET FOREIGN_KEY_CHECKS=1;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
 });
 
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {

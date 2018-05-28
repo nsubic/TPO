@@ -153,6 +153,8 @@
     {
       window.localStorage['sifraIzpita'] = sifra;
       window.localStorage['imeIzpita'] = imeIzpita;
+      window.localStorage['datumIzpita'] = imeIzpita;
+      window.localStorage['uraIzpita'] = imeIzpita;
       vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
     }
     
@@ -397,7 +399,135 @@
           vm.izbris2 = "Napaka pri pridobivanju tock."
         });
     };
+  
+    vm.prijavi = function() {
+      vm.napakaNaObrazcu5="";
+      var tmp = false;
+      estudentPodatki.student3(parseInt(vm.novaPrijavaVpisna)).then(
+        function success(res) {
+          vm.student = { stu: res.data.response };
+          if (vm.student.stu.length == 0)
+          {
+            vm.napakaNaObrazcu5="Student ni vpisan v tej šoli!";
+            tmp = true;
+            return;
+          }
+        });
+      if (tmp)
+      {
+        return;
+      }
+      else
+      {
+        var now = new Date();
+      estudentPodatki.podatkiIzpitovZaStudenta(parseInt(vm.novaPrijavaVpisna)).then(
+            function success(res) {
+              vm.podatki = { izpiti: res.data.response };
+             
+        var leto = new Date()
+        var s = leto.getFullYear();
+        
+        if(!preveriDatum2(window.localStorage['datumIzpita']) == 1){
+           vm.napakaNaObrazcu5 += "Na ta izpit se študent ne more več prijaviti, saj je rok prijave potekel. ";
+  
+        }//vec kot 2 dni do izpita, loahko s eprijavi
+          var steviloPorabljenihRokov = 0
+          var steviloPolaganjLetos = 0
+          var flag = false;
+          var flag3 = false;
+          var flag2 = false;
+          var flag1 = false;
+          var datumZadnjegaPolaganja = '2000-01-01' //random datum da je najstarej
+          for(var i=0; i<vm.podatki.izpiti.length; i++){   // gre cez vse njegove izpite
+            if(vm.podatki.izpiti[i].ocena > 5 && !flag){
+            
+              vm.napakaNaObrazcu5 += "Ta predmet je študent že opravil. ";
+              flag = true;
+            }
+            if(vm.podatki.izpiti[i].odjava==0) // preveri za izbrani predmet in samo predmete kjer ni bil odjavlen
+              steviloPorabljenihRokov++;
+            if(vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].datum.split('-')[0] == s) // stevilo polaganj izpita letos
+              steviloPolaganjLetos++;
+            if((parseDate(vm.podatki.izpiti[i].datum.split('T')[0]).getTime() > parseDate(datumZadnjegaPolaganja).getTime()) && vm.podatki.izpiti[i].odjava==0){        // Preveri kdaj je bil zadnji datum polaganja tega predmeta
+              datumZadnjegaPolaganja = vm.podatki.izpiti[i].datum.split('T')[0]
+              console.log("datumZadnjegaPolaganja: " + datumZadnjegaPolaganja)
+            }
+            if(vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].ocena==null && !flag1){ // preveri ce se nima vpisane ocene
+              vm.napakaNaObrazcu5 += "Za ta predmet vam še niso vpisali ocene! ";
+              flag1 = true;
+            }
+          }
+            if (steviloPorabljenihRokov > 6 && !flag2)
+            {
+              vm.napakaNaObrazcu5 += "Študent je že porabil 6. rokov za ta predmet! ";
+              flag2 = true;
+            }
+            if (steviloPolaganjLetos > 3 && !flag3)
+            {
+              vm.napakaNaObrazcu5 += "Študent je že polagal predmet letos več kot 3-krat, zato mora plačati. ";
+              flag3 = true;
+            }
+                  // naredi novo prijavo
+                 estudentPodatki.prijavaNaIzpit({
+                  Izpit_sifra:window.localStorage['sifraIzpita'],
+                  Student_vpisna_st:parseInt(vm.novaPrijavaVpisna)
+                    }).then(
+                      function success(res) {
+                      alert("Uspešna prijava na izpit!")
+                      location.reload();
+                    })
+          });
+      }
+      
+        };
+//---------------------------------------------------------------------------------------------------------
+    function preveriDatum2 (time1) {
+      var today = new Date();
+      var parsedDate = new Date(time1); // ni potrebno komplicirat, ISO8601 ve JS parsat BP!
+      var timeDiff = parsedDate.getTime() - today.getTime(); 
+      $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      console.log("diff", $scope.dayDifference);
+      if ($scope.dayDifference > 2 ) {
+          return 1
+      }
+      else{
+          return 0
+      }
+      
+    }
     
+    function preveriDatum (time1){
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+      if(dd<10) {
+          dd = '0'+dd
+      } 
+      
+      if(mm<10) {
+          mm = '0'+mm
+      } 
+      
+      today = yyyy + '-' + mm + '-' + dd;
+
+      // abs ni ok, ker v preteklosti bo bug, in bo spet se lahko na 2dni strejše se prijavil :)
+      var timeDiff = Math.abs(parseDate(time1).getTime() - parseDate(today).getTime()); 
+      $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if ($scope.dayDifference >= 2 ) {
+          return 1
+      }
+      else{
+          return 0
+      }
+      
+    }
+    
+    function parseDate(input) {
+      var parts = input.match(/(\d+)/g);
+      // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+      return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+    }
     vm.dodajIzpit = function(profesor,predmet) {
       vm.napakaNaObrazcu = "";
       console.log(profesor)

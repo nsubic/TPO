@@ -91,6 +91,7 @@
 		  <th>Profesor</th>
 		  <th></th>
 		  <th></th>
+		  <th></th>
 		</tr>
 	  </thead>
 	  <tbody>
@@ -103,6 +104,8 @@
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
   			<td><button ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
   			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra, s.datum, s.ura)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene/ Odjavi Studenta</button></td>
+  			<td><button  ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong2">Prijavi študenta</button></td>
+
 		  </tr>
 	  </tbody>
 	</table>
@@ -203,6 +206,40 @@
   </div>
 </div>
 
+<div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Prijavi študenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="source1" class="modal-body"  style="height:100%;width:100%;overflow:auto;">
+        <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <h3>{{ vm.ime }}</h3>
+        <div role="alert" ng-show="vm.napakaNaObrazcu5" class="alert alert-danger">{{ vm.napakaNaObrazcu5 }}</div>
+</div>
+            <form name="vnosOcen">
+            <tr class="form-group">
+                <ng-form name="vnosOcenPosamezno">
+              Vpisna št.:<br>
+              <input type="text" id="vpisna" ng-model="vm.novaPrijavaVpisna"  value="vpisnaStudenta"><br>
+              <br>
+              <input type="submit"  ng-click="vm.prijavi()" value="Prijavi" class="delete btn btn-primary">
+              </ng-form>
+            </tr>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
 $('#exampleModalLong').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
@@ -210,6 +247,9 @@ $('#exampleModalLong').on('shown.bs.modal', function () {
 $('#exampleModalLong1').on('shown.bs.modal', function () {
   $('#exampleModalLong').on('hide', function () {
 })
+  $('#myInput').trigger('focus')
+})
+$('#exampleModalLong2').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
 })
 </script>
