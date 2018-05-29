@@ -286,12 +286,14 @@ router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
 });
 
 router.get('/nosilciInPredmeti/', function(req, res, next) {
-     global.connection.query('SELECT * \
+     global.connection.query('SELECT *, \
+    							Del_predmetnika.naziv AS Naziv_Skupine	\
 							FROM Predmetnik\
 							INNER JOIN Nosilec_predmeta ON Predmetnik.Nosilec_predmeta_sifra_opcije = Nosilec_predmeta.sifra_opcije\
 							AND Predmetnik.sifra_predmetaFK = Nosilec_predmeta.sifra_predmetaFK\
 							INNER JOIN Predmet ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta\
 							INNER JOIN Profesor ON Nosilec_predmeta.sifra_profesorjaFK1 = Profesor.sifra_profesorja\
+							INNER JOIN Del_predmetnika ON Predmetnik.sifra_predmetnikaFK = Del_predmetnika.sifra_predmetnika\
 							GROUP BY Predmetnik.studijsko_letoFK, Profesor.sifra_profesorja',function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);

@@ -1,120 +1,216 @@
 <studentglava></studentglava>
 <div class="container">
+    <h1>Vpis</h1>
     <form ng-submit="vm.izvediVpis()">
-      <div class="form-group">
-        <label for="ime">Ime:</label>
-        <input type="text" class="form-control" id="ime" ng-model="vpis.ime" placeholder="Janez">
+      <div class="form-group row">
+        <label for="ime" class="col-sm-3 col-form-label">Ime:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="ime" ng-model="vpis.ime" placeholder="Janez">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="priimek">Priimek:</label>
-        <input type="text" class="form-control" id="priimek" ng-model="vpis.priimek" placeholder="Novak">
+      <div class="form-group row">
+        <label for="priimek" class="col-sm-3 col-form-label">Priimek:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="priimek" ng-model="vpis.priimek" placeholder="Novak">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="datum_rojstva">Datum rojstva:</label>
-        <input id="datum_rojstva" class="form-control" type="date" ng-model="vpis.datum_rojstva">
+      <div class="form-group row">
+        <label for="datum_rojstva" class="col-sm-3 col-form-label">Datum rojstva:</label>
+        <div class="col-sm-9">
+          <input id="datum_rojstva" class="form-control" type="date" ng-model="vpis.datum_rojstva">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="kraj_rojstva">Kraj rojstva:</label>
-        <input type="text" class="form-control" id="kraj_rojstva" placeholder="Ljubljana" ng-model="vpis.kraj_rojstva">
+      <div class="form-group row">
+        <label for="kraj_rojstva" class="col-sm-3 col-form-label">Kraj rojstva:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="kraj_rojstva" placeholder="Ljubljana" ng-model="vpis.kraj_rojstva">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="drzava_rojstva">Drzava rojstva:</label>
-        <select placeholder="Slovenija" class="form-control" id="drzava_rojstva" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.drzava_rojstva">
-          <option value="" selected="selected">Država rojstva</option>
-        </select>
+      <div class="form-group row">
+        <label for="drzava_rojstva" class="col-sm-3 col-form-label">Drzava rojstva:</label>
+        <div class="col-sm-9">
+          <select placeholder="Slovenija" class="form-control" id="drzava_rojstva" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.drzava_rojstva">
+            <option value="" selected="selected">Država rojstva</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="emso">EMŠO:</label>
-        <input type="text" class="form-control" id="emso" placeholder="0000000000" ng-model="vpis.emso">
+      <div class="form-group row">
+        <label for="emso" class="col-sm-3 col-form-label">EMŠO:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="emso" placeholder="0000000000" ng-model="vpis.emso">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="davcna">Davčna številka:</label>
-        <input type="text" class="form-control" id="davcna" placeholder="11942432" ng-model="vpis.davcna">
+      <div class="form-group row">
+        <label for="davcna" class="col-sm-3 col-form-label">Davčna številka:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="davcna" placeholder="11942432" ng-model="vpis.davcna">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="spol">Spol:</label>
-        <select id="spol" class="form-control">
-          <option value="selected">Izberi spol</option>
-          <option value="1">Ž</option>
-          <option value="2">M</option>
-        </select>
+      <div class="form-group row">
+        <label for="spol" class="col-sm-3 col-form-label">Spol:</label>
+        <div class="col-sm-9">
+          <select id="spol" class="form-control">
+            <option value="selected">Izberi spol</option>
+            <option value="1">Ž</option>
+            <option value="2">M</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="tel_st">Telefonska številka:</label>
-        <input type="text" class="form-control" id="tel_st" placeholder="041234567">
+
+      <div class="form-group row">
+        <label for="stalni_naslov_ulica" class="col-sm-3 col-form-label">Ulica stalnega bivanja:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="stalni_naslov_ulica" placeholder="Ulica Novakov">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="stalni_naslov_ulica">Ulica stalnega bivanja:</label>
-        <input type="text" class="form-control" id="stalni_naslov_ulica" placeholder="Ulica Novakov">
-      </div>
-      <div class="form-group">
-        <label for="stalni_naslov_hisnast">Hišna številka stalnega bivanja:</label>
-        <input type="text" class="form-control" id="stalni_naslov_hisnast" placeholder="42">
+      <div class="form-group row">
+        <label for="stalni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka stalnega bivanja:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="stalni_naslov_hisnast" placeholder="42">
+        </div>
       </div>
       
-      <div class="form-group">
-        <label for="stalni_postna_stevilka">Poštna številka:</label>
-        <input type="text" class="form-control" id="stalni_postna_stevilka" placeholder="4212" ng-model="vpis.stalni_postna_stevilka">
+      <div class="form-group row">
+        <label for="stalni_postna_stevilka" class="col-sm-3 col-form-label">Poštna številka:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="stalni_postna_stevilka" placeholder="4212" ng-model="vpis.stalni_postna_stevilka">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="stalni_obcina_koda">Kraj pošte:</label>
-        <input type="text" class="form-control" id="stalni_obcina_koda" placeholder="Ljubljana" ng-model="vpis.stalni_obcina_koda">
+      <div class="form-group row">
+        <label for="stalni_obcina_koda" class="col-sm-3 col-form-label">Kraj pošte:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="stalni_obcina_koda" placeholder="Ljubljana" ng-model="vpis.stalni_obcina_koda">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="stalni_drzava_koda">Država pošte:</label>
-        <select placeholder="Slovenija" class="form-control" id="stalni_drzava_koda" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.stalni_drzava_koda">
-          <option value="">Izberi državo</option>
-        </select>
+      <div class="form-group row">
+        <label for="stalni_drzava_koda" class="col-sm-3 col-form-label">Država pošte:</label>
+        <div class="col-sm-9">
+          <select placeholder="Slovenija" class="form-control" id="stalni_drzava_koda" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.stalni_drzava_koda">
+            <option value="">Izberi državo</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="zacasni_naslov_ulica">Ulica začasnega bivanja:</label>
-        <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_naslov_ulica" placeholder="Ulica Janezov" ng-model="zacasni_naslov_ulica">
-        
+      <div class="form-group row">
+        <label for="zacasni_naslov_ulica" class="col-sm-3 col-form-label">Ulica začasnega bivanja:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="zacasni_naslov_ulica" placeholder="Ulica Janezov" ng-model="zacasni_naslov_ulica">
+          <small class="form-text text-muted">Neobvezno polje</small>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="zacasni_naslov_hisnast">Hišna številka začasnega bivanja:</label>
-        <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_naslov_hisnast" placeholder="2" ng-model="zacasni_naslov_hisnast">
+      <div class="form-group row">
+        <label for="zacasni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka začasnega bivanja:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="zacasni_naslov_hisnast" placeholder="2" ng-model="zacasni_naslov_hisnast">
+          <small class="form-text text-muted">Neobvezno polje</small>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="zacasni_postna_stevilka">Začasna poštna številka:</label>
-        <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_postna_stevilka" placeholder="4212" ng-model="vpis.zacasni_postna_stevilka">
+      <div class="form-group row">
+        <label for="zacasni_postna_stevilka" class="col-sm-3 col-form-label">Začasna poštna številka:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="zacasni_postna_stevilka" placeholder="4212" ng-model="vpis.zacasni_postna_stevilka">
+          <small class="form-text text-muted">Neobvezno polje</small>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="zacasni_kraj_posta">Začasni kraj pošte:</label>
-        <small class="form-text text-muted">Neobvezno polje</small>
-        <input type="text" class="form-control" id="zacasni_kraj_posta" placeholder="Visoko" ng-model="vpis.zacasni_kraj_posta">
+      <div class="form-group row">
+        <label for="zacasni_kraj_posta" class="col-sm-3 col-form-label">Začasni kraj pošte:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="zacasni_kraj_posta" placeholder="Visoko" ng-model="vpis.zacasni_kraj_posta">
+          <small class="form-text text-muted">Neobvezno polje</small>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="zacasni_drzava_posta">Začasna država pošte:</label>
-        <small class="form-text text-muted">Neobvezno polje</small>
-        <select class="form-control" id="zacasni_drzava_posta" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.zacasni_drzava_posta">
-          <option value="">Izberi državo</option>
-        </select>
+      <div class="form-group row">
+        <label for="zacasni_drzava_posta" class="col-sm-3 col-form-label">Začasna država pošte:</label>
+        <div class="col-sm-9">
+          <select class="form-control" id="zacasni_drzava_posta" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.zacasni_drzava_posta">
+            <option value="">Izberi državo</option>
+          </select>
+          <small class="form-text text-muted">Neobvezno polje</small>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="program">Študijski program:</label>
-        <select id="program" class="form-control" ng-options="item as item.naziv for item in programi track by item.sifra_stProgram" ng-model="vpis.program">
-        </select>
+
+      <div class="form-group row">
+        <label for="tel_st" class="col-sm-3 col-form-label">Telefonska številka:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="tel_st" placeholder="041234567">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="vrsta_vpisa">Vrsta vpisa:</label>
-        <select id="vrsta_vpisa" class="form-control" ng-options="item as item.opis for item in vrste_vpisov track by item.vrsta_vpisa" ng-model="vpis.vrsta_vpisa">
-          <option value="selected">Izberi vrsto vpisa</option>
-        </select>
+      <div class="form-group row">
+        <label for="email" class="col-sm-3 col-form-label">Elektronska pošta:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="email" placeholder="marko@example.com" ng-model="vpis.email">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="letnik">Letnik:</label>
-        <select id="letnik" class="form-control" ng-options="item as item.letnik for item in letniki track by item.letnik" ng-model="vpis.letnik">
-          <option value="selected">Izberi letnik vpisa</option>
-        </select>
+      
+      <div class="form-group row">
+        <label for="program" class="col-sm-3 col-form-label">Študijski program:</label>
+        <div class="col-sm-9">
+          <select id="program" class="form-control" ng-options="item as item.naziv for item in programi track by item.sifra_stProgram" ng-model="vpis.program">
+          </select>
+        </div>
       </div>
-      <a href="/izberiPredmete" class="btn btn-primary">Izberi predmete</a>
-      <a href="/content/VpisniList.pdf" target="_blank" class="btn btn-primary">Tiskanje</a>
+      <div class="form-group row">
+        <label for="vrsta_vpisa" class="col-sm-3 col-form-label">Vrsta vpisa:</label>
+        <div class="col-sm-9">
+          <select id="vrsta_vpisa" class="form-control" ng-options="nacin.nacin_studija as nacin.opis for nacin in nacini_studija" ng-model="vpis.vrsta_vpisa">
+            <option value="selected">Izberi vrsto vpisa</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="letnik" class="col-sm-3 col-form-label">Letnik:</label>
+        <div class="col-sm-9">
+          <select id="letnik" class="form-control" ng-options="item as item.letnik for item in letniki track by item.letnik" ng-model="vpis.letnik">
+            <option value="selected">Izberi letnik vpisa</option>
+          </select>
+        </div>
+      </div>
+      <!-- <a href="/vpis/predmeti" class="btn btn-primary">Izberi predmete</a> -->
+      <!-- <a href="/content/VpisniList.pdf" target="_blank" class="btn btn-primary">Tiskanje</a> -->
       <!-- <button type="submit" class="btn btn-primary">Tiskanje</button> -->
-    </form>
+      
+      <!-- start -->
+      <div class="container">
+  <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%">
+    <h1 style="margin:30px;text-align:center">Predmetnik</h1>
+    <h6 style="margin-top:30px;">Moduli:</h6>
+    <div ng-repeat="skupina in skupine" ng-if="skupina.id != 1">
+      <h6 style="margin-top:30px;">{{ skupina.naziv }}:</h6>  
+      <div class="list-group">
+        <button ng-repeat="predmet in skupina.predmeti" ng-if="!predmet.izbran" ng-click="dodajPredmet(predmet)" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> <i class="fas fa-plus"></i> </div></button>  
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%;min-height: 90%;">
+    <h1 style="margin:30px;text-align:center">Seznam izbranih predmetov </h1>
+    <h6 style="margin-top:30px;" >KT:&nbsp;&nbsp;<div style="display:inline-block;font-size: 30px;color:red;">60</div></h6>
+    <h6 style="margin-top:30px;" >Predmeti:</h6>
+    <div class="list-group "  >
+      
+      
+      <div ng-repeat="skupina in skupine" ng-if="skupina.id == 1">
+        <h6 style="margin-top:30px;">{{ skupina.naziv }}:</h6>  
+        <div class="list-group">
+          <button ng-repeat="predmet in skupina.predmeti" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> </div></button>  
+        </div>
+      </div>
+      <div ng-repeat="skupina in skupine" ng-if="skupina.id != 1">
+        <h6 style="margin-top:30px;">{{ skupina.naziv }}:</h6>  
+        <div class="list-group">
+          <button ng-repeat="predmet in skupina.predmeti" ng-if="predmet.izbran" ng-click="odstraniPredmet(predmet)" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> <i class="fas fa-times"></i> </div></button>  
+        </div>
+      </div>
+   </div>
+   <div style="margin-top:30px;">
+     <button type="button" class="btn btn-primary" onclick="vpisi()"  style="margin:10px"> <span class="fa fa-pencil-alt"></span> Potrdi vpis</button>
+     <a href="/content/VpisniList.pdf" target="_blank" class="btn btn-primary"> <span class="fa fa-print"></span> Tiskanje</a>
+   </div>
+  </div>
 </div>
 
+<!-- stop -->
+      
+    </form>
+</div>
 <noga></noga>

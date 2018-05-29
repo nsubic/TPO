@@ -33,10 +33,15 @@
        controller: 'podatkiStudent',
        controllerAs: 'vm'
     })
-    .when('/vpisniList', {
+    .when('/vpis', {
        templateUrl: '/vpisniList/vpisniList.pogled.html',
        controller: 'vpisniListCtrl',
        controllerAs: 'vm'
+    })
+    .when('/vpis/predmeti', {
+      templateUrl: '/izberiPredmete/izberiPredmete.html',
+      controller: 'vpisniListCtrl',
+      controllerAs: 'vm'
     })
     .when('/uvozPodatkov', {
        templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html',
