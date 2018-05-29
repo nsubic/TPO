@@ -5,9 +5,7 @@
   function podatkiStudent($window, $location,estudentPodatki) {
     console.log($window.localStorage['upIme']);
     var vm = this;
-    var upime = $window.localStorage['upIme']
-
-    
+    var upime = $window.localStorage['upIme'];
    estudentPodatki.student2(upime).then(
     function success(odgovor) {
       vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";

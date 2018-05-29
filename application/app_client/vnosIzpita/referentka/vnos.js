@@ -346,6 +346,28 @@
     vm.izbrisi1 = function(sifra) {
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
+          /*var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'ref@ref',
+            pass: 'ref'
+          }
+        });
+        
+        var mailOptions = {
+          from: 'ref@ref',
+          to: 'aljaz.erzin@gmail.com',
+          subject: 'Izbris izpita',
+          text: 'Brisali smo vašo prijavo na izpit!'
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });*/
           alert("Uspešno izbrisan izpit in odjavljeni studentje!");
             location.reload();
         }, 
