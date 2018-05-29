@@ -39,22 +39,56 @@
           <thead>
             <tr>
               <th>Vrsta vpisa</th>
-              <th>Izkoriščeno</th>
+              <th>Način študija</th>
+              <th>Nivo študija</th>
+              <th>Izkoriščen</th>
+              <th>Akcija</th>
             </tr>
           </thead>
           <tbody>
-            <tr  ng-repeat="z in zetoni">
+            <tr ng-repeat="z in zetoni">
               <td>
-                {{ z.opis }}
-                <!-- <select class="form-control" id="zacasni_drzava_posta" ng-init="zeton.vrsta_vpisa = selVrstaVpisa" ng-options="vrsta.vrsta_vpisa as vrsta.opis for vrsta in vrsteVpisov" ng-model="zeton.vrsta_vpisa">
-                  <option value="">Izberi vrsto vpisa</option>
-                </select> -->
+                {{ z.vrsta_vpisa_opis }}
               </td>
               <td>
-                {{ z.cnt }} / {{ z.na_voljo }}
+                {{ z.nacin_studija_opis }}
+              </td>
+              <td>
+                {{ z.nivo_studija_opis }}
+              </td>
+              <td>
+                {{ z.izkoriscen > 0 ? "Da" : "Ne" }}
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" ng-if="z.izkoriscen == 0" ng-click="zbrisiZeton(z.id)">Odstrani žeton</button>
               </td>
             </tr>  
           </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <select class="form-control" ng-options="vrsta.vrsta_vpisa as vrsta.opis for vrsta in vrsteVpisov" ng-model="zeton.vrsta_vpisa">
+                  <option value="">Izberi vrsto vpisa</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng-options="nacin.nacin_studija as nacin.opis for nacin in naciniStudija" ng-model="zeton.nacin_studija">
+                  <option value="">Izberi način študija</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" ng-options="nivo.id as nivo.opis for nivo in nivojiStudija" ng-model="zeton.nivo_studija">
+                  <option value="">Izberi nivo študija</option>
+                </select>
+              </td>
+              <td>
+                
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary" ng-click="vstaviZeton()">Ustvari žeton</button>
+              </td>
+            </tr>
+          </tfoot>
         </table>
         <hr />
         <h6>Vpisi</h6>

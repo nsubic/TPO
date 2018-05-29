@@ -308,7 +308,35 @@ router.get('/vrsteVpisa', function(req, res, next) {
 		console.log(results);
 		res.json({"status": 200, "error": null, "response": results});
 	});
-})
+});
+
+router.get('/naciniStudija', function(req, res, next) {
+	global.connection.query('SELECT * FROM Nacin_studija', function(error, results, fields) {
+		if(error) {
+			throw error;
+		}
+		res.json({
+			"status": 200,
+			"error": null,
+			"response": results,
+		});
+	})
+});
+
+router.get('/nivojiStudija', function(req, res, next) {
+	global.connection.query('SELECT * FROM Nivo_studija', function(error, results, fields) {
+		if(error) {
+			throw error;
+		}
+		
+		res.json({
+			"status": 200,
+			"error": null,
+			"response": results,
+		})
+	});
+});
+
 router.get('/PrijavljeniNaIzpit/:sifraIzpita', function(req, res, next) {
      global.connection.query('SELECT * FROM Prijavljeni_na_izpit WHERE Izpit_šifra = ? and odjava=0', [req.params.sifraIzpita], function (error, results, fields) {
 		if (error) throw error;
@@ -355,17 +383,13 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	if(req.params.vpisnaSt) {
 		global.connection.query(`
-SELECT vv.opis, vv.na_voljo, COALESCE(v.cnt, 0) cnt
-FROM Vrsta_vpisa vv
-LEFT JOIN ( 
-    SELECT * FROM Zeton
-) AS z ON (z.vrsta_vpisa = vv.vrsta_vpisa and z.vpisna_stFK = ?)
-LEFT JOIN (
-    SELECT vrsta_vpisaFK, vpisna_st, COUNT(vpisna_st) cnt
-    FROM Vpis
-    GROUP BY vrsta_vpisaFK, vpisna_st
-) AS v ON (v.vrsta_vpisaFK = vv.vrsta_vpisa AND v.vpisna_st = ?)
-`, [req.params.vpisnaSt, req.params.vpisnaSt], cb);	
+SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.opis nivo_studija_opis, z.izkoriscen
+FROM Zeton z
+JOIN Vrsta_vpisa vv ON (z.Vrsta_vpisa = vv.Vrsta_vpisa)
+JOIN Nacin_studija nacin ON (z.Nacin_studijaFK = nacin.nacin_studija)
+JOIN Nivo_studija nivo ON (z.Nivo_studijaFK = nivo.id)
+WHERE z.vpisna_stFK = ?
+`, [req.params.vpisnaSt], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
 	}

@@ -41,7 +41,7 @@ app.use(function(req, res, next){
     database:"mydb",
     connectionLimit: 1000
 	});
-	connection.connect()
+	global.connection.connect()
  
 	next();
 });
@@ -81,5 +81,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
 
 module.exports = app;

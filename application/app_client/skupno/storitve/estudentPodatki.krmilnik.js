@@ -113,7 +113,13 @@
       };
       var vrsteVpisa = function() {
         return $http.get('/api/vrsteVpisa');
-      }
+      };
+      var naciniStudija = function() {
+        return $http.get('/api/naciniStudija');
+      };
+      var nivojiStudija = function() {
+        return $http.get('/api/nivojiStudija');
+      };
       var odjavaIzpit = function(data) {
         return $http.put('/api/izpit/odjava', JSON.stringify(data));
       }
@@ -140,8 +146,14 @@
       var pridobiZeton = function(vpisna_st) {
         return $http.get('/api/zetoni/' + vpisna_st);
       };
+      var vstaviZeton = function(zeton) {
+        return $http.post('/api/zeton', JSON.stringify(zeton));
+      };
       var posodobiZeton = function(data) {
         return $http.put('/api/zeton', JSON.stringify(data));
+      };
+      var izbrisiZeton = function(id) {
+        return $http.delete('/api/zeton/' + id);
       };
       return {
         obcina: obcina,
@@ -177,6 +189,8 @@
         nosilciInPredmeti:nosilciInPredmeti,
         profesor:profesor,
         vrsteVpisa:vrsteVpisa,
+        naciniStudija:naciniStudija,
+        nivojiStudija:nivojiStudija,
         odjavaIzpit:odjavaIzpit,
         prijavljeniNaIzpit:prijavljeniNaIzpit,
         updateOceno:updateOceno,
@@ -189,7 +203,9 @@
         odjaviStudentaRef:odjaviStudentaRef,
         student3:student3,
         vrniTocke:vrniTocke,
-        vrniOcene:vrniOcene
+        vrniOcene:vrniOcene,
+        vstaviZeton:vstaviZeton,
+        izbrisiZeton:izbrisiZeton,
       };
     };
 

@@ -24,5 +24,19 @@ router.delete('/prijavljeniIZ/:sifra', function(req, res, next) {
 	});
 });
 
+router.delete('/zeton/:id', function(req, res, next) {
+    console.log(req.params.id);
+    global.connection.query('DELETE FROM Zeton WHERE id = ?', [req.params.id], function(error, results, fields) {
+       if(error) {
+           throw error;
+       } 
+       res.json({
+           "status": 200,
+           "error": null,
+           "response": results,
+       });
+    });
+});
+
 
 module.exports = router;

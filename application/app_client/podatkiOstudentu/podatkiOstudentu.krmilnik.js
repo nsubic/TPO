@@ -6,11 +6,15 @@
     var vm = this;
     
     $scope.vrsteVpisov = [];
+    $scope.naciniStudija = [];
+    $scope.nivojiStudija = [];
+    
     $scope.zeton = {
       vrsta_vpisa: null,
+      nacin_studija: null,
+      nivo_studija: null,
       vpisna_stFK: null,
       izkoriscen: null,
-      visoko_povprecje: null,
     }
     
     estudentPodatki
@@ -19,6 +23,21 @@
         $scope.vrsteVpisov = res.data.response;
         console.log("vrste vpisov", $scope.vrsteVpisov);
       });
+      
+    estudentPodatki
+      .naciniStudija()
+      .then(function(res) {
+        $scope.naciniStudija = res.data.response;
+        console.log("nacini studija", $scope.naciniStudija);
+      });
+      
+    estudentPodatki
+      .nivojiStudija()
+      .then(function(res) {
+        $scope.nivojiStudija = res.data.response;
+        console.log("nivoji studija", $scope.nivojiStudija);
+      })
+      
       
 
     
@@ -32,26 +51,46 @@
       console.log(odgovor.e);
     });
     
+    $scope.zbrisiZeton = function(id) {
+      console.log("brisanje zeton-a", id);
+      estudentPodatki
+        .izbrisiZeton(id)
+        .then(function(res) {
+          console.log("zbrisan", res);
+          if(vm.izpisiZeton) {
+            vm.izpisiZeton(); // refresh
+          }
+        })
+      
+    }
+    
+    $scope.vstaviZeton = function(zeton) {
+      console.log("vstavljanje žeton-a", zeton);
+      estudentPodatki
+        .vstaviZeton($scope.zeton)
+        .then(function(res) {
+          console.log("vstavljen", res);
+          if(vm.izpisiZeton) {
+            vm.izpisiZeton(); // Refresh
+          }
+        })
+    }
+    
     vm.izpis = function(vpisna,ime,priimek) {
       vm.ime=ime;
       vm.priimek=priimek;
       vm.vpisna=vpisna
-      
-      estudentPodatki
+      $scope.zeton.vpisna_stFK = vpisna;
+      vm.izpisiZeton = function() {
+        estudentPodatki
         .dobiZeton(vpisna)
         .then(function(res) {
           console.log("zetoni", res);
           var data = res.data.response;
-          if(data.length > 0) {
-            $scope.zetoni = data;
-            var datum = data[0];
-            console.info("zeton", datum);
-            $scope.zeton.vpisna_stFK = datum.vpisna_stFK;
-            $scope.selVrstaVpisa = $scope.zeton.vrsta_vpisa = datum.vrsta_vpisa;
-            $scope.zeton.izkoriscen = datum.izkoriscen === 1 ? true : false;
-            $scope.zeton.visoko_povprecje = datum.visoko_povprecje;
-          }
-        })
+          $scope.zetoni = data;
+        });
+      }
+      vm.izpisiZeton();
       
       estudentPodatki.studentiVpis(vpisna).then(
         function success(odgovor) {

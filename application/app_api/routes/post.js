@@ -23,7 +23,7 @@ router.post('/dodajKandidate', function(req, res, next) {
 router.post('/dodajStudenta', function(req, res, next) {
      global.connection.query('INSERT INTO Student VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',["erzin",req.body.ime,req.body.emso,req.body.vpisna,req.body.stalnaPostnaSt,req.body.stalniPostniNaslov,req.body.stalnaPostnaDrzava, req.body.stalniNaslovUlica, req.body.stalniNaslovSt, req.body.davcna, req.body.mail, req.body.telSt, req.body.spol, req.body.datumRojstva, req.body.krajRojstva, req.body.zacasnaPostnaSt, req.body.zacasniPostniNaslov, req.body.zacasnaPostnaDrzava, req.body.zacasniNaslovUlica, req.body.zacasniNaslovSt, req.body.drzavaRojstva, req.body.obcinaRojstva, req.body.naslovVrocanja, req.body.upIme], function (error, results, fields) {
 		if (error) throw error;
-		global.connection.query('INSERT INTO Zeton (vrsta_vpisa, izkoriscen, vpisna_stFK) VALUES (?, ?, ?)', ["0000000001", 0, req.body.vpisna], function (error, results, fields) {
+		global.connection.query('INSERT INTO Zeton (vrsta_vpisa, Nacin_studijaFK, Nivo_studijaFK, izkoriscen, vpisna_stFK) VALUES (?, ?, ?, ?, ?)', ["0000000001", 1, 1, 0, req.body.vpisna], function (error, results, fields) {
 		    console.log("Zeton vpisan");
 		})
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
@@ -60,6 +60,23 @@ router.post('/prijavaNaIzpit', function(req, res, next) {
         console.log(result);
     });
 });
+
+router.post('/zeton', function(req, res, next) {
+    var vrsta_vpisa = req.body.vrsta_vpisa;
+    var nacin_studija = req.body.nacin_studija;
+    var nivo_studija = req.body.nivo_studija;
+    var vpisna_st = req.body.vpisna_stFK;
+    global.connection.query('INSERT INTO Zeton (vrsta_vpisa, Nacin_studijaFK, Nivo_studijaFK, izkoriscen, vpisna_stFK) VALUES (?, ?, ?, ?, ?)', [vrsta_vpisa, nacin_studija, nivo_studija, 0, vpisna_st], function(error, results, fields) {
+       if(error) {
+           throw error;
+       }
+       res.json({
+          "status": 200,
+          "error": null,
+          "response": results,
+       });
+    });
+})
 
 var vrniJsonOdgovor = function(odgovor, status, vsebina) {
   odgovor.status(status);
