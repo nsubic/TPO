@@ -212,6 +212,7 @@
         var datumIzpita = window.localStorage['datumIzpita'];
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
+        
       if (p.ocena == undefined & p.tocke_na_izpitu == undefined)
       {
         vm.napakaNaObrazcu1 = "Vnesiti morate ali končno oceno ali točke izpita oz. oboje.";
@@ -229,7 +230,7 @@
           return;
         }
       
-      if (p.tocke_na_izpitu != undefined)
+      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
       {
          if (parseInt(datumIzpita.substr(0,4)) <= parseInt(datumTMP.substr(0,4)))
         {
@@ -282,7 +283,7 @@
                  function success(odgovor) {
                    
                    alert("Uspešno posodobljena ocena/st.tock!");
-                   location.reload();
+                  // location.reload();
                  }, 
                  function error(odgovor) {
                    vm.napakaNaObrazcu = "Ni dostopa do baze!";
