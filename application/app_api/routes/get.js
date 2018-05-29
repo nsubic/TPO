@@ -275,7 +275,7 @@ router.get('/stVpisanih', function(req, res, next) {
 router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
 	console.log(req.params.sifraPredmeta)
 	if (req.params.sifraPredmeta) { 
-     global.connection.query('SELECT * FROM Izpit WHERE Predmet_sifra_predmeta = ? ', [req.params.sifraPredmeta], function (error, results, fields) {
+     global.connection.query('SELECT * FROM Izpit WHERE Predmet_sifra_predmeta = ? ORDER BY datum', [req.params.sifraPredmeta], function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
