@@ -21,6 +21,14 @@
           var vpisna = res.data.response[0].vpisna_st;
           vm.vpisnaSt = vpisna
           
+          estudentPodatki.vrstaStudija(vm.vpisnaSt).then(
+            function success(res) {
+            vm.nacinVpisa = { leto: res.data.response };
+            console.log(vm.vpisnaSt)
+            console.log(vm.nacinVpisa.leto.length)
+            console.log("nacin vpisa", vm.nacinVpisa);
+          });
+          
           estudentPodatki.podatkiIzpitovZaStudenta(vpisna).then(
             function success(res) {
               vm.podatki = { izpiti: res.data.response };
@@ -65,7 +73,9 @@
         vm.napakaNaObrazcu = "Od tega izpita se ne morete več odjaviti!";
       }
     }
-
+  
+    
+    
     estudentPodatki.predmet().then(
       function success(res) {
         vm.predmeti = { imena: res.data.response };
@@ -143,7 +153,9 @@
               return;
             }
           }
-        
+          var steviloLet = vm.nacinVpisa.leto.length - 1;
+          var nacinStudija = vm.nacinVpisa.leto[steviloLet].nacin_studijaFK;
+          console.log("let", steviloLet)
           console.log(steviloPorabljenihRokov)
           console.log(steviloPolaganjLetos)
           console.log(steviloPolaganjVPrvemLetu)
@@ -158,6 +170,7 @@
               return;
           }
           // tuki manjkajo pogoji ki prevrjajo a ma že preveč rokov/a more placat ...
+          console.log("spodaj", vm.nacinVpisa)
           steviloPorabljenihRokov++;
           steviloPolaganjLetos++;
           estudentPodatki.prijavaNaIzpit({
@@ -165,10 +178,12 @@
               Student_vpisna_st:vm.vpisnaSt
           }).then(
             function success(res) {
-              if(steviloPorabljenihRokov > 3)
-                alert("Uspešna prijava na izpit! To bo vaše " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše.")
+              if(nacinStudija == 3)
+                alert("Uspešna prijava na izpit! To bo vaše " + steviloPorabljenihRokov + " polaganje, letos pa " + steviloPolaganjLetos + " polaganje. Ker niste redno vpisani, morate plačati prijavnino, sicer se vam prijava izbriše.")
+              else if(steviloPorabljenihRokov > 3)
+                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše. Letos pa bo to vaše " + steviloPolaganjLetos + " polaganje.")
               else
-                alert("Uspešna prijava na izpit! To bo vaše " + steviloPorabljenihRokov + " polaganje, letos pa " + steviloPolaganjLetos + " polaganje."  )
+                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, letos pa bo vaše " + steviloPolaganjLetos + " polaganje."  )
             location.reload();
           })
           
