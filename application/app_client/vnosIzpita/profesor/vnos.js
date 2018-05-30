@@ -133,55 +133,21 @@
         var datumIzpita = window.localStorage['datumIzpita'];
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
-      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
-      {
-        vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisano  st tock, oz. ne smete vpisovati tock pri odjavi studenta.";
-        return;
-      }
-      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
-      {
-         if (parseInt(datumIzpita.substr(0,4)) <= parseInt(datumTMP.substr(0,4)))
+        
+        if (p.tocke_na_izpitu == "VP" || p.ocena == "VP")
         {
-          if (parseInt(datumIzpita.substr(5,7)) <= parseInt(datumTMP.substr(5,7)))
-          {
-            if (parseInt(datumIzpita.substr(8,10)) <= parseInt(datumTMP.substr(8,10)))
-            {
-              if (parseInt(uraIzpita) <= parseInt(uraTMP))
-              {
-                if (parseInt(minutaIzpita) <= parseInt(minuteTMP))
-                {
-                  // je kul
-                }
-                else
-                {
-                   vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-                }
-              }
-              else
-              {
-                vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-              }
-            }
-            else
-            {
-              vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-            }
-          }
-          else
-          {
-            vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-          }
+          
         }
         else
         {
-          vm.napakaNaObrazcu3 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
+          if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
+          {
+            vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisano  st tock, oz. ne smete vpisovati tock pri odjavi studenta.";
+            return;
+          }
         }
-      }
+      
+      
         var odja = $window.localStorage['upIme'];
         estudentPodatki.odjaviStudentaRef({
         Izpit_šifra: p.Izpit_šifra,
@@ -238,23 +204,6 @@
           {
             if (parseInt(datumIzpita.substr(8,10)) <= parseInt(datumTMP.substr(8,10)))
             {
-              if (parseInt(uraIzpita) <= parseInt(uraTMP))
-              {
-                if (parseInt(minutaIzpita) <= parseInt(minuteTMP))
-                {
-                  // je kul
-                }
-                else
-                {
-                   vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-                }
-              }
-              else
-              {
-                vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
-                    return;
-              }
             }
             else
             {

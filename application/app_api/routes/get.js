@@ -340,7 +340,7 @@ router.get('/nivojiStudija', function(req, res, next) {
 });
 
 router.get('/PrijavljeniNaIzpit/:sifraIzpita', function(req, res, next) {
-     global.connection.query('SELECT * FROM Prijavljeni_na_izpit WHERE Izpit_šifra = ? and odjava=0', [req.params.sifraIzpita], function (error, results, fields) {
+     global.connection.query('SELECT * FROM Prijavljeni_na_izpit INNER JOIN Student ON Prijavljeni_na_izpit.Student_vpisna_st = Student.vpisna_st WHERE Izpit_šifra = ? and odjava=0', [req.params.sifraIzpita], function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
