@@ -167,21 +167,28 @@
                 vm.letoPrvega = vm.Vpis.leto[0].Vpis_studijsko_letoFK;
             
             
-                console.log("prvi vpis", vm.letoPrvega.split('/')[1])
-                console.log("prvi izpit", vm.podatki.izpiti[0].datum.split('-')[0])
                 
                 var seRokiZbrisejo = 0
-                if(vm.letoPrvega.split('/')[1] == vm.podatki.izpiti[0].datum.split('-')[0]){
-                  seRokiZbrisejo = 1;
+                console.log("podatki izpita", vm.podatki.izpiti.length)
+                if(vm.podatki.izpiti.length > 0){
+                  console.log("podatki izpita", vm.podatki.izpiti[0].datum.split('-')[0])
+                  if(vm.podatki.izpiti[0].datum.split('-')[0] > 0){
+                    console.log("prvi izpit", vm.podatki.izpiti[0].datum.split('-')[0])
+                    console.log("prvi vpis", vm.letoPrvega.split('/')[1])
+                  
+                    if(vm.letoPrvega.split('/')[1] == vm.podatki.izpiti[0].datum.split('-')[0]){
+                      seRokiZbrisejo = 1;
+                    }
+                  }
                 }
                 console.log("brisanje rokov", seRokiZbrisejo)
                 var steviloLet = vm.nacinVpisa.leto.length - 1;
                 var nacinStudija = vm.nacinVpisa.leto[steviloLet].nacin_studijaFK;
-      
-                if((steviloPorabljenihRokov != steviloPolaganjVPrvemLetu) && seRokiZbrisejo==1){
+                console.log(steviloPorabljenihRokov, " ", steviloPolaganjVPrvemLetu)
+                if((steviloPorabljenihRokov != steviloPolaganjLetos) && seRokiZbrisejo==1){
                   steviloPorabljenihRokov = (steviloPorabljenihRokov - steviloPolaganjVPrvemLetu);
                 }
-                //console.log("odstejemo", steviloPorabljenihRokov);
+                console.log("odstejemo", steviloPorabljenihRokov);
                 if(steviloPolaganjLetos > 2){
                   vm.napakaNaObrazcu = "Letos ste porabili že 3 izpitne roke! Več sreče prihodnje leto!";
                     return;
