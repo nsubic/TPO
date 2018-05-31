@@ -96,7 +96,7 @@ router.get('/vpisStudent/:vpisna', function(req, res, next) {
 
 router.get('/vrstaStudija/:vpisna', function(req, res, next) {
 	if (req.params && req.params.vpisna) { 
-     global.connection.query('SELECT nacin_studijaFK ,Nacin_studija.opis AS eins FROM Vpis INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE vpisna_st = ?', [req.params.vpisna],function (error, results, fields) {
+     global.connection.query('SELECT nacin_studijaFK ,Nacin_studija.opis AS eins FROM Vpis INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE vpisna_st = ? ', [req.params.vpisna],function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
@@ -153,6 +153,18 @@ router.get('/predmetiStudenta/:vpisnaSt', function(req, res, next) {
 	console.log("tukaj", req.params.vpisnaSt)
      if (req.params.vpisnaSt) { 
      global.connection.query('SELECT * FROM Izbrani_predmeti WHERE Vpis_vpisna_st = ?', [req.params.vpisnaSt], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
+router.get('/vpisiVPredmetLeto/:vpisnaSt/:sifraPredmeta', function(req, res, next) {
+	console.log("tukaj", req.params.vpisnaSt)
+     if (req.params.vpisnaSt && req.params.sifraPredmeta) { 
+     global.connection.query('SELECT Vpis_studijsko_letoFK FROM Izbrani_predmeti WHERE Vpis_vpisna_st = ? AND Predmetnik_sifra_predmetaFK = ?', [req.params.vpisnaSt, req.params.sifraPredmeta], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});

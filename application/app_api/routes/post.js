@@ -3,7 +3,8 @@ var router = express.Router();
 var passport = require('passport');
 //var ctrlAvtentikacija = require('../controllers/avtentikacija');
 var jwt = require('jsonwebtoken');
-
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 
 router.post('/dodajKandidate', function(req, res, next) {
@@ -36,6 +37,33 @@ router.post('/dodajOsebe', function(req, res, next) {
     	});
 });
 
+
+router.post('/posljiMail', function(req, res, next) {
+    var transporter = nodemailer.createTransport(smtpTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  auth: {
+        user: 'aljaz.erzin@gmail.com',
+        pass: 'puma7862*'
+    }
+}));
+
+var data = req.body;
+     var mailOptions = {
+        from: 'aljaz.erzin@gmail.com',
+        to: data.mail,
+        subject: 'Brisanje izpita pri'+ data.imePredmeta,
+        text: data.imeStudenta + ', zbrisali smo vam izpit '+ data.imePredmeta
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+});
+    
+ 
+});
 router.post('/dodajIzpit', function(req, res, next) {
     console.log(req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija)
      global.connection.query('INSERT INTO Izpit( rok, Predmet_sifra_predmeta, datum, lokacija,ura,profesor_ime ) VALUES (?,?,?,?,?,?)',[req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija,req.body.ura,req.body.profesor_ime], function (error, results, fields) {

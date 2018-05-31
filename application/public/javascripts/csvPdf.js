@@ -1,5 +1,4 @@
-function myFunction1() {
-    console.log("oj")
+function myFunction2() {
   var titles = [];
   var data = [];
 
@@ -31,7 +30,6 @@ function myFunction1() {
             if(j < cols.length-1)  row = row +','
         }
         row=row+'\n'
-
     }
 
   /*

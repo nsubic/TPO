@@ -140,11 +140,17 @@
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
       };
+      var letoVpisaVPredmet = function(vpisnaSt, predmetSifra) {
+        return $http.get('/api/vpisiVPredmetLeto/'+vpisnaSt+'/'+predmetSifra);
+      } 
       var podatkiIzpitovZaStudenta = function(sifraStudenta) {
         return $http.get('/api/podatkiIzpitovZaStudenta/' + sifraStudenta);
       };
       var prijavaNaIzpit = function(podatki) {
         return $http.post('/api/prijavaNaIzpit/', podatki);
+      };
+      var posljiMail = function(podatki) {
+        return $http.post('/api/posljiMail/', podatki);
       };
       var pridobiZeton = function(vpisna_st) {
         return $http.get('/api/zetoni/' + vpisna_st);
@@ -214,6 +220,8 @@
         izbrisiZeton:izbrisiZeton,
         vrstaStudija:vrstaStudija,
         dodajVpis:dodajVpis,
+        letoVpisaVPredmet:letoVpisaVPredmet,
+        posljiMail:posljiMail
       };
     };
 
