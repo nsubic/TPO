@@ -152,38 +152,61 @@
               return;
             }
           }
-          var steviloLet = vm.nacinVpisa.leto.length - 1;
-          var nacinStudija = vm.nacinVpisa.leto[steviloLet].nacin_studijaFK;
-
-          if(steviloPorabljenihRokov != steviloPolaganjVPrvemLetu){
-            steviloPorabljenihRokov = (steviloPorabljenihRokov - steviloPolaganjVPrvemLetu);
-          }
-          //console.log("odstejemo", steviloPorabljenihRokov);
-          if(steviloPolaganjLetos > 2){
-            vm.napakaNaObrazcu = "Letos ste porabili že 3 izpitne roke! Več sreče prihodnje leto!";
-              return;
-          }
           
-          if(steviloPorabljenihRokov > 5){
-            vm.napakaNaObrazcu = "Porabili ste že vse roke. Žal nimate več možnosti nadaljevanje pri tem predmetu!";
-              return;
-          }
-          steviloPorabljenihRokov++;
-          steviloPolaganjLetos++;
-          estudentPodatki.prijavaNaIzpit({
-              Izpit_sifra:izpit.sifra,
-              Student_vpisna_st:vm.vpisnaSt
-          }).then(
-            function success(res) {
-              if(nacinStudija == 3)
-                alert("Uspešna prijava na izpit! To bo vaše skupno" + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše" + steviloPolaganjLetos + " polaganje. Ker niste redno vpisani, morate plačati prijavo na izpit, sicer se vam prijava izbriše.")
-              else if(steviloPorabljenihRokov > 3)
-                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše. Letos pa bo to vaše " + steviloPolaganjLetos + " polaganje.")
-              else
-                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše " + steviloPolaganjLetos + " polaganje."  )
-            location.reload();
+          
+          console.log("vpisna: ", vm.vpisnaSt)
+          console.log("izpit: ", izpit.Predmet_sifra_predmeta)
+          vm.letoPrvega = ""
+          estudentPodatki.letoVpisaVPredmet(
+              vm.vpisnaSt,
+              izpit.Predmet_sifra_predmeta
+          ).then(
+              function success(res) {
+                vm.Vpis = { leto: res.data.response };
+                console.log("leta: ",vm.Vpis.leto[0].Vpis_studijsko_letoFK)
+                vm.letoPrvega = vm.Vpis.leto[0].Vpis_studijsko_letoFK;
+            
+            
+                console.log("prvi vpis", vm.letoPrvega.split('/')[1])
+                console.log("prvi izpit", vm.podatki.izpiti[0].datum.split('-')[0])
+                
+                var seRokiZbrisejo = 0
+                if(vm.letoPrvega.split('/')[1] == vm.podatki.izpiti[0].datum.split('-')[0]){
+                  seRokiZbrisejo = 1;
+                }
+                console.log("brisanje rokov", seRokiZbrisejo)
+                var steviloLet = vm.nacinVpisa.leto.length - 1;
+                var nacinStudija = vm.nacinVpisa.leto[steviloLet].nacin_studijaFK;
+      
+                if((steviloPorabljenihRokov != steviloPolaganjVPrvemLetu) && seRokiZbrisejo==1){
+                  steviloPorabljenihRokov = (steviloPorabljenihRokov - steviloPolaganjVPrvemLetu);
+                }
+                //console.log("odstejemo", steviloPorabljenihRokov);
+                if(steviloPolaganjLetos > 2){
+                  vm.napakaNaObrazcu = "Letos ste porabili že 3 izpitne roke! Več sreče prihodnje leto!";
+                    return;
+                }
+                
+                if(steviloPorabljenihRokov > 5){
+                  vm.napakaNaObrazcu = "Porabili ste že vse roke. Žal nimate več možnosti nadaljevanje pri tem predmetu!";
+                    return;
+                }
+                steviloPorabljenihRokov++;
+                steviloPolaganjLetos++;
+                estudentPodatki.prijavaNaIzpit({
+                    Izpit_sifra:izpit.sifra,
+                    Student_vpisna_st:vm.vpisnaSt
+                }).then(
+                  function success(res) {
+                    if(nacinStudija == 3)
+                      alert("Uspešna prijava na izpit! To bo vaše skupno" + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše" + steviloPolaganjLetos + " polaganje. Ker niste redno vpisani, morate plačati prijavo na izpit, sicer se vam prijava izbriše.")
+                    else if(steviloPorabljenihRokov > 3)
+                      alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše. Letos pa bo to vaše " + steviloPolaganjLetos + " polaganje.")
+                    else
+                      alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše " + steviloPolaganjLetos + " polaganje."  )
+                  location.reload();
+                })
           })
-          
           
         }
         else{                                             // prepozno

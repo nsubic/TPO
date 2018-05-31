@@ -140,6 +140,9 @@
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
       };
+      var letoVpisaVPredmet = function(vpisnaSt, predmetSifra) {
+        return $http.get('/api/vpisiVPredmetLeto/'+vpisnaSt+'/'+predmetSifra);
+      } 
       var podatkiIzpitovZaStudenta = function(sifraStudenta) {
         return $http.get('/api/podatkiIzpitovZaStudenta/' + sifraStudenta);
       };
@@ -209,7 +212,8 @@
         vrniOcene:vrniOcene,
         vstaviZeton:vstaviZeton,
         izbrisiZeton:izbrisiZeton,
-        vrstaStudija:vrstaStudija
+        vrstaStudija:vrstaStudija,
+        letoVpisaVPredmet:letoVpisaVPredmet
       };
     };
 
