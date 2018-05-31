@@ -43,6 +43,11 @@
       controller: 'vpisniListCtrl',
       controllerAs: 'vm'
     })
+    .when('/vpis/potrditev', {
+     templateUrl: '/vpisniList/potrditevVpisniList.pogled.html',
+     controller: 'potrditevVpisniListCtrl',
+     controllerAs: 'vm',
+    })
     .when('/uvozPodatkov', {
        templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html',
        controller: 'nalozi',
