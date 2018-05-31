@@ -33,6 +33,13 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 //Passport
 app.use(passport.initialize());
 
+var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'ae',
+            pass: 'ref'
+          }
+        });
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({
     host: "127.0.0.1",

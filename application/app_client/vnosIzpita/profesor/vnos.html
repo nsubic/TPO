@@ -122,6 +122,8 @@
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
               <th scope="col">Št. točk</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Priimek</th>
               <th scope="col">Končna Ocena</th>
             </tr>
           </thead>
@@ -132,6 +134,8 @@
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
+                <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
                  <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
@@ -171,6 +175,8 @@
             <tr>
               <th  class="TOTR" scope="col">#</th>
               <th class="TOTR"  scope="col">Vpisna št.</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Priimek</th>
               <th class="TOTR"  scope="col">Št. točk</th>
               <th class="TOTR"  scope="col">Ocena</th>
             </tr>
@@ -179,6 +185,8 @@
             <tr ng-repeat="p in vm.prijavljeni.stu">
               <th class="TOTR"  scope="row">{{$index +1}}</th>
               <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
+              <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
               <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
               <td class="TOTR" >{{ p.ocena }}</td>
             </tr>

@@ -60,6 +60,9 @@
       var studentiVpis = function(vpisna) {
         return $http.get('/api/vpisStudent/'+vpisna);
       };
+      var vrstaStudija = function(vpisna) {
+        return $http.get('/api/vrstaStudija/'+vpisna);
+      };
       var student2 = function(upime) {
         return $http.get('/api/student2/'+upime);
       };
@@ -206,6 +209,7 @@
         vrniOcene:vrniOcene,
         vstaviZeton:vstaviZeton,
         izbrisiZeton:izbrisiZeton,
+        vrstaStudija:vrstaStudija
       };
     };
 
