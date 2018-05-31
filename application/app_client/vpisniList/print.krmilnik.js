@@ -8,7 +8,27 @@
     var leto2 = $routeParams.leto2;
     var program = $routeParams.program;
     $scope.vpis = {};
-    
+    $scope.tock = 0;
+    estudentPodatki
+      .studentiVpis(vpisnaSt)
+      .then(function(res) {
+        var currents = $.grep(res.data.response, function(data) {
+          return data.sifra_stProgramFK === program && data.studijsko_letoFK === [leto1, leto2].join("/");
+        })
+        
+        var current = currents[0];
+        console.log("vpis", current);
+        
+        $scope.vpis.letnik = current.letnikFK;
+        $scope.vpis.program = current.sifra_stProgramFK;
+        $scope.vpis.vrsta_vpisa = current.eins;
+      })
+    estudentPodatki
+      .predmet()
+      .then(function(res) {
+        console.log("predmet...", res);
+        $scope.sifrantPredmetov = res.data.response;
+      })
     estudentPodatki
       .student(vpisnaSt)
       .then(function(res) {
@@ -32,7 +52,24 @@
       
     estudentPodatki.dobiVsePredmete(vpisnaSt).then(
     function (res) {
-      console.log("predmeti", res)
+      console.log("predmeti", res);
+      var predmeti = $.grep(res.data.response, function(data) {
+        return data.Vpis_studijsko_letoFK === [leto1, leto2].join("/") && data.Vpis_sifra_stProgramFK === program;
+      });
+      $scope.predmeti = $.map(predmeti, function(data) {
+        var nazivi = $.grep($scope.sifrantPredmetov, function(data2) {
+          return data2.sifra_predmeta === data.Predmetnik_sifra_predmetaFK;
+        });
+        data.naziv = nazivi[0].ime_predmeta;
+        data.tocke = nazivi[0].KT_tocke;
+        return data;
+      });
+      
+      
+      $.each($scope.predmeti, function(idx, data) {
+        console.log("sum", $scope.tock, data);
+        $scope.tock += data.tocke;
+      })
     });
       
       $scope.print = print;
