@@ -4,6 +4,7 @@
   vpisniListCtrl.$inject = ['$location', '$scope', 'estudentPodatki', '$routeParams', '$window'];
   function vpisniListCtrl($location, $scope, estudentPodatki, $routeParams, $window) {
     var vm = this;
+    $scope.spoli = [{id: 1, name: 'Ženski'}, {id: 2, name: 'Moški'}];
     $scope.zetonNiNaVoljo = true;
     $scope.maxPredmeti = 10;
     $scope.obvezniPredmeti = 0;
@@ -53,7 +54,7 @@
     $scope.reloadPredmeti = function() {
       console.log("letnik", $scope.vpis.letnik);
       if($scope.vpis.letnik == 2) {
-        $scope.maxTock = 54;
+        $scope.maxTock = 48;
       } else {
         $scope.maxTock = 60;
       }
@@ -148,6 +149,7 @@
       vrsta_vpisa: null,
       letnik: null,
       solskoLeto: "2018/2019",
+      zetonId: null,
     };
     
     $scope.skupine = [];
@@ -277,9 +279,10 @@
       $scope.recalculate();
     }
     
-    vm.izvediVpis = function() {
+    $scope.izvediVpis = function() {
       console.info("submit start");
       
+      // IGNORE
       if (true) // ce se bo student prvic vpisal na faks
       {
         // potrebujemo novo vpisno stevilko
@@ -290,6 +293,30 @@
         // ce ga ze imamo v bazi, potem pa moramo preverjatni kombinacije, kam se voce vpisat
       }
       
+      $scope.vpis.predmeti = [];
+      
+      $.each($scope.skupine, function(idx1, elem1) {
+        
+        
+        $.each(elem1.predmeti, function(idx2, elem2) {
+          if(elem2.izbran || elem2.skupina === 1) {
+            $scope.vpis.predmeti.push({
+              predmet: elem2.id,
+              skupina: elem2.skupina,
+            });
+          }
+        });
+      })
+      
+      estudentPodatki
+        .dodajVpis($scope.vpis)
+        .then(function(res) {
+          console.log(res);
+          var leta = $scope.vpis.solskoLeto.split("/");
+          $window.location.href = "/" + ["vpis", "print", leta[0], leta[1], $scope.vpis.program, $scope.vpis.vpisna_st].join("/");
+        }, function(err) {
+          alert(err);
+        })
       // estudentPodatki
       //  .dodajStudenta(vpis) ???
       // sn: ali kaj drugega, ne vem
@@ -298,6 +325,23 @@
     estudentPodatki.student2($window.localStorage['upIme']).then(function (res) {
       console.log(res);
       var vpisna = res.data.response[0].vpisna_st;
+      var data = res.data.response[0];
+      
+      for(var key in data) {
+        var partial = data[key];
+        try {
+          if(key.indexOf("datum") >= 0) {
+            partial = new Date(Date.parse(data[key]));
+          } else if(key === "naslov_vrocanje") {
+            partial = data[key] === 1 ? true : false;
+          }
+        } catch(ex) {
+        }
+        $scope.vpis[key] = partial;
+      }
+      
+      console.log("scope", $scope.vpis);
+
       estudentPodatki
         .dobiZeton(vpisna)
         .then(function(res) {
@@ -311,8 +355,11 @@
             console.log("first", first);
             $scope.vpis.program = first.Nivo_studijaFK;
             $scope.vpis.vrsta_vpisa = first.nacin_studijaFK;
+            $scope.vpis.nacin_studija = first.nacin_studijaFK;
             $scope.vpis.letnik = first.letnikFK;
             $scope.vpis.solskoLeto = first.studijsko_letoFK;
+            $scope.vpis.visoko_povprecje = first.visoko_povprecje;
+            $scope.vpis.zetonId = first.id;
             
             $scope.reloadPredmeti();
           }

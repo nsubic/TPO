@@ -158,6 +158,9 @@
       var izbrisiZeton = function(id) {
         return $http.delete('/api/zeton/' + id);
       };
+      var dodajVpis = function(vpis) {
+        return $http.post('/api/vpis', JSON.stringify(vpis));
+      }
       return {
         obcina: obcina,
         drzava:drzava,
@@ -209,7 +212,8 @@
         vrniOcene:vrniOcene,
         vstaviZeton:vstaviZeton,
         izbrisiZeton:izbrisiZeton,
-        vrstaStudija:vrstaStudija
+        vrstaStudija:vrstaStudija,
+        dodajVpis:dodajVpis,
       };
     };
 

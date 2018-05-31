@@ -1,128 +1,121 @@
 <studentglava></studentglava>
+<style type="text/css">
+  @media print {
+    .navbar, .footer, .print-button { display: none; }
+    .print { display: block }
+  }
+</style>
 <div class="container">
-    <h1>Vpis</h1>
+    <h1>Vpisni list {{ vpis.letnik }}</h1>
     <form ng-submit="vm.izvediVpis()">
       <div class="form-group row">
         <label for="ime" class="col-sm-3 col-form-label">Ime:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="ime" ng-model="vpis.ime">
+          {{ vpis.ime }}
         </div>
       </div>
       <div class="form-group row">
         <label for="priimek" class="col-sm-3 col-form-label">Priimek:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="priimek" ng-model="vpis.priimek">
+          {{ vpis.priimek }}
         </div>
       </div>
       <div class="form-group row">
         <label for="datum_rojstva" class="col-sm-3 col-form-label">Datum rojstva:</label>
         <div class="col-sm-9">
-          <input id="datum_rojstva" class="form-control" type="date" ng-model="vpis.datum_rojstva">
+          {{ vpis.datum_rojstva }}
         </div>
       </div>
       <div class="form-group row">
         <label for="kraj_rojstva" class="col-sm-3 col-form-label">Kraj rojstva:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="kraj_rojstva" ng-model="vpis.kraj_rojstva">
+          {{ vpis.kraj_rojstva }}
         </div>
       </div>
       <div class="form-group row">
         <label for="drzava_rojstva" class="col-sm-3 col-form-label">Država rojstva:</label>
         <div class="col-sm-9">
-          <select class="form-control" id="drzava_rojstva" ng-options="item.dvomestna_koda as item.slo_naziv for item in drzave" ng-model="vpis.drzava_rojstva">
-            <option value="">Izberi državo rojstva</option>
-          </select>
+          {{ vpis.Drzava_rojstva }}
         </div>
       </div>
       <div class="form-group row">
         <label for="emso" class="col-sm-3 col-form-label">EMŠO:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="emso" ng-model="vpis.emso">
+          {{ vpis.emso }}
         </div>
       </div>
       <div class="form-group row">
         <label for="davcna" class="col-sm-3 col-form-label">Davčna številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="davcna" ng-model="vpis.davcna">
+          {{ vpis.davcna }}
         </div>
       </div>
       <div class="form-group row">
         <label for="spol" class="col-sm-3 col-form-label">Spol:</label>
         <div class="col-sm-9">
-          <select id="spol" class="form-control" ng-options="item.id as item.name for item in spoli" ng-model="vpis.spol">
-            <option value="">Izberi spol</option>
-          </select>
+          {{ vpis.spol }}
         </div>
       </div>
 
       <div class="form-group row">
         <label for="stalni_naslov_ulica" class="col-sm-3 col-form-label">Ulica stalnega bivanja:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="stalni_naslov_ulica" ng-model="vpis.stalni_naslov_ulica">
+          {{ vpis.stalni_naslov_ulica }}
         </div>
       </div>
       <div class="form-group row">
         <label for="stalni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka stalnega bivanja:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="stalni_naslov_hisnast" ng-model="vpis.stalni_naslov_hisnast">
+          {{ vpis.stalni_naslov_hisnast }}
         </div>
       </div>
       
       <div class="form-group row">
         <label for="stalni_postna_stevilka" class="col-sm-3 col-form-label">Poštna številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="stalni_postna_stevilka" ng-model="vpis.stalni_postna_stevilka">
+          {{ vpis.stalni_postna_stevilka }}
         </div>
       </div>
       <div class="form-group row">
         <label for="stalni_obcina_koda" class="col-sm-3 col-form-label">Kraj pošte:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="stalni_obcina_koda" ng-model="vpis.stalni_obcina_koda">
+          {{ vpis.stalni_obcina_koda }}
         </div>
       </div>
       <div class="form-group row">
         <label for="stalni_drzava_koda" class="col-sm-3 col-form-label">Država pošte:</label>
         <div class="col-sm-9">
-          <select class="form-control" id="stalni_drzava_koda" ng-options="item.dvomestna_koda as item.slo_naziv for item in drzave" ng-model="vpis.stalni_drzava_koda">
-            <option value="">Izberi državo</option>
-          </select>
+          {{ vpis.stalni_drzava_koda }}
         </div>
       </div>
       <div class="form-group row">
         <label for="zacasni_naslov_ulica" class="col-sm-3 col-form-label">Ulica začasnega bivanja:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="zacasni_naslov_ulica" ng-model="zacasni_naslov_ulica">
-          <small class="form-text text-muted">Neobvezno polje</small>
+          {{ vpis.zacasni_naslov_ulica }}
         </div>
       </div>
       <div class="form-group row">
         <label for="zacasni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka začasnega bivanja:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="zacasni_naslov_hisnast" ng-model="zacasni_naslov_hisnast">
-          <small class="form-text text-muted">Neobvezno polje</small>
+          {{ vpis.zacasni_naslov_hisnast }}
         </div>
       </div>
       <div class="form-group row">
         <label for="zacasni_postna_stevilka" class="col-sm-3 col-form-label">Začasna poštna številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="zacasni_postna_stevilka" ng-model="vpis.zacasni_postna_stevilka">
-          <small class="form-text text-muted">Neobvezno polje</small>
+          {{ vpis.zacasni_postna_stevilka }}
         </div>
       </div>
       <div class="form-group row">
         <label for="zacasni_kraj_posta" class="col-sm-3 col-form-label">Začasni kraj pošte:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="zacasni_kraj_posta" ng-model="vpis.zacasni_kraj_posta">
-          <small class="form-text text-muted">Neobvezno polje</small>
+          {{ vpis.zacasni_kraj_posta }}
         </div>
       </div>
       <div class="form-group row">
         <label for="zacasni_drzava_posta" class="col-sm-3 col-form-label">Začasna država pošte:</label>
         <div class="col-sm-9">
-          <select class="form-control" id="zacasni_drzava_posta" ng-options="item as item.slo_naziv for item in drzave track by item.dvomestna_koda" ng-model="vpis.zacasni_drzava_posta">
-            <option value="">Izberi državo</option>
-          </select>
-          <small class="form-text text-muted">Neobvezno polje</small>
+          {{ vpis.zacasni_drzava_posta }}
         </div>
       </div>
       
@@ -130,34 +123,30 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-9">
-          <input type="checkbox" ng-model="vpis.naslov_vrocanje" id="prejem_zacasni" />
-          <label for="prejem_zacasni" class="col-form-label">Pošto hočem prejemati na naslov začasnega bivanja</label>  
+          {{ vpis.naslov_vrocanje ? 'Prejemam pošto na začasni naslov' : 'Prejemam pošto na stalni naslov' }}
         </div>
       </div>
       
       <div class="form-group row">
         <label for="vpisna_st" class="col-sm-3 col-form-label">Vpisna številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="vpisna_st" ng-model="vpis.vpisna_st">
+          {{ vpis.vpisna_st }}
         </div>
       </div>
 
       <div class="form-group row">
         <label for="tel_st" class="col-sm-3 col-form-label">Telefonska številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="tel_st" ng-model="vpis.tel_st">
+          {{ vpis.tel_st }}
         </div>
       </div>
       <div class="form-group row">
         <label for="email" class="col-sm-3 col-form-label">Elektronska pošta:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="email" ng-model="vpis.mail">
+          {{ vpis.mail }}
         </div>
       </div>
-      
-      <div class="alert alert-danger" role="alert" ng-if="zetonNiNaVoljo">
-        Vpis ni možen, na voljo nimate nobenega žeton-a.
-      </div>
+
       <div class="form-group row">
         <label for="program" class="col-sm-3 col-form-label">Študijski program:</label>
         <div class="col-sm-9">
@@ -219,8 +208,8 @@
         </div>
       </div>
    </div>
-   <div style="margin-top:30px;">
-     <button type="button" class="btn btn-primary" ng-click="izvediVpis()"  style="margin:10px"> <span class="fa fa-pencil-alt"></span> Potrdi vpis</button>
+   <div style="margin-top:30px;" class="print-button">
+     <a ng-click="print()" target="_blank" class="btn btn-primary"> <span class="fa fa-print"></span> Tiskanje</a>
    </div>
   </div>
 </div>

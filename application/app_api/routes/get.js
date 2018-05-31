@@ -395,13 +395,13 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	if(req.params.vpisnaSt) {
 		global.connection.query(`
-SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.naziv nivo_studija_opis, z.izkoriscen, z.letnikFK, z.prosto_izbirni, z.studijsko_letoFK
+SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.naziv nivo_studija_opis, z.izkoriscen, z.letnikFK, z.prosto_izbirni, z.studijsko_letoFK, z.visoko_povprecje
 FROM Zeton z
 JOIN Studijsko_leto sl ON (z.studijsko_letoFK = sl.studijsko_leto)
 JOIN Vrsta_vpisa vv ON (z.Vrsta_vpisa = vv.Vrsta_vpisa)
 JOIN Nacin_studija nacin ON (z.Nacin_studijaFK = nacin.nacin_studija)
 JOIN Studijski_program nivo ON (z.Nivo_studijaFK = nivo.sifra_stProgram)
-WHERE z.vpisna_stFK = ?
+WHERE z.vpisna_stFK = ? AND z.izkoriscen = 0
 `, [req.params.vpisnaSt], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
