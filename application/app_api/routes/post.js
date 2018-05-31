@@ -64,9 +64,13 @@ router.post('/prijavaNaIzpit', function(req, res, next) {
 router.post('/zeton', function(req, res, next) {
     var vrsta_vpisa = req.body.vrsta_vpisa;
     var nacin_studija = req.body.nacin_studija;
-    var nivo_studija = req.body.nivo_studija;
+    var program = req.body.program;
     var vpisna_st = req.body.vpisna_stFK;
-    global.connection.query('INSERT INTO Zeton (vrsta_vpisa, Nacin_studijaFK, Nivo_studijaFK, izkoriscen, vpisna_stFK) VALUES (?, ?, ?, ?, ?)', [vrsta_vpisa, nacin_studija, nivo_studija, 0, vpisna_st], function(error, results, fields) {
+    var letnik = req.body.letnik;
+    var prosto_izbirni = req.body.prosto_izbirni;
+    var leto = req.body.leto;
+    
+    global.connection.query('INSERT INTO Zeton (Studijsko_letoFK, vrsta_vpisa, Nacin_studijaFK, Nivo_studijaFK, izkoriscen, vpisna_stFK, letnikFK, prosto_izbirni) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [leto, vrsta_vpisa, nacin_studija, program, 0, vpisna_st, letnik, prosto_izbirni], function(error, results, fields) {
        if(error) {
            throw error;
        }

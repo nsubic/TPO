@@ -6,6 +6,8 @@
     var vm = this;
     
     $scope.vrsteVpisov = [];
+    $scope.programi = [];
+    $scope.letniki = [];
     $scope.naciniStudija = [];
     $scope.nivojiStudija = [];
     
@@ -15,7 +17,29 @@
       nivo_studija: null,
       vpisna_stFK: null,
       izkoriscen: null,
+      prosto_izbirni: null,
     }
+    
+    estudentPodatki
+      .letnik()
+      .then(function(res) {
+        $scope.letniki = res.data.response;
+        console.log("letniki", $scope.letniki);
+      });
+      
+    estudentPodatki
+      .studijskiProgram()
+      .then(function(res) {
+        $scope.programi = res.data.response;
+        console.log("programi", $scope.programi);
+      });
+      
+    estudentPodatki
+      .studijskoLeto()
+      .then(function(res) {
+        $scope.leta = res.data.response;
+        console.log("študijska leta", $scope.leta);
+      });
     
     estudentPodatki
       .vrsteVpisa()

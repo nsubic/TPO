@@ -127,6 +127,15 @@
           <small class="form-text text-muted">Neobvezno polje</small>
         </div>
       </div>
+      
+      <div class="form-group row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-9">
+          <input type="checkbox" ng-model="vpis.prejem_zacasni" id="prejem_zacasni" />
+          <label for="prejem_zacasni" class="col-form-label">Pošto hočem prejemati na naslov začasnega bivanja</label>  
+        </div>
+      </div>
 
       <div class="form-group row">
         <label for="tel_st" class="col-sm-3 col-form-label">Telefonska številka:</label>
@@ -141,26 +150,30 @@
         </div>
       </div>
       
+      <div class="alert alert-danger" role="alert" ng-if="zetonNiNaVoljo">
+        Vpis ni možen, na voljo nimate nobenega žeton-a.
+      </div>
       <div class="form-group row">
         <label for="program" class="col-sm-3 col-form-label">Študijski program:</label>
         <div class="col-sm-9">
-          <select id="program" class="form-control" ng-options="item as item.naziv for item in programi track by item.sifra_stProgram" ng-model="vpis.program">
+          <select id="program" class="form-control" ng-options="item.sifra_stProgram as item.naziv for item in programi" ng-model="vpis.program">
+            <option value="">Izberite program</option>
           </select>
         </div>
       </div>
       <div class="form-group row">
-        <label for="vrsta_vpisa" class="col-sm-3 col-form-label">Vrsta vpisa:</label>
+        <label for="vrsta_vpisa" class="col-sm-3 col-form-label">Način študija:</label>
         <div class="col-sm-9">
           <select id="vrsta_vpisa" class="form-control" ng-options="nacin.nacin_studija as nacin.opis for nacin in nacini_studija" ng-model="vpis.vrsta_vpisa">
-            <option value="selected">Izberi vrsto vpisa</option>
+            <option value="">Izberite način študija</option>
           </select>
         </div>
       </div>
       <div class="form-group row">
         <label for="letnik" class="col-sm-3 col-form-label">Letnik:</label>
         <div class="col-sm-9">
-          <select id="letnik" class="form-control" ng-options="item as item.letnik for item in letniki track by item.letnik" ng-model="vpis.letnik">
-            <option value="selected">Izberi letnik vpisa</option>
+          <select id="letnik" class="form-control" ng-options="item.letnik as item.letnik for item in letniki" ng-model="vpis.letnik">
+            <option value="">Izberite letnik vpisa</option>
           </select>
         </div>
       </div>
@@ -172,7 +185,6 @@
       <div class="container">
   <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%">
     <h1 style="margin:30px;text-align:center">Predmetnik</h1>
-    <h6 style="margin-top:30px;">Moduli:</h6>
     <div ng-repeat="skupina in skupine" ng-if="skupina.id != 1">
       <h6 style="margin-top:30px;">{{ skupina.naziv }}:</h6>  
       <div class="list-group">
@@ -184,7 +196,7 @@
 <div class="container">
   <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%;min-height: 90%;">
     <h1 style="margin:30px;text-align:center">Seznam izbranih predmetov </h1>
-    <h6 style="margin-top:30px;" >KT:&nbsp;&nbsp;<div style="display:inline-block;font-size: 30px;color:red;">60</div></h6>
+    <h6 style="margin-top:30px;" >KT:&nbsp;&nbsp;<div style="display:inline-block;font-size: 30px;color:red;">{{ tock }}</div></h6>
     <h6 style="margin-top:30px;" >Predmeti:</h6>
     <div class="list-group "  >
       

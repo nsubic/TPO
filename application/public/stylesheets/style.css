@@ -37,3 +37,8 @@
   
   background-color: #e1e6ef;
 }
+
+@media (min-width: 1200px)
+.modal-lg {
+    max-width: 968px;
+}

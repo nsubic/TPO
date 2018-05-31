@@ -38,15 +38,21 @@
         <table class="table">
           <thead>
             <tr>
+              <th>Študijsko leto</th>
               <th>Vrsta vpisa</th>
               <th>Način študija</th>
-              <th>Nivo študija</th>
+              <th>Študijski program</th>
+              <th>Letnik</th>
+              <th>Prosto izbirni</th>
               <th>Izkoriščen</th>
               <th>Akcija</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="z in zetoni">
+              <td>
+                {{ z.studijsko_letoFK }}
+              </td>
               <td>
                 {{ z.vrsta_vpisa_opis }}
               </td>
@@ -55,6 +61,12 @@
               </td>
               <td>
                 {{ z.nivo_studija_opis }}
+              </td>
+              <td>
+                {{ z.letnikFK }}
+              </td>
+              <td>
+                {{ z.prosto_izbirni > 0 ? "Da" : "Ne" }}
               </td>
               <td>
                 {{ z.izkoriscen > 0 ? "Da" : "Ne" }}
@@ -67,6 +79,11 @@
           <tfoot>
             <tr>
               <td>
+                <select class="form-control" ng-options="leto.studijsko_leto as leto.studijsko_leto for leto in leta" ng-model="zeton.leto">
+                  <option value="">Izberi študijsko leto</option>
+                </select>
+              </td>
+              <td>
                 <select class="form-control" ng-options="vrsta.vrsta_vpisa as vrsta.opis for vrsta in vrsteVpisov" ng-model="zeton.vrsta_vpisa">
                   <option value="">Izberi vrsto vpisa</option>
                 </select>
@@ -77,9 +94,17 @@
                 </select>
               </td>
               <td>
-                <select class="form-control" ng-options="nivo.id as nivo.opis for nivo in nivojiStudija" ng-model="zeton.nivo_studija">
-                  <option value="">Izberi nivo študija</option>
+                <select class="form-control" ng-options="program.sifra_stProgram as program.naziv for program in programi" ng-model="zeton.program">
+                  <option value="">Izberi program</option>
                 </select>
+              </td>
+              <td>
+                <select class="form-control" ng-options="letnik.letnik as letnik.letnik for letnik in letniki" ng-model="zeton.letnik">
+                  <option value="">Izberi letnik</option>
+                </select>
+              </td>
+              <td>
+                <input type="checkbox" class="form-control" ng-model="zeton.prosto_izbirni" ng-if="zeton.letnik == 3" ng-checked="zeton.letnik == 3" />
               </td>
               <td>
                 

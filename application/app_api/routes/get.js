@@ -293,8 +293,7 @@ router.get('/nosilciInPredmeti/', function(req, res, next) {
 							AND Predmetnik.sifra_predmetaFK = Nosilec_predmeta.sifra_predmetaFK\
 							INNER JOIN Predmet ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta\
 							INNER JOIN Profesor ON Nosilec_predmeta.sifra_profesorjaFK1 = Profesor.sifra_profesorja\
-							INNER JOIN Del_predmetnika ON Predmetnik.sifra_predmetnikaFK = Del_predmetnika.sifra_predmetnika\
-							GROUP BY Predmetnik.studijsko_letoFK, Profesor.sifra_profesorja',function (error, results, fields) {
+							INNER JOIN Del_predmetnika ON Predmetnik.sifra_predmetnikaFK = Del_predmetnika.sifra_predmetnika',function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
@@ -385,11 +384,12 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	if(req.params.vpisnaSt) {
 		global.connection.query(`
-SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.opis nivo_studija_opis, z.izkoriscen
+SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.naziv nivo_studija_opis, z.izkoriscen, z.letnikFK, z.prosto_izbirni, z.studijsko_letoFK
 FROM Zeton z
+JOIN Studijsko_leto sl ON (z.studijsko_letoFK = sl.studijsko_leto)
 JOIN Vrsta_vpisa vv ON (z.Vrsta_vpisa = vv.Vrsta_vpisa)
 JOIN Nacin_studija nacin ON (z.Nacin_studijaFK = nacin.nacin_studija)
-JOIN Nivo_studija nivo ON (z.Nivo_studijaFK = nivo.id)
+JOIN Studijski_program nivo ON (z.Nivo_studijaFK = nivo.sifra_stProgram)
 WHERE z.vpisna_stFK = ?
 `, [req.params.vpisnaSt], cb);	
 	} else {
