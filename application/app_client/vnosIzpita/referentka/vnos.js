@@ -149,12 +149,11 @@
           
     };
     
-    vm.shraniSifroIzpit = function(sifra, datumIzpita, uraIzpita, imeIzpita)
+    vm.shraniSifroIzpit = function(sifra, datumIzpita, sifraPredmeta, uraIzpita)
     {
       window.localStorage['sifraIzpita'] = sifra;
-      window.localStorage['imeIzpita'] = imeIzpita;
-      window.localStorage['datumIzpita'] = imeIzpita;
-      window.localStorage['uraIzpita'] = imeIzpita;
+      window.localStorage['sifraPredmeta'] = sifraPredmeta;
+      window.localStorage['datumIzpita'] = datumIzpita;
       vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
     }
     
@@ -370,87 +369,121 @@
           vm.izbris2 = "Napaka pri pridobivanju tock."
         });
     };
-  
-    vm.prijavi = function() {
-      vm.napakaNaObrazcu5="";
-      var tmp = false;
-      estudentPodatki.student3(parseInt(vm.novaPrijavaVpisna)).then(
-        function success(res) {
-          vm.student = { stu: res.data.response };
-          if (vm.student.stu.length == 0)
-          {
-            vm.napakaNaObrazcu5="Student ni vpisan v tej šoli!";
-            tmp = true;
-            return;
-          }
-        });
-      if (tmp)
-      {
-        return;
+  vm.preveriOpravljen = function(predmetS) {
+    if (vm.podatki.izpiti == undefined)
+        return false;
+      for(var i=0; i<vm.podatki.izpiti.length; i++){  
+        if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == predmetS && vm.podatki.izpiti[i].ocena > 5){
+          return true;
+        }
       }
-      else
-      {
-        var now = new Date();
-      estudentPodatki.podatkiIzpitovZaStudenta(parseInt(vm.novaPrijavaVpisna)).then(
+      return false
+    };
+    vm.preveriPrijava = function(izpit) {
+      var now = new Date();
+      if (vm.podatki.izpiti == undefined)
+        return false;
+      for(var i=0; i<vm.podatki.izpiti.length; i++){  
+        var trenutniIzpit = vm.podatki.izpiti[i];
+        if(trenutniIzpit.Izpit_šifra == izpit){
+          if(trenutniIzpit.odjava==0) {
+            return false;  
+          }
+        }
+      }
+      return true;
+    };
+   vm.prijavi = function(vpisna) {
+        //console.log(izpit)
+        var napakaNaObrazcu5 = "";
+        var leto = new Date()
+        vpisna = parseInt(vpisna);
+        var izpitS = window.localStorage['sifraIzpita'];
+        var datumI = window.localStorage['datumIzpita'];
+        var sifraP = window.localStorage['sifraPredmeta'];
+        estudentPodatki.podatkiIzpitovZaStudenta(vpisna).then(
             function success(res) {
               vm.podatki = { izpiti: res.data.response };
-             
-        var leto = new Date()
-        var s = leto.getFullYear();
-        
-        if(!preveriDatum2(window.localStorage['datumIzpita']) == 1){
-           vm.napakaNaObrazcu5 += "Na ta izpit se študent ne more več prijaviti, saj je rok prijave potekel. ";
-  
-        }//vec kot 2 dni do izpita, loahko s eprijavi
+              var s = leto.getFullYear();
+        if(preveriDatum2(datumI) == 1){  //vec kot 2 dni do izpita, loahko s eprijavi
           var steviloPorabljenihRokov = 0
           var steviloPolaganjLetos = 0
-          var flag = false;
-          var flag3 = false;
-          var flag2 = false;
-          var flag1 = false;
           var datumZadnjegaPolaganja = '2000-01-01' //random datum da je najstarej
-          for(var i=0; i<vm.podatki.izpiti.length; i++){   // gre cez vse njegove izpite
-            if(vm.podatki.izpiti[i].ocena > 5 && !flag){
+          var prvoLeto = 0;
+          var steviloPolaganjVPrvemLetu = 0;
+          if (vm.preveriOpravljen(sifraP))
+            {
+              vm.napakaNaObrazcu5 = "Ta predmet je student ze pisal pozitivno";
+              return;
+            }
+            if (vm.preveriPrijava(izpitS))
+            {
+              vm.napakaNaObrazcu5 = "Študent je na izpit že prijavljen";
+              return;
+            }
+          if (vm.podatki.izpiti == undefined)
+          {
+          }
+          else
+          {
             
-              vm.napakaNaObrazcu5 += "Ta predmet je študent že opravil. ";
-              flag = true;
+          for(var i=0; i<vm.podatki.izpiti.length; i++){   // gre cez vse njegove izpite
+            if(steviloPorabljenihRokov == 0 && vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && vm.podatki.izpiti[i].odjava==0){
+              prvoLeto = vm.podatki.izpiti[i].datum.split('-')[0];
             }
-            if(vm.podatki.izpiti[i].odjava==0) // preveri za izbrani predmet in samo predmete kjer ni bil odjavlen
+            if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && vm.podatki.izpiti[i].odjava==0){ // preveri za izbrani predmet in samo predmete kjer ni bil odjavlen
               steviloPorabljenihRokov++;
-            if(vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].datum.split('-')[0] == s) // stevilo polaganj izpita letos
-              steviloPolaganjLetos++;
-            if((parseDate(vm.podatki.izpiti[i].datum.split('T')[0]).getTime() > parseDate(datumZadnjegaPolaganja).getTime()) && vm.podatki.izpiti[i].odjava==0){        // Preveri kdaj je bil zadnji datum polaganja tega predmeta
-              datumZadnjegaPolaganja = vm.podatki.izpiti[i].datum.split('T')[0]
-              console.log("datumZadnjegaPolaganja: " + datumZadnjegaPolaganja)
+              if(vm.podatki.izpiti[i].datum.split('-')[0] == prvoLeto)
+                steviloPolaganjVPrvemLetu++;
             }
-            if(vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].ocena==null && !flag1){ // preveri ce se nima vpisane ocene
-              vm.napakaNaObrazcu5 += "Za ta predmet vam še niso vpisali ocene! ";
-              flag1 = true;
+            if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].datum.split('-')[0] == s) // stevilo polaganj izpita letos
+              steviloPolaganjLetos++;
+            if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && (parseDate(vm.podatki.izpiti[i].datum.split('T')[0]).getTime() > parseDate(datumZadnjegaPolaganja).getTime()) && vm.podatki.izpiti[i].odjava==0){        // Preveri kdaj je bil zadnji datum polaganja tega predmeta
+              datumZadnjegaPolaganja = vm.podatki.izpiti[i].datum.split('T')[0]
+            }
+            if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].ocena==null){ // preveri ce se nima vpisane ocene
+              vm.napakaNaObrazcu5 = "Za ta predmet vam še niso vpisali ocene!";
             }
           }
-            if (steviloPorabljenihRokov > 6 && !flag2)
+          }
+
+          if(steviloPorabljenihRokov != steviloPolaganjVPrvemLetu){
+            steviloPorabljenihRokov = (steviloPorabljenihRokov - steviloPolaganjVPrvemLetu);
+          }
+          //console.log("odstejemo", steviloPorabljenihRokov);
+          if(steviloPolaganjLetos > 2){
+            vm.napakaNaObrazcu5 = "Letos ste porabili že 3 izpitne roke! Več sreče prihodnje leto!";
+          }
+          
+          if(steviloPorabljenihRokov > 5){
+            vm.napakaNaObrazcu5 = "Porabili ste že vse roke. Žal nimate več možnosti nadaljevanje pri tem predmetu!";
+          }
+          steviloPorabljenihRokov++;
+          steviloPolaganjLetos++;
+          estudentPodatki.prijavaNaIzpit({
+              Izpit_sifra:izpitS,
+              Student_vpisna_st:vpisna
+          }).then(
+            function success(res) {
+             if(steviloPorabljenihRokov > 3)
+                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše. Letos pa bo to vaše " + steviloPolaganjLetos + " polaganje.")
+              else
+                alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše " + steviloPolaganjLetos + " polaganje."  )
+            location.reload();
+          })
+          
+          
+        }
+        else{                                             // prepozno
+           vm.napakaNaObrazcu5 = "Na ta izpit se ne morete več prijaviti!";
+        } 
+          },
+            function error(res)
             {
-              vm.napakaNaObrazcu5 += "Študent je že porabil 6. rokov za ta predmet! ";
-              flag2 = true;
-            }
-            if (steviloPolaganjLetos > 3 && !flag3)
-            {
-              vm.napakaNaObrazcu5 += "Študent je že polagal predmet letos več kot 3-krat, zato mora plačati. ";
-              flag3 = true;
-            }
-                  // naredi novo prijavo
-                 estudentPodatki.prijavaNaIzpit({
-                  Izpit_sifra:window.localStorage['sifraIzpita'],
-                  Student_vpisna_st:parseInt(vm.novaPrijavaVpisna)
-                    }).then(
-                      function success(res) {
-                      alert("Uspešna prijava na izpit!")
-                      location.reload();
-                    })
-          });
-      }
-      
-        };
+              return;
+            });
+        
+    };
 //---------------------------------------------------------------------------------------------------------
     function preveriDatum2 (time1) {
       var today = new Date();
