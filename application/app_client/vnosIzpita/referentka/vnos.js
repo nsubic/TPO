@@ -149,11 +149,12 @@
           
     };
     
-    vm.shraniSifroIzpit = function(sifra, datumIzpita, sifraPredmeta, uraIzpita)
+    vm.shraniSifroIzpit = function(sifra, datumIzpita, sifraPredmeta, uraIzpita, imePredmeta)
     {
       window.localStorage['sifraIzpita'] = sifra;
       window.localStorage['sifraPredmeta'] = sifraPredmeta;
       window.localStorage['datumIzpita'] = datumIzpita;
+      window.localStorage['imePredmeta'] = imePredmeta;
       vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
     }
     
@@ -301,22 +302,19 @@
       estudentPodatki.IzbrisiPrijavePoSifri(sifra).then(
         function success(res) {
           
-        
-        var mailOptions = {
-          from: 'ref@ref',
-          to: 'aljaz.erzin@gmail.com',
-          subject: 'Izbris izpita',
-          text: 'Brisali smo vašo prijavo na izpit!'
-        };
-        
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
-          alert("Uspešno izbrisan izpit in odjavljeni studentje!");
+        var data = ({
+                mail : 'ae8220@student.uni-lj.si',
+                imePredmeta : window.localStorage['imePredmeta'],
+                imeStudenta : 'Luka'
+            });
+            estudentPodatki.posljiMail(data).then(
+              console.log("nis se naredu"),
+              function success(res) {
+                alert("Izpit izbrisan in poslan mail!")
+              },
+              function error(res) {
+              })
+          //alert("Uspešno izbrisan izpit in odjavljeni studentje!");
             location.reload();
         }, 
         function error(res) {
@@ -398,6 +396,9 @@
         var napakaNaObrazcu5 = "";
         var leto = new Date()
         vpisna = parseInt(vpisna);
+        
+        
+        
         var izpitS = window.localStorage['sifraIzpita'];
         var datumI = window.localStorage['datumIzpita'];
         var sifraP = window.localStorage['sifraPredmeta'];
@@ -414,11 +415,6 @@
           if (vm.preveriOpravljen(sifraP))
             {
               vm.napakaNaObrazcu5 = "Ta predmet je student ze pisal pozitivno";
-              return;
-            }
-            if (vm.preveriPrijava(izpitS))
-            {
-              vm.napakaNaObrazcu5 = "Študent je na izpit že prijavljen";
               return;
             }
           if (vm.podatki.izpiti == undefined)
@@ -440,9 +436,6 @@
               steviloPolaganjLetos++;
             if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && (parseDate(vm.podatki.izpiti[i].datum.split('T')[0]).getTime() > parseDate(datumZadnjegaPolaganja).getTime()) && vm.podatki.izpiti[i].odjava==0){        // Preveri kdaj je bil zadnji datum polaganja tega predmeta
               datumZadnjegaPolaganja = vm.podatki.izpiti[i].datum.split('T')[0]
-            }
-            if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == sifraP && vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].ocena==null){ // preveri ce se nima vpisane ocene
-              vm.napakaNaObrazcu5 = "Za ta predmet vam še niso vpisali ocene!";
             }
           }
           }

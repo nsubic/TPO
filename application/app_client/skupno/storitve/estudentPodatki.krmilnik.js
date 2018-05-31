@@ -149,6 +149,9 @@
       var prijavaNaIzpit = function(podatki) {
         return $http.post('/api/prijavaNaIzpit/', podatki);
       };
+      var posljiMail = function(podatki) {
+        return $http.post('/api/posljiMail/', podatki);
+      };
       var pridobiZeton = function(vpisna_st) {
         return $http.get('/api/zetoni/' + vpisna_st);
       };
@@ -213,7 +216,8 @@
         vstaviZeton:vstaviZeton,
         izbrisiZeton:izbrisiZeton,
         vrstaStudija:vrstaStudija,
-        letoVpisaVPredmet:letoVpisaVPredmet
+        letoVpisaVPredmet:letoVpisaVPredmet,
+        posljiMail:posljiMail
       };
     };
 

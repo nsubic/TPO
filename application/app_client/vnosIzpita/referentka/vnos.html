@@ -102,10 +102,10 @@
   			<td style="vertical-align: middle;">{{s.ura}} </td>
   			<td style="vertical-align: middle;">{{s.lokacija}} </td>
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
-  			<td><button ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
+  			<td><button ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.Predmet_sifra_predmeta, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
   			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra, s.datum, s.ura)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene/ Odjavi Studenta</button></td>
-  			<td><button  ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.Predmet_sifra_predmeta, s.ura)" data-toggle="modal" data-target="#exampleModalLong2">Prijavi študenta</button></td>
-        
+  			<td><button  ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.Predmet_sifra_predmeta, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong2">Prijavi študenta</button></td>
+
 		  </tr>
 	  </tbody>
 	</table>
