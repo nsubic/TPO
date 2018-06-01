@@ -122,7 +122,7 @@
     $scope.$watch('vpis.emso', function(data) {
       $scope.emsoChecksumValidation = false;
       $scope.emsoDateValidation = false;
-      if(data.length === 13) {
+      if(data && data.length === 13) {
         console.log("vpis emso", data);
         var table_pos = [7, 6, 5, 4, 3, 2, 7, 6, 5, 4, 3, 2];
         var sum = 0;
@@ -160,7 +160,12 @@
         var dateEMSO = new Date(parseInt("1" + year), month-1, day);
         var dateBirth = new Date(dateDr.getFullYear(), dateDr.getMonth(), dateDr.getDate());
         
-        if(dateEMSO !== dateBirth && !$scope.emsoChecksumValidation) {
+        var txtEMSO = [year, dateEMSO.getMonth()+1, dateEMSO.getDate()].join("-");
+        var txtBirth = [dateDr.getFullYear().toString().substr(1, 3), dateDr.getMonth()+1, dateDr.getDate()].join("-");
+        
+        console.log("comparing", txtEMSO, txtBirth, txtEMSO !== txtBirth);
+        
+        if(txtEMSO !== txtBirth && !$scope.emsoChecksumValidation) {
           $scope.emsoDateValidation = true;
         } else {
           $scope.emsoDateValidation = false;
