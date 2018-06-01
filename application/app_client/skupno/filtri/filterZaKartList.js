@@ -9,10 +9,11 @@
     if(secondArgument == undefined || secondArgument == false){
     angular.forEach(items, function(value, key) {
       if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-        st++;
+        
         if(value.izpit.length > 0){
           for(var i =0; i<value.izpit.length; i++){
             if(value.izpit[i].odjava == 0){
+              st++;
               if(i == 0) {
                 var tbl;
                 tbl = {
@@ -57,10 +58,11 @@
     else{
       angular.forEach(items, function(value, key) {
         if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-          st++;
+       
           if(value.izpit.length > 0){
             for(var i =0; i<value.izpit.length; i++){
               if(value.izpit[i].odjava == 0){
+                st++;
                 if(i == value.izpit.length-1) {
                   var tbl;
                   tbl = {
