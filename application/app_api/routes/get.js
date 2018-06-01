@@ -96,7 +96,7 @@ router.get('/vpisStudent/:vpisna', function(req, res, next) {
 
 router.get('/vrstaStudija/:vpisna', function(req, res, next) {
 	if (req.params && req.params.vpisna) { 
-     global.connection.query('SELECT nacin_studijaFK ,Nacin_studija.opis AS eins FROM Vpis INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa WHERE vpisna_st = ? ', [req.params.vpisna],function (error, results, fields) {
+     global.connection.query('SELECT Vpis.vrsta_vpisaFK FROM Vpis WHERE vpisna_st = ? ', [req.params.vpisna],function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
@@ -204,7 +204,7 @@ router.get('/studenti', function(req, res, next) {
 });
 router.get('/pridobiNeprijavljene', function(req, res, next) {
 	
-     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student ON Student.vpisna_st = Vpis.vpisna_st  WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek, Student.ime DESC', function (error, results, fields) {
+     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student INNER JOIN Vrsta_vpisa INNER JOIN Studijski_program INNER JOIN Posta  ON Student.vpisna_st = Vpis.vpisna_st  and Vrsta_vpisa.vrsta_vpisa = Vpis.vrsta_vpisaFK and Studijski_program.sifra_stProgram = Vpis.sifra_stProgramFK and Posta.postna_stevilka = Student.stalni_postna_stevilka WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek, Student.ime DESC', function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});

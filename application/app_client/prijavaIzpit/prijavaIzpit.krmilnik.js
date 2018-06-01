@@ -133,7 +133,22 @@
           var datumZadnjegaPolaganja = '2000-01-01' //random datum da je najstarej
           var prvoLeto = 0;
           var steviloPolaganjVPrvemLetu = 0;
+          var prevecDni = 0;
           for(var i=0; i<vm.podatki.izpiti.length; i++){   // gre cez vse njegove izpite
+            if(vm.podatki.izpiti[i].odjava==0){
+              console.log("datumi", vm.podatki.izpiti[i].datum)
+              console.log("datum novega izpita:", izpit.datum)
+              var casZadnjega = new Date(vm.podatki.izpiti[i].datum);
+              var casNovega = new Date(izpit.datum);
+              var timeDiff = Math.abs(casZadnjega.getTime() - casNovega.getTime());
+              var prevecDni = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+              console.log("razlika", prevecDni);
+              
+              if(prevecDni < 10){
+              vm.napakaNaObrazcu = "Od zadnjega roka še ni preteklo 10 dni!";
+              return;
+              }
+            } 
             if(steviloPorabljenihRokov == 0 && vm.podatki.izpiti[i].Predmet_sifra_predmeta == izpit.Predmet_sifra_predmeta && vm.podatki.izpiti[i].odjava==0){
               prvoLeto = vm.podatki.izpiti[i].datum.split('-')[0];
             }
@@ -145,6 +160,7 @@
             if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == izpit.Predmet_sifra_predmeta && vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].datum.split('-')[0] == s) // stevilo polaganj izpita letos
               steviloPolaganjLetos++;
             if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == izpit.Predmet_sifra_predmeta && (parseDate(vm.podatki.izpiti[i].datum.split('T')[0]).getTime() > parseDate(datumZadnjegaPolaganja).getTime()) && vm.podatki.izpiti[i].odjava==0){        // Preveri kdaj je bil zadnji datum polaganja tega predmeta
+              console.log("pride sm notr")
               datumZadnjegaPolaganja = vm.podatki.izpiti[i].datum.split('T')[0]
             }
             if(vm.podatki.izpiti[i].Predmet_sifra_predmeta == izpit.Predmet_sifra_predmeta && vm.podatki.izpiti[i].odjava==0 && vm.podatki.izpiti[i].ocena==null){ // preveri ce se nima vpisane ocene
@@ -152,6 +168,8 @@
               return;
             }
           }
+          console.log(parseDate(datumZadnjegaPolaganja).getTime())
+          console.log("datum izpita", izpit.datum);
           
           
           console.log("vpisna: ", vm.vpisnaSt)
@@ -183,7 +201,8 @@
                 }
                 console.log("brisanje rokov", seRokiZbrisejo)
                 var steviloLet = vm.nacinVpisa.leto.length - 1;
-                var nacinStudija = vm.nacinVpisa.leto[steviloLet].nacin_studijaFK;
+                var nacinStudija = vm.nacinVpisa.leto[steviloLet].vrsta_vpisaFK;
+                console.log("nacinStudija", nacinStudija)
                 console.log(steviloPorabljenihRokov, " ", steviloPolaganjVPrvemLetu)
                 if((steviloPorabljenihRokov != steviloPolaganjLetos) && seRokiZbrisejo==1){
                   steviloPorabljenihRokov = (steviloPorabljenihRokov - steviloPolaganjVPrvemLetu);
@@ -205,7 +224,7 @@
                     Student_vpisna_st:vm.vpisnaSt
                 }).then(
                   function success(res) {
-                    if(nacinStudija == 3)
+                    if(nacinStudija == 0000000009)
                       alert("Uspešna prijava na izpit! To bo vaše skupno" + steviloPorabljenihRokov + " polaganje, letos pa bo to vaše" + steviloPolaganjLetos + " polaganje. Ker niste redno vpisani, morate plačati prijavo na izpit, sicer se vam prijava izbriše.")
                     else if(steviloPorabljenihRokov > 3)
                       alert("Uspešna prijava na izpit! To bo vaše skupno " + steviloPorabljenihRokov + " polaganje, zato morate plačati prijavnino, sicer se vam prijava izbriše. Letos pa bo to vaše " + steviloPolaganjLetos + " polaganje.")

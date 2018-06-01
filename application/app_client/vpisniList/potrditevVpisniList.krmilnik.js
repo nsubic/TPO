@@ -21,8 +21,20 @@
 win.document.write($("#potrdiloV").html());
 
     }
+    vm.preveriVpisno = function(vpisna)
+    {
+        var vpisnaShrani = parseInt(window.localStorage['vpisnaPreveri']);
+        console.log("vpisn1 ", vpisnaShrani);
+        if (vpisnaShrani == vpisna)
+        {
+          return true;
+        }
+        else
+          return false;
+    }
   vm.submit = function(p)
     {
+      window.localStorage['vpisnaPreveri'] = p.vpisna_st;
       var win = window.open('','printwindow');
       win.document.write($("#potrdiloV").html());
       win.print();

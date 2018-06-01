@@ -29,6 +29,7 @@
   
   background-color: #e1e6ef;
 }
+
 #buton{
   display: none;
 }
@@ -38,7 +39,14 @@
   background-color: #e1e6ef;
 }
 
-@media (min-width: 1200px)
-.modal-lg {
-    max-width: 968px;
+@media (min-width: 1200px) {
+  .modal-lg {
+      max-width: 968px;
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }

@@ -1,6 +1,7 @@
 <referentkaglava></referentkaglava>
 
 <div class="container">
+        <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   
   <table class="table">
     <thead>
@@ -22,7 +23,7 @@
                 <td>{{ p.vpisna_st  }}</td>
                 <td>{{ p.ime  }}</td>
                 <td>{{ p.priimek  }}</td>
-                <td>{{ p.sifra_stProgramFK  }}</td>
+                <td>{{ p.naziv  }}</td>
                 <td>{{ p.studijsko_letoFK  }}</td>
                 <td><input type="submit" ng-click="vm.potrdi(p.vpisna_st)"  value="Potrditev"></td>
                 <td><button type="submit"  ng-click="vm.submit(p)" value="Natisni">Natisni</td>
@@ -35,27 +36,60 @@
 </div>
 
 <div id="potrdiloV" hidden>
-       <table class="table">
-    <thead>
-    <tr>
-      <th>Potrdilo o vpisu</th>
-    </tr>
-    </thead>
     
-    <tbody>
+     
             <form name="vnosOcen">
-            <tr class="form-group table td" ng-repeat="p in vm.potrdiVpis.stu">
+            <div class="form-group table td" ng-if="vm.preveriVpisno(p.vpisna_st)" ng-repeat="p in vm.potrdiVpis.stu">
+            <div style="display: flex; justify-content: center;"><img class="mb-6" src="http://tekmovanja.acm.si/sites/tekmovanja.acm.si/files/logo_fri.png" alt="" width="30%" height="30%" align="middle"></div>
+             <div>
+                 <pre class='vneseno'>{{ p.priimek  }} {{ p.ime  }} </pre>
+                 <pre class='vneseno'>{{ p.stalni_naslov_ulica  }} {{ p.stalni_naslov_hisnast  }} </pre>
+                 <pre class='vneseno'>{{ p.stalni_postna_stevilka  }} {{ p.ime_poste  }} </pre>
+             </div>
+             <h3 align="center">POTRDILO O VPISU</h3>
+            <div id="wrapper" style='display: flex; float: left;'>
                 <ng-form name="potrdiloVPisa">
-                <td>Vpisna: {{ p.vpisna_st  }}</td><br>
-                <td>Ime:  {{ p.ime  }}</td><br>
-                <td>Priimek: {{ p.priimek  }}</td><br>
-                <td>Program: {{ p.sifra_stProgramFK  }}</td><br>
-                <td>Leto: {{ p.studijsko_letoFK  }}</td><br>
+                <div style='float: left;'>
+                     <p class='naslov'>Vpisna:</p>
+                <pre class='vneseno'> <strong>{{ p.vpisna_st  }}</strong> </pre></br>
+                <p class='naslov'>Priimek, ime: </p>
+                 <pre class='vneseno'><strong>{{ p.priimek  }}, {{ p.ime  }}</strong></pre></br>
+                 <p class='naslov'>Datum rojstva:</p>
+                <pre class='vneseno' ><strong>  1995-02-05 </strong></pre></br>
+                <p class='naslov'>Kraj rojstva:</p>
+                <pre class='vneseno'><strong> {{ p.kraj_rojstva  }}</strong> </pre></br>
+                
+                </div>
+                <div style='float: left; margin-left:50px'>
+                    <p class='naslov'>Program:</p>
+                <pre class='vneseno'><strong>{{ p.naziv  }}</strong></pre></br>
+                <p class='naslov'>Leto: </p>
+                <pre class='vneseno'><strong>{{ p.studijsko_letoFK  }}</strong></pre></br>
+                <p class='naslov'>Vrsta vpisa:</p>
+                <pre class='vneseno'><strong>{{ p.opis  }}</strong></pre></br>
+                 <p class='naslov'>Letnik vpisa:</p>
+                <pre class='vneseno'><strong>{{ p.letnikFK  }}. letnik</strong></pre></br>
+                </div>
+            </div>
+                
+               
+                
               </ng-form>
-            </tr>
+              <div style='position: fixed;  bottom: 15%; right: 0;'>
+                  <p>prof. dr- Bojan Orel</p>
+                  <p>dekan</p>
+              </div>
             </form>
-          </tbody>
-  </table>
-       
+       </div>
       </div>
       
+      
+<style>
+.serif {
+    font-family: "Times New Roman", Times, serif;
+}
+
+.sansserif {
+    font-family: Arial, Helvetica, sans-serif;
+}
+</style>

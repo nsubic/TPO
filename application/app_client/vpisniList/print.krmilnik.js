@@ -7,8 +7,29 @@
     var leto1 = $routeParams.leto1;
     var leto2 = $routeParams.leto2;
     var program = $routeParams.program;
+    $scope.drzave = [];
+    $scope.programi = [];
     $scope.vpis = {};
     $scope.tock = 0;
+    estudentPodatki
+      .drzava()
+      .then(function(res) {
+        console.log("drzave", res.data.response);
+        $scope.drzave = res.data.response;
+      });
+      
+    estudentPodatki
+      .studijskiProgram()
+      .then(function(res) {
+        console.log("program", res);
+        $scope.programi = res.data.response;
+      });
+    estudentPodatki
+      .obcina()
+      .then(function(res) {
+        console.log("obcine", res);
+        $scope.obcine = res.data.response;
+      })
     estudentPodatki
       .studentiVpis(vpisnaSt)
       .then(function(res) {
@@ -46,6 +67,63 @@
             }
           } catch(ex) {
           }
+          
+          switch($scope.vpis.spol){
+            case 0:
+              $scope.vpis.spol_opis = "Neznan";
+              break;
+            case 1:
+              $scope.vpis.spol_opis = "Ženski";
+              break;
+            case 2:
+              $scope.vpis.spol_opis = "Moški"
+              break;
+          }
+          
+          var drzave_rojstva = $.grep($scope.drzave, function(data) {
+            return data.dvomestna_koda === $scope.vpis.Drzava_rojstva;
+          })
+          
+          if(drzave_rojstva.length) {
+            $scope.vpis.drzava_rojstva_opis = drzave_rojstva[0].slo_naziv;  
+          }
+          
+          
+          var drzave_stalnega = $.grep($scope.drzave, function(data) {
+            return data.dvomestna_koda === $scope.vpis.stalni_drzava_koda;
+          });
+          
+          if(drzave_stalnega.length) {
+            $scope.vpis.stalni_drzava = drzave_stalnega[0].slo_naziv;  
+          }
+          
+          
+          var drzave_zacasnega = $.grep($scope.drzave, function(data) {
+            return data.dvomestna_koda === $scope.vpis.zacasni_drzava_posta;
+          })
+          if(drzave_zacasnega.length) {
+            $scope.vpis.zacasni_drzava = drzave_zacasnega[0].slo_naziv;  
+          }
+          
+          $scope.vpis.datum_rojstva_opis = new Date(Date.parse($scope.vpis.datum_rojstva)).toLocaleDateString("sl-SI");
+          
+          var programseek = $.grep($scope.programi, function(data) {
+            return data.sifra_stProgram === $scope.vpis.program;
+          })
+          
+          if(programseek.length) {
+            $scope.vpis.program_opis = programseek[0].naziv;
+          }
+          
+          var obcinaseek = $.grep($scope.obcine, function(data) {
+            return data.sifra_obcine === $scope.vpis.stalni_obcina_koda;
+          })
+          
+          if(obcinaseek.length) {
+            $scope.vpis.stalni_obcina_koda_opis = obcinaseek[0].ime_obcine;
+          }
+          
+          
           $scope.vpis[key] = partial;
         }
       });

@@ -44,7 +44,6 @@
               <th>Študijski program</th>
               <th>Letnik</th>
               <th>Prosto izbirni</th>
-              <th>Visoko povprečje</th>
               <th>Izkoriščen</th>
               <th>Akcija</th>
             </tr>
@@ -68,9 +67,6 @@
               </td>
               <td>
                 {{ z.prosto_izbirni > 0 ? "Da" : "Ne" }}
-              </td>
-              <td>
-                {{ z.visoko_povprecje > 0 ? "Da" : "Ne" }}
               </td>
               <td>
                 {{ z.izkoriscen > 0 ? "Da" : "Ne" }}
@@ -109,9 +105,6 @@
               </td>
               <td>
                 <input type="checkbox" class="form-control" ng-model="zeton.prosto_izbirni" ng-if="zeton.letnik == 3" ng-checked="zeton.letnik == 3" />
-              </td>
-              <td>
-                <input type="checkbox" class="form-control" ng-model="zeton.visoko_povprecje" />
               </td>
               <td>
                 

@@ -4,6 +4,8 @@
   vpisniListCtrl.$inject = ['$location', '$scope', 'estudentPodatki', '$routeParams', '$window'];
   function vpisniListCtrl($location, $scope, estudentPodatki, $routeParams, $window) {
     var vm = this;
+    $scope.emsoChecksumValidation = false;
+    $scope.emsoDateValidation = false;
     $scope.spoli = [{id: 1, name: 'Ženski'}, {id: 2, name: 'Moški'}];
     $scope.zetonNiNaVoljo = true;
     $scope.maxPredmeti = 10;
@@ -11,9 +13,59 @@
     $scope.izbraniPredmeti = 0;
     $scope.strokovni = 0;
     $scope.moduli = 0;
+    $scope.splosni = 0;
+    
+    $scope.strokovniTock = 0;
+    $scope.moduliTock = 0;
+    $scope.splosniTock = 0;
+    
+    $scope.readonly = true;
     
     $scope.maxTock = 60;
     $scope.tock = 0;
+    
+    $scope.groupModule = [
+      {
+        "id": 1,
+        "name": "Informacijski sistemi",
+        "children": [63250, 63249, 63251],
+      },
+      {
+        "id": 2,
+        "name": "Obvladovanje informatike",
+        "children": [63226, 63252, 63253]
+      },
+      {
+        "id": 3,
+        "name": "Razvoj programske opreme",
+        "children": [63252, 63255, 63287]
+      },
+      {
+        "id": 4,
+        "name": "Računalniška omrežja",
+        "children": [63257, 63258, 63259]
+      },
+      {
+        "id": 5,
+        "name": "Računalniški sistemi",
+        "children": [63260, 63261, 63262]
+      },
+      {
+        "id": 6,
+        "name": "Algoritmi in sistemski programi",
+        "children": [63265, 63264, 63263]
+      },
+      {
+        "id": 7,
+        "name": "Umetna inteligenca",
+        "children": [63266, 63267, 63268]
+      },
+      {
+        "id": 8,
+        "name": "Medijske tehnologije",
+        "children": [63270, 63269, 63271]
+      }
+    ];
     
     var stran = $routeParams.stran;
     
@@ -24,6 +76,10 @@
       var intermediateIzbirni = 0;
       var strokovni = 0;
       var moduli = 0;
+      var splosni = 0;
+      var strokovniTock = 0;
+      var moduliTock = 0;
+      var splosniTock = 0;
       
       $.each($scope.skupine, function(idx1, elem1) {
         $.each(elem1.predmeti, function(idx2, elem2) {
@@ -35,10 +91,17 @@
             intermediateIzbirni += 1;
             if(elem1.id === 2) {
               strokovni += 1;
+              strokovniTock += elem2.tocke;
+            }
+            
+            if(elem1.id === 3) {
+              splosni += 1;
+              splosniTock += elem2.tocke;
             }
             
             if(elem1.id === 4) {
               moduli += 1;
+              moduliTock += elem2.tocke;
             }
           }
         });
@@ -48,19 +111,75 @@
       $scope.obvezniPredmeti = intermediateObvezni;
       $scope.izbraniPredmeti = intermediateIzbirni;
       $scope.strokovni = strokovni;
+      $scope.splosni = splosni;
       $scope.moduli = moduli;
+      
+      $scope.strokovniTock = strokovniTock;
+      $scope.splosniTock = splosniTock;
+      $scope.moduliTock = moduliTock;
     }
+    
+    $scope.$watch('vpis.emso', function(data) {
+      $scope.emsoChecksumValidation = false;
+      $scope.emsoDateValidation = false;
+      if(data.length === 13) {
+        console.log("vpis emso", data);
+        var table_pos = [7, 6, 5, 4, 3, 2, 7, 6, 5, 4, 3, 2];
+        var sum = 0;
+        for(var i = 0; i < data.length-1; ++i) {
+          var part1 = parseInt(data[i])*table_pos[i];
+          sum += part1;
+        }
+        
+        console.log("sum", sum);
+        var part2 = Math.floor(sum / 11);
+        console.log("delil", part2);
+        var part3 = sum % 11;
+        console.log("ostanek", part3);
+        
+        var last_num = parseInt(data[data.length-1]);
+        var checksum = 11 - part3;
+        
+        console.log("totaling", last_num, checksum, last_num !== checksum)
+        console.log("summing", typeof last_num, typeof checksum);
+        
+        if(last_num !== checksum) {
+          $scope.emsoChecksumValidation = true;
+        } else {
+          $scope.emsoChecksumValidation = false;
+        }
+        
+        console.log("datum", $scope.vpis.datum_rojstva);
+        var dateDr = $scope.vpis.datum_rojstva;
+        
+        var day = data.substr(0, 2);
+        var month = data.substr(2, 2);
+        var year = data.substr(4, 3)
+        
+        console.log("datum 2", day, month, year);
+        var dateEMSO = new Date(parseInt("1" + year), month-1, day);
+        var dateBirth = new Date(dateDr.getFullYear(), dateDr.getMonth(), dateDr.getDate());
+        
+        if(dateEMSO !== dateBirth && !$scope.emsoChecksumValidation) {
+          $scope.emsoDateValidation = true;
+        } else {
+          $scope.emsoDateValidation = false;
+        }
+      }
+      
+    })
     
     $scope.reloadPredmeti = function() {
       console.log("letnik", $scope.vpis.letnik);
       if($scope.vpis.letnik == 2) {
-        $scope.maxTock = 48;
+        $scope.maxTock = 54;
       } else {
         $scope.maxTock = 60;
       }
       
       console.log("maxTock", $scope.maxTock);
       
+      $scope.regexIme = /[a-zA-Z]+/;
       $scope.tock = 0;
       $scope.obvezniPredmeti = 0;
       $scope.izbraniPredmeti = 0;
@@ -72,6 +191,7 @@
       var partial = $.grep($scope.predmeti, function(data) {
         var result = true;
         if(data.sifra_stProgramFK !== $scope.vpis.program) {
+          console.log("no program", data.sifra_stProgramFK, $scope.vpis.program, data.sifra_stProgramFK !== $scope.vpis.program)
           result = false;
         }
         
@@ -82,11 +202,21 @@
       });
       
       $scope.skupine = [];
+      
+      console.log("partial!!!", partial);
+      
       $.each(partial, function(idx, elem) {
+        
+        
+        if(elem.sifra_predmetnikaFK == 4 && !$scope.vpis.prosto_izbirni) {
+          return;
+        }
+        
         var found = $.grep($scope.skupine, function(data) {
           return data.id == elem.sifra_predmetnikaFK;
         });
-        
+
+      
         if(found.length === 0) {
           $scope.skupine.push({
             id: elem.sifra_predmetnikaFK,
@@ -97,6 +227,7 @@
               naziv: elem.ime_predmeta,
               tocke: elem.KT_tocke,
               izbran: false,
+              ignore: false,
             }],
           });
         } else {
@@ -113,11 +244,52 @@
               naziv: elem.ime_predmeta,
               tocke: elem.KT_tocke,
               izbran: false,
+              ignore: false,
             });  
           }
         }
       });
+      
+      console.log("debug", $scope.vpis.letnik);
+      if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3) {
+        
+        var moduli = {
+            isModule: true,
+            id: 4,
+            naziv: "Modul",
+            predmeti: []
+          };
+        $scope.skupine.push(moduli);
+        
+        $.each($scope.groupModule, function(idx, grpMod) {
           
+          var khm = {
+            id: grpMod.id,
+            isModule: true,
+            skupina: 4,
+            naziv: grpMod.name,
+            tocke: 18,
+            children: grpMod.children,
+            izbran: false,
+          };
+           
+          var moreData = [];
+           
+          $.each(grpMod.children, function(idx3, elem3) {
+            var predmet = $.grep($scope.predmeti, function(data3) {
+              return data3.sifra_predmetaFK === elem3;
+            });
+            
+            if(predmet.length) {
+              console.log(predmet[0]);
+              moreData.push(predmet[0]);
+            }
+          });
+          khm.nodes = moreData;
+          moduli.predmeti.push(khm);
+        })
+      }
+    
       $scope.recalculate();
       console.log("partial", $scope.skupine);
     }
@@ -144,7 +316,7 @@
       zacasni_naslov_hisnast: null,
       zacasni_postna_stevilka: null,
       zacasni_kraj_posta: null,
-      zacasni_drzava_posta: null,
+      zacasni_drzava_koda: null,
       program: null,
       vrsta_vpisa: null,
       letnik: null,
@@ -220,7 +392,7 @@
     $scope.$watch('vpis.program', $scope.reloadPredmeti);
     $scope.$watch('vpis.letnik', $scope.reloadPredmeti);
     $scope.$watch('vpis.stalni_postna_stevilka', function(data) { 
-      if($scope.vpis.stalni_drzava_koda && $scope.vpis.stalni_drzava_koda.dvomestna_koda == "SI") {
+      if($scope.vpis.stalni_drzava_koda == "SI") {
         var results = $.grep($scope.poste, function(value, index) {
           return value.posta.toString() === data;
         })
@@ -231,9 +403,7 @@
     }, true);
     
     $scope.$watch('vpis.zacasni_postna_stevilka', function(data) {
-      
-      // Samo za slovenske pošte
-      if($scope.vpis.zacasni_drzava_posta && $scope.vpis.zacasni_drzava_posta.dvomestna_koda == "SI") {
+      if($scope.vpis.zacasni_drzava_koda  == "SI") {
         var results = $.grep($scope.poste, function(value, index) {
           return value.posta.toString() === data;
         })
@@ -246,6 +416,8 @@
     }, true);
     
     $scope.dodajPredmet = function(predmet) {
+      
+      // tu so pogoji za dodajanje
       
       var tempSum = $scope.tock - predmet.tocke;
       if(tempSum < 0) {
@@ -260,22 +432,93 @@
         return;
       }
       
-      if($scope.strokovni >= 1 && predmet.skupina == 2) {
-        alert("Strokovni predmet ste že izbrali");
-        return;
-      }
+      console.log("letnik:::", $scope.vpis.letnik);
       
-      if($scope.moduli >= 2 && predmet.skupina == 4) {
-        alert("Presegli ste maksimalno število modulov; max: 2");
-        return;
+      if($scope.vpis.letnik == 2) {
+        if($scope.splosniTock >= 6 && predmet.skupina == 3) {
+         if($scope.splosni > 1) {
+            alert("Izbrana že imate splošna predmeta, izbira zato ni mogoča.");
+          } else {
+            alert("Izbran že imate splošni predmet, izbira zato ni mogoča.");  
+          }
+          return;
+        }
+        
+        if($scope.strokovniTock >= 6 && predmet.skupina == 2) {
+          if($scope.strokovni > 1) {
+            alert("Izbrana že imate strokovna predmeta, izbira zato ni mogoča");
+          } else {
+            alert("Izbran že imate strokovni predmet, izbira zato ni mogoča");
+          }
+          return;
+        }
+      } else if($scope.vpis.letnik == 3) {
+       
+        if($scope.splosniTock >= 6 && predmet.skupina == 3) {
+          alert("Izbran že imate splošni predmet, izbira zato ni mogoča.");
+          return;
+        } else if($scope.strokovniTock >= 6 && predmet.skupina == 3) {
+          if($scope.strokovni > 1) {
+            alert("Strokovna predmeta ste že izbrali");
+          } else {
+            alert("Strokovni predmet ste že izbrali");
+          }
+          
+          return;
+        }
+        
+        if($scope.strokovniTock >= 6 && predmet.skupina == 2) {
+          alert("Izbran že imate strokovni predmet, izbira zato ni mogoča");
+          return;
+        } else if($scope.splosniTock >= 6 && predmet.skupina == 2) {
+          if($scope.splosni > 1) {
+            alert("Splošna predmeta ste že izbrali");
+          } else {
+            alert("Splošni predmet ste že izbrali");  
+          }
+          return;
+        }  
+        
+        if($scope.moduli >= 7 && predmet.skupina == 4) { // Na žalost manjka podatke o skupini modulov :)
+          alert("Presegli ste maksimalno število modulov. Izbrali ste že 7 modulskih predmetov");
+          return;
+        }
       }
+
+      
       
       predmet.izbran = true;
+      
+      console.log("switch on", predmet);
+      
+      for(var i = 0; i < $scope.skupine.length; ++i){
+        var skupina = $scope.skupine[i];
+        var predmeti = skupina.predmeti;
+        for(var j = 0; j < predmeti.length; ++j) {
+          var lclPredmet = predmeti[j];
+          if(lclPredmet.id === predmet.id) {
+            console.log("ignore", lclPredmet.id, predmet.id);
+            lclPredmet.ignore = true;
+          } 
+        }
+      } 
+      
+      $scope.skupine = $scope.skupine;
+      
       $scope.recalculate();
     }
     
     $scope.odstraniPredmet = function(predmet) {
       predmet.izbran = false;
+      
+      $.each($scope.skupine, function(idx1, elem1) {
+        $.each(elem1.predmeti, function(idx2, elem2) {
+          if(elem2.id === predmet.id && !elem2.izbran) {
+            elem2.ignore = false;
+          }
+        });
+      })
+      
       $scope.recalculate();
     }
     
@@ -297,6 +540,9 @@
       
       $.each($scope.skupine, function(idx1, elem1) {
         
+        if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3 && elem1.id === 4) {
+          return; // skip 4
+        }
         
         $.each(elem1.predmeti, function(idx2, elem2) {
           if(elem2.izbran || elem2.skupina === 1) {
@@ -307,6 +553,31 @@
           }
         });
       })
+      
+      // še dodati predmete v modulih
+      
+      if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3) {
+        
+        $.each($scope.skupine, function(idx1, elem1) {
+          if(elem1.id !== 4) {
+            return;
+          }
+
+          $.each(elem1.predmeti, function(idx2, elem2) {
+            if(elem2.izbran) {
+              $.each(elem2.nodes, function(idx3, elem3) {
+                $scope.vpis.predmeti.push({
+                  predmet: elem3.sifra_predmetaFK,
+                  skupina: elem2.skupina,
+                });  
+              });
+              
+            }
+          });
+        });
+      }
+  
+      // konec
       
       estudentPodatki
         .dodajVpis($scope.vpis)
@@ -357,8 +628,13 @@
             $scope.vpis.vrsta_vpisa = first.nacin_studijaFK;
             $scope.vpis.nacin_studija = first.nacin_studijaFK;
             $scope.vpis.letnik = first.letnikFK;
+            
+            if($scope.vpis.letnik == 3) {
+              $scope.maxPredmeti = 11;
+            }
             $scope.vpis.solskoLeto = first.studijsko_letoFK;
             $scope.vpis.visoko_povprecje = first.visoko_povprecje;
+            $scope.vpis.prosto_izbirni = first.prosto_izbirni === 1 ? true : false;
             $scope.vpis.zetonId = first.id;
             
             $scope.reloadPredmeti();
