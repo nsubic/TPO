@@ -5,27 +5,57 @@
   <table class="table">
     <thead>
     <tr>
-      <th>Študent</th>
-      <th>Študijsko leto</th>
-      <th>Letnik</th>
+      <th>#</th>
+      <th>Vpisna st.</th>
+      <th>Ime</th>
+       <th>Priimek</th>
       <th>Študijski program</th>
-      <th>
-        
-      </th>
+      <th>Študijsko leto</th>
     </tr>  
     </thead>
     
-    <tr>
-      <td>Marko Kranjc</td>
-      <td>2020/2021</td>
-      <td>4</td>
-      <td>...</td>
-      <td>
-        <button class="btn btn-primary">Potrditev vpisa</button>      
-        <button class="btn btn-primary">Vpisni list</button>
-      </td>
-    </tr>
+    <tbody>
+            <form name="vnosOcen">
+            <tr class="form-group table td" ng-repeat="p in vm.potrdiVpis.stu">
+                <th scope="row">{{$index +1}}</th>
+                <ng-form name="potrdiloVPisa">
+                <td>{{ p.vpisna_st  }}</td>
+                <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
+                <td>{{ p.sifra_stProgramFK  }}</td>
+                <td>{{ p.studijsko_letoFK  }}</td>
+                <td><input type="submit" ng-click="vm.potrdi(p.vpisna_st)"  value="Potrditev"></td>
+                <td><button type="submit"  ng-click="vm.submit(p)" value="Natisni">Natisni</td>
+                <td><button  ng-click="vm.potrdilo(p)" value="Ogled potrdila">Ogled potrdila</td>
+              </ng-form>
+            </tr>
+            </form>
+          </tbody>
   </table>
-  
-  
 </div>
+
+<div id="potrdiloV" hidden>
+       <table class="table">
+    <thead>
+    <tr>
+      <th>Potrdilo o vpisu</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+            <form name="vnosOcen">
+            <tr class="form-group table td" ng-repeat="p in vm.potrdiVpis.stu">
+                <ng-form name="potrdiloVPisa">
+                <td>Vpisna: {{ p.vpisna_st  }}</td><br>
+                <td>Ime:  {{ p.ime  }}</td><br>
+                <td>Priimek: {{ p.priimek  }}</td><br>
+                <td>Program: {{ p.sifra_stProgramFK  }}</td><br>
+                <td>Leto: {{ p.studijsko_letoFK  }}</td><br>
+              </ng-form>
+            </tr>
+            </form>
+          </tbody>
+  </table>
+       
+      </div>
+      

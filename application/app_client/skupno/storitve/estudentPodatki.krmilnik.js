@@ -130,6 +130,10 @@
         console.log("data", data);
         return $http.put('/api/dodajOceno/',data);
       }
+      var potrdiVpisReferent = function(podatki) {
+      
+        return $http.put('/api/potrdiRefV', podatki);
+      }
       var odjaviStudentaRef = function(data) {
         console.log("data", data);
         return $http.put('/api/odjaviStudentaRef/',data);
@@ -166,13 +170,19 @@
       };
       var dodajVpis = function(vpis) {
         return $http.post('/api/vpis', JSON.stringify(vpis));
+      };
+      var pridobiNeprijavljene = function() {
+        return $http.get('/api/pridobiNeprijavljene');
       }
+      
       return {
         obcina: obcina,
         drzava:drzava,
         posta:posta,
         predmet:predmet,
+        pridobiNeprijavljene:pridobiNeprijavljene,
         vpis:vpis,
+        potrdiVpisReferent:potrdiVpisReferent,
         student:student,
         vpisaniPredmet:vpisaniPredmet,
         studijskoLeto:studijskoLeto,

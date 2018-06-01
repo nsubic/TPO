@@ -72,6 +72,7 @@ router.post('/dodajIzpit', function(req, res, next) {
     	});
 });
 
+
 router.post('/prijavaNaIzpit', function(req, res, next) {
     global.connection.query("SET FOREIGN_KEY_CHECKS=0;", function (err, result, fields) {
         if (err) throw err;

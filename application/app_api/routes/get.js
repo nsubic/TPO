@@ -202,7 +202,13 @@ router.get('/studenti', function(req, res, next) {
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 });
-
+router.get('/pridobiNeprijavljene', function(req, res, next) {
+	
+     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student ON Student.vpisna_st = Vpis.vpisna_st  WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek, Student.ime DESC', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
 router.get('/vpisaniPredmet/:sifra/:leto1/:leto2', function(req, res, next) {
     console.log(req.params.sifra)
      if (req.params && req.params.sifra && req.params.leto1) { 
