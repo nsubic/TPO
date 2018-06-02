@@ -125,6 +125,9 @@
         };
 
            $("#myModal").modal()
+           $('#myModal').on('hidden.bs.modal', function () {
+           location.reload();
+            })
     }
 
     
