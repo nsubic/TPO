@@ -9,12 +9,15 @@
     if(secondArgument == undefined || secondArgument == false){
     angular.forEach(items, function(value, key) {
       if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-        st++;
+       
         if(value.izpit.length > 0){
+          var steviloRokovLetos = 0
           for(var i =0; i<value.izpit.length; i++){
             if(value.izpit[i].odjava == 0){
+               st++;
               if(i == 0) {
                 var tbl;
+                if(value.izpit[i].datum.split('-')[0] == firstArgument.split('/')[1]) steviloRokovLetos++
                 tbl = {
                   Predmetnik_sifra_predmetaFK: value.Predmetnik_sifra_predmetaFK,
                   ime: value.ime,
@@ -26,11 +29,13 @@
                   profesor_ime: value.izpit[i].profesor_ime,
                   datum: value.izpit[i].datum,
                   ocena: value.izpit[i].ocena,
-                  stPolaganj: i+1
+                  stPolaganj: i+1,
+                  stRokov: steviloRokovLetos
                 };
                 this.push(tbl)
               }
               else{
+                if(value.izpit[i].datum.split('-')[0] == firstArgument.split('/')[1]) steviloRokovLetos++
                 var tbl;
                 tbl = {
                   izpit: ""
@@ -39,7 +44,8 @@
                   profesor_ime: value.izpit[i].profesor_ime,
                   datum: value.izpit[i].datum,
                   ocena: value.izpit[i].ocena,
-                  stPolaganj: i+1
+                  stPolaganj: i+1,
+                  stRokov: steviloRokovLetos
                 };
                 this.push(tbl)
               }
@@ -57,10 +63,13 @@
     else{
       angular.forEach(items, function(value, key) {
         if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-          st++;
+         
           if(value.izpit.length > 0){
+            var steviloRokovLetos = 0
             for(var i =0; i<value.izpit.length; i++){
               if(value.izpit[i].odjava == 0){
+                 st++;
+                if(value.izpit[i].datum.split('-')[0] == firstArgument.split('/')[1]) steviloRokovLetos++
                 if(i == value.izpit.length-1) {
                   var tbl;
                   tbl = {
@@ -74,7 +83,8 @@
                     profesor_ime: value.izpit[i].profesor_ime,
                     datum: value.izpit[i].datum,
                     ocena: value.izpit[i].ocena,
-                    stPolaganj: i+1
+                    stPolaganj: i+1,
+                    stRokov: steviloRokovLetos
                   };
                   this.push(tbl)
                 }
