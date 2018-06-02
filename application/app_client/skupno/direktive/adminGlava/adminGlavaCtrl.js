@@ -1,15 +1,13 @@
 (function() {
   /* global angular */
   
-  adminGlavaCtrl.$inject = ['$location', '$route', '$odjava'];
-  function adminGlavaCtrl($location, odjava, $route) {
+  adminGlavaCtrl.$inject = ['$window','$location', '$route'];
+  function adminGlavaCtrl($window,$location, $route) {
     var navvm = this;
-    navvm.odjava = function() {
-     odjava.odjava();
-     $location.path('/');
-     $route.reload();
- }
+    
+    navvm.ime = $window.localStorage['upIme'];
   };
+    
   
   angular
     .module('estudent')
