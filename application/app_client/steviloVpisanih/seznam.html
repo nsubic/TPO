@@ -15,16 +15,30 @@
   </select>
   <div >
    <button type="button" class="btn btn-primary" onclick="demoFromHTML()"  style="margin:10px">Shrani kot pdf</button>
-   <button type="button" class="btn btn-primary" onclick="myFunction1()" style="margin:10px">Shrani kot csv</button>
+   <button type="button" class="btn btn-primary" onclick="myFunction()" style="margin:10px">Shrani kot csv</button>
  </div>
+ 
+ 
   <div id="source" >
-<link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <div class="media text-muted pt-3" ng-repeat="s in vm.z.vpisani.response | filter : {studijsko_letoFK: letoFilter.studijsko_leto, Vpis_sifra_stProgramFK: programFilter.sifra_stProgram, Predmetnik_letnikFK: letnikFilter.letnik}" >
-    <p id = "ena" class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-      <strong class="d-block text-gray-dark">{{ s.ime_predmeta }}</strong>
-         Šifra predmeta: {{ s.sifra_predmetaFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Leto izvajanja: {{ s.studijsko_letoFK }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Število vpisanih: <b>{{ s.stVpisanih }}</b>
-    </p>
- </div>
+      <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <table class="table" style="margin-top:30px">
+      <thead>
+        <tr>
+          <th scope="col">Ime predmeta</th>
+          <th scope="col">Šifra predmeta</th>
+          <th scope="col">Leto izvajanja</th>
+          <th scope="col">Število vpisanih</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="modalno" ng-repeat="s in vm.z.vpisani.response | filter : {studijsko_letoFK: letoFilter.studijsko_leto, Vpis_sifra_stProgramFK: programFilter.sifra_stProgram, Predmetnik_letnikFK: letnikFilter.letnik}">
+          <td>{{s.ime_predmeta}}</td>
+          <td>{{s.sifra_predmetaFK}}</td>
+          <td >{{  s.studijsko_letoFK }}</td>
+          <td> <b>{{ s.stVpisanih }}</b> </td>
+        </tr>
+      </tbody>
+    </table>
  </div>
 </div>
 
