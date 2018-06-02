@@ -94,6 +94,17 @@ router.get('/vpisStudent/:vpisna', function(req, res, next) {
     }
 });
 
+router.get('/vrstaStudija/:vpisna', function(req, res, next) {
+	if (req.params && req.params.vpisna) { 
+     global.connection.query('SELECT Vpis.vrsta_vpisaFK FROM Vpis WHERE vpisna_st = ? ', [req.params.vpisna],function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+	} else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
 router.get('/student/:vpisna', function(req, res, next) {
      if (req.params && req.params.vpisna) { 
      global.connection.query('SELECT * FROM Student WHERE vpisna_st = ?', [req.params.vpisna], function (error, results, fields) {
@@ -150,6 +161,18 @@ router.get('/predmetiStudenta/:vpisnaSt', function(req, res, next) {
     }
 });
 
+router.get('/vpisiVPredmetLeto/:vpisnaSt/:sifraPredmeta', function(req, res, next) {
+	console.log("tukaj", req.params.vpisnaSt)
+     if (req.params.vpisnaSt && req.params.sifraPredmeta) { 
+     global.connection.query('SELECT Vpis_studijsko_letoFK FROM Izbrani_predmeti WHERE Vpis_vpisna_st = ? AND Predmetnik_sifra_predmetaFK = ?', [req.params.vpisnaSt, req.params.sifraPredmeta], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
 router.get('/student2/:upime', function(req, res, next) {
      if (req.params && req.params.upime) { 
      global.connection.query('SELECT *,Nacin_studija.opis AS eins FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa INNER JOIN Studijski_program ON Vpis.sifra_stProgramFK = Studijski_program.sifra_stProgram WHERE Student.Oseba_upIme = ?', [req.params.upime], function (error, results, fields) {
@@ -179,7 +202,13 @@ router.get('/studenti', function(req, res, next) {
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 });
-
+router.get('/pridobiNeprijavljene', function(req, res, next) {
+	
+     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student INNER JOIN Vrsta_vpisa INNER JOIN Studijski_program INNER JOIN Posta  ON Student.vpisna_st = Vpis.vpisna_st  and Vrsta_vpisa.vrsta_vpisa = Vpis.vrsta_vpisaFK and Studijski_program.sifra_stProgram = Vpis.sifra_stProgramFK and Posta.postna_stevilka = Student.stalni_postna_stevilka WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek, Student.ime DESC', function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+});
 router.get('/vpisaniPredmet/:sifra/:leto1/:leto2', function(req, res, next) {
     console.log(req.params.sifra)
      if (req.params && req.params.sifra && req.params.leto1) { 
@@ -286,13 +315,14 @@ router.get('/izpiti/:sifraPredmeta', function(req, res, next) {
 });
 
 router.get('/nosilciInPredmeti/', function(req, res, next) {
-     global.connection.query('SELECT * \
+     global.connection.query('SELECT *, \
+    							Del_predmetnika.naziv AS Naziv_Skupine	\
 							FROM Predmetnik\
 							INNER JOIN Nosilec_predmeta ON Predmetnik.Nosilec_predmeta_sifra_opcije = Nosilec_predmeta.sifra_opcije\
 							AND Predmetnik.sifra_predmetaFK = Nosilec_predmeta.sifra_predmetaFK\
 							INNER JOIN Predmet ON Nosilec_predmeta.sifra_predmetaFK = Predmet.sifra_predmeta\
 							INNER JOIN Profesor ON Nosilec_predmeta.sifra_profesorjaFK1 = Profesor.sifra_profesorja\
-							GROUP BY Predmetnik.studijsko_letoFK, Profesor.sifra_profesorja',function (error, results, fields) {
+							INNER JOIN Del_predmetnika ON Predmetnik.sifra_predmetnikaFK = Del_predmetnika.sifra_predmetnika',function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
@@ -308,9 +338,37 @@ router.get('/vrsteVpisa', function(req, res, next) {
 		console.log(results);
 		res.json({"status": 200, "error": null, "response": results});
 	});
-})
+});
+
+router.get('/naciniStudija', function(req, res, next) {
+	global.connection.query('SELECT * FROM Nacin_studija', function(error, results, fields) {
+		if(error) {
+			throw error;
+		}
+		res.json({
+			"status": 200,
+			"error": null,
+			"response": results,
+		});
+	})
+});
+
+router.get('/nivojiStudija', function(req, res, next) {
+	global.connection.query('SELECT * FROM Nivo_studija', function(error, results, fields) {
+		if(error) {
+			throw error;
+		}
+		
+		res.json({
+			"status": 200,
+			"error": null,
+			"response": results,
+		})
+	});
+});
+
 router.get('/PrijavljeniNaIzpit/:sifraIzpita', function(req, res, next) {
-     global.connection.query('SELECT * FROM Prijavljeni_na_izpit WHERE Izpit_šifra = ? and odjava=0', [req.params.sifraIzpita], function (error, results, fields) {
+     global.connection.query('SELECT * FROM Prijavljeni_na_izpit INNER JOIN Student ON Prijavljeni_na_izpit.Student_vpisna_st = Student.vpisna_st WHERE Izpit_šifra = ? and odjava=0', [req.params.sifraIzpita], function (error, results, fields) {
 		if (error) throw error;
 		console.log(results);
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
@@ -355,17 +413,14 @@ router.get('/zetoni/:vpisnaSt', function(req, res, next) {
 	
 	if(req.params.vpisnaSt) {
 		global.connection.query(`
-SELECT vv.opis, vv.na_voljo, COALESCE(v.cnt, 0) cnt
-FROM Vrsta_vpisa vv
-LEFT JOIN ( 
-    SELECT * FROM Zeton
-) AS z ON (z.vrsta_vpisa = vv.vrsta_vpisa and z.vpisna_stFK = ?)
-LEFT JOIN (
-    SELECT vrsta_vpisaFK, vpisna_st, COUNT(vpisna_st) cnt
-    FROM Vpis
-    GROUP BY vrsta_vpisaFK, vpisna_st
-) AS v ON (v.vrsta_vpisaFK = vv.vrsta_vpisa AND v.vpisna_st = ?)
-`, [req.params.vpisnaSt, req.params.vpisnaSt], cb);	
+SELECT z.id, z.vrsta_vpisa, vv.opis vrsta_vpisa_opis, nacin_studijaFK, nacin.opis nacin_studija_opis, Nivo_studijaFK, nivo.naziv nivo_studija_opis, z.izkoriscen, z.letnikFK, z.prosto_izbirni, z.studijsko_letoFK, z.visoko_povprecje
+FROM Zeton z
+JOIN Studijsko_leto sl ON (z.studijsko_letoFK = sl.studijsko_leto)
+JOIN Vrsta_vpisa vv ON (z.Vrsta_vpisa = vv.Vrsta_vpisa)
+JOIN Nacin_studija nacin ON (z.Nacin_studijaFK = nacin.nacin_studija)
+JOIN Studijski_program nivo ON (z.Nivo_studijaFK = nivo.sifra_stProgram)
+WHERE z.vpisna_stFK = ? AND z.izkoriscen = 0
+`, [req.params.vpisnaSt], cb);	
 	} else {
 		global.connection.query('SELECT * FROM Zeton', cb);
 	}

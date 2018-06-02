@@ -35,6 +35,14 @@ router.put('/dodajOceno1', function(req, res, next) {
         res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
     })
 })
+router.put('/potrdiRefV', function(req, res, next) {
+   console.log("alo")
+    	 global.connection.query('UPDATE `Vpis` SET `je_potrjen`=? WHERE  `vpisna_st`=?', [1, req.body.podatki], function(error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+    })
+});
+
 router.put('/dodajOceno', function(req, res, next) {
     console.log(req.body.cas_odjave);
     global.connection.query('UPDATE `Prijavljeni_na_izpit` SET `ocena`=?, `tocke_na_izpitu`=?,  `odjava`=?, `cas_odjave`=?, `odjavitelj`=? WHERE  `Izpit_šifra`=? and `Student_vpisna_st`=?', [req.body.ocena, req.body.tocke_na_izpitu, req.body.odjava, req.body.cas_odjave, req.body.odjavitelj, req.body.Izpit_šifra, req.body.Student_vpisna_st], function(error, results, fields) {

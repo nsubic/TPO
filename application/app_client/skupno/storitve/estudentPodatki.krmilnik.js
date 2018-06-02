@@ -60,6 +60,9 @@
       var studentiVpis = function(vpisna) {
         return $http.get('/api/vpisStudent/'+vpisna);
       };
+      var vrstaStudija = function(vpisna) {
+        return $http.get('/api/vrstaStudija/'+vpisna);
+      };
       var student2 = function(upime) {
         return $http.get('/api/student2/'+upime);
       };
@@ -113,13 +116,23 @@
       };
       var vrsteVpisa = function() {
         return $http.get('/api/vrsteVpisa');
-      }
+      };
+      var naciniStudija = function() {
+        return $http.get('/api/naciniStudija');
+      };
+      var nivojiStudija = function() {
+        return $http.get('/api/nivojiStudija');
+      };
       var odjavaIzpit = function(data) {
         return $http.put('/api/izpit/odjava', JSON.stringify(data));
       }
       var updateOceno = function(data) {
         console.log("data", data);
         return $http.put('/api/dodajOceno/',data);
+      }
+      var potrdiVpisReferent = function(podatki) {
+      
+        return $http.put('/api/potrdiRefV', podatki);
       }
       var odjaviStudentaRef = function(data) {
         console.log("data", data);
@@ -131,24 +144,45 @@
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
       };
+      var letoVpisaVPredmet = function(vpisnaSt, predmetSifra) {
+        return $http.get('/api/vpisiVPredmetLeto/'+vpisnaSt+'/'+predmetSifra);
+      } 
       var podatkiIzpitovZaStudenta = function(sifraStudenta) {
         return $http.get('/api/podatkiIzpitovZaStudenta/' + sifraStudenta);
       };
       var prijavaNaIzpit = function(podatki) {
         return $http.post('/api/prijavaNaIzpit/', podatki);
       };
+      var posljiMail = function(podatki) {
+        return $http.post('/api/posljiMail/', podatki);
+      };
       var pridobiZeton = function(vpisna_st) {
         return $http.get('/api/zetoni/' + vpisna_st);
+      };
+      var vstaviZeton = function(zeton) {
+        return $http.post('/api/zeton', JSON.stringify(zeton));
       };
       var posodobiZeton = function(data) {
         return $http.put('/api/zeton', JSON.stringify(data));
       };
+      var izbrisiZeton = function(id) {
+        return $http.delete('/api/zeton/' + id);
+      };
+      var dodajVpis = function(vpis) {
+        return $http.post('/api/vpis', JSON.stringify(vpis));
+      };
+      var pridobiNeprijavljene = function() {
+        return $http.get('/api/pridobiNeprijavljene');
+      }
+      
       return {
         obcina: obcina,
         drzava:drzava,
         posta:posta,
         predmet:predmet,
+        pridobiNeprijavljene:pridobiNeprijavljene,
         vpis:vpis,
+        potrdiVpisReferent:potrdiVpisReferent,
         student:student,
         vpisaniPredmet:vpisaniPredmet,
         studijskoLeto:studijskoLeto,
@@ -177,6 +211,8 @@
         nosilciInPredmeti:nosilciInPredmeti,
         profesor:profesor,
         vrsteVpisa:vrsteVpisa,
+        naciniStudija:naciniStudija,
+        nivojiStudija:nivojiStudija,
         odjavaIzpit:odjavaIzpit,
         prijavljeniNaIzpit:prijavljeniNaIzpit,
         updateOceno:updateOceno,
@@ -189,7 +225,13 @@
         odjaviStudentaRef:odjaviStudentaRef,
         student3:student3,
         vrniTocke:vrniTocke,
-        vrniOcene:vrniOcene
+        vrniOcene:vrniOcene,
+        vstaviZeton:vstaviZeton,
+        izbrisiZeton:izbrisiZeton,
+        vrstaStudija:vrstaStudija,
+        dodajVpis:dodajVpis,
+        letoVpisaVPredmet:letoVpisaVPredmet,
+        posljiMail:posljiMail
       };
     };
 

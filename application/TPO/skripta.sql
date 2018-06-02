@@ -332,19 +332,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`Zeton` ;
 
+
 CREATE TABLE IF NOT EXISTS `mydb`.`Zeton` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `vrsta_vpisa` VARCHAR(45) NOT NULL,
   `izkoriscen` INT NOT NULL,
   `vpisna_stFK` INT NOT NULL,
   `visoko_povprecje` INT NULL,
-  PRIMARY KEY (`vpisna_stFK`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Zeton_Student1`
     FOREIGN KEY (`vpisna_stFK`)
     REFERENCES `mydb`.`Student` (`vpisna_st`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `mydb`.`Predmet`

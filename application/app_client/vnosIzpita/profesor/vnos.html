@@ -122,6 +122,8 @@
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
               <th scope="col">Št. točk</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Priimek</th>
               <th scope="col">Končna Ocena</th>
             </tr>
           </thead>
@@ -132,6 +134,8 @@
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
+                <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
                  <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
@@ -157,7 +161,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Seznam študentov</h5>
-        
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -171,6 +174,8 @@
             <tr>
               <th  class="TOTR" scope="col">#</th>
               <th class="TOTR"  scope="col">Vpisna št.</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Priimek</th>
               <th class="TOTR"  scope="col">Št. točk</th>
               <th class="TOTR"  scope="col">Ocena</th>
             </tr>
@@ -179,6 +184,8 @@
             <tr ng-repeat="p in vm.prijavljeni.stu">
               <th class="TOTR"  scope="row">{{$index +1}}</th>
               <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
+              <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
               <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
               <td class="TOTR" >{{ p.ocena }}</td>
             </tr>
@@ -188,7 +195,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
         <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
-        <button type="button" class="btn btn-primary" onclick="myFunction1()">Shrani kot csv</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction2()">Shrani kot csv</button>
         <button ng-click="vm.izbrisi()" class="delete btn btn-primary">Izbriši izpit</button>
       </div>
     </div>

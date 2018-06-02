@@ -102,9 +102,9 @@
   			<td style="vertical-align: middle;">{{s.ura}} </td>
   			<td style="vertical-align: middle;">{{s.lokacija}} </td>
   			<td style="vertical-align: middle;">{{s.profesor_ime}} </td>
-  			<td><button ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
+  			<td><button ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.Predmet_sifra_predmeta, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong1" class="delete">Izbriši izpit</button></td>
   			<td><button  ng-click="vm.prijavljeniStudenti(s.sifra, s.datum, s.ura)" data-toggle="modal" data-target="#exampleModalLong"  class="delete">Dodaj ocene/ Odjavi Studenta</button></td>
-  			<td><button  ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong2">Prijavi študenta</button></td>
+  			<td><button  ng-click="vm.shraniSifroIzpit(s.sifra, s.datum, s.Predmet_sifra_predmeta, s.ura, s.ime_predmeta)" data-toggle="modal" data-target="#exampleModalLong2">Prijavi študenta</button></td>
 
 		  </tr>
 	  </tbody>
@@ -127,11 +127,14 @@
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
         <div role="alert" ng-show="vm.napakaNaObrazcu3" class="alert alert-danger">{{ vm.napakaNaObrazcu3 }}</div>
+        <div>Za vrnjeno prijavo vpišite VP v eno izmed polj oz. v oba polja.</div>
          <table class="table1">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Priimek</th>
               <th scope="col">Št. točk</th>
               <th scope="col">Končna Ocena</th>
             </tr>
@@ -143,6 +146,8 @@
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
+                <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
                  <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
@@ -175,13 +180,14 @@
       </div>
       <div id="source" class="modal-body" style="height:100%;width:100%;overflow:auto;">
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu4" class="alert alert-danger">{{ vm.napakaNaObrazcu4 }}</div>
          <table class="table">
           <thead>
             <tr>
               <th  class="TOTR" scope="col">#</th>
               <th class="TOTR"  scope="col">Vpisna št.</th>
+              <th scope="TOTR">Ime</th>
+              <th scope="TOTR">Priimek</th>
               <th class="TOTR"  scope="col">Št. točk</th>
               <th class="TOTR"  scope="col">Ocena</th>
             </tr>
@@ -190,6 +196,8 @@
             <tr ng-repeat="p in vm.prijavljeni.stu">
               <th class="TOTR"  scope="row">{{$index +1}}</th>
               <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
+              <td class="TOTR" >{{ p.ime }}</td>
+              <td class="TOTR" >{{ p.priimek }}</td>
               <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
               <td class="TOTR" >{{ p.ocena }}</td>
             </tr>
@@ -199,7 +207,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
         <button type="button" class="btn btn-primary" onclick="demoFromHTML()">Shrani kot pdf</button>
-        <button type="button" class="btn btn-primary" onclick="myFunction1()">Shrani kot csv</button>
+        <button type="button" class="btn btn-primary" onclick="myFunction2()">Shrani kot csv</button>
         <button ng-click="vm.izbrisi()" class="delete btn btn-primary">Izbriši izpit</button>
       </div>
     </div>
@@ -226,7 +234,8 @@
               Vpisna št.:<br>
               <input type="text" id="vpisna" ng-model="vm.novaPrijavaVpisna"  value="vpisnaStudenta"><br>
               <br>
-              <input type="submit"  ng-click="vm.prijavi()" value="Prijavi" class="delete btn btn-primary">
+              <button ng-click="vm.prijavi(vm.novaPrijavaVpisna)" class="delete">Prijavi se</button>
+
               </ng-form>
             </tr>
             </form>

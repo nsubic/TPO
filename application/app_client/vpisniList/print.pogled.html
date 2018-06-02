@@ -1,0 +1,192 @@
+<studentglava></studentglava>
+<style type="text/css">
+  @media print {
+    .navbar, .footer, .print-button { display: none; }
+    .print { display: block }
+  }
+</style>
+<div class="container">
+    <h1>Vpisni list</h1>
+    <form>
+      <div class="form-group row">
+        <label for="ime" class="col-sm-3 col-form-label">Ime:</label>
+        <div class="col-sm-9">
+          {{ vpis.ime }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="priimek" class="col-sm-3 col-form-label">Priimek:</label>
+        <div class="col-sm-9">
+          {{ vpis.priimek }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="datum_rojstva" class="col-sm-3 col-form-label">Datum rojstva:</label>
+        <div class="col-sm-9">
+          {{ vpis.datum_rojstva_opis }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="kraj_rojstva" class="col-sm-3 col-form-label">Kraj rojstva:</label>
+        <div class="col-sm-9">
+          {{ vpis.kraj_rojstva }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="drzava_rojstva" class="col-sm-3 col-form-label">Država rojstva:</label>
+        <div class="col-sm-9">
+          {{ vpis.drzava_rojstva_opis }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="emso" class="col-sm-3 col-form-label">EMŠO:</label>
+        <div class="col-sm-9">
+          {{ vpis.emso }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="davcna" class="col-sm-3 col-form-label">Davčna številka:</label>
+        <div class="col-sm-9">
+          {{ vpis.davcna }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="spol" class="col-sm-3 col-form-label">Spol:</label>
+        <div class="col-sm-9">
+          {{ vpis.spol_opis }}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="stalni_naslov_ulica" class="col-sm-3 col-form-label">Ulica stalnega bivanja:</label>
+        <div class="col-sm-9">
+          {{ vpis.stalni_naslov_ulica }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="stalni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka stalnega bivanja:</label>
+        <div class="col-sm-9">
+          {{ vpis.stalni_naslov_hisnast }}
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label for="stalni_postna_stevilka" class="col-sm-3 col-form-label">Poštna številka:</label>
+        <div class="col-sm-9">
+          {{ vpis.stalni_postna_stevilka }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="stalni_obcina_koda" class="col-sm-3 col-form-label">Kraj pošte:</label>
+        <div class="col-sm-9">
+          {{ vpis.stalni_obcina_koda_opis }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="stalni_drzava_koda" class="col-sm-3 col-form-label">Država pošte:</label>
+        <div class="col-sm-9">
+          {{ vpis.stalni_drzava }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="zacasni_naslov_ulica" class="col-sm-3 col-form-label">Ulica začasnega bivanja:</label>
+        <div class="col-sm-9">
+          {{ vpis.zacasni_naslov_ulica }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="zacasni_naslov_hisnast" class="col-sm-3 col-form-label">Hišna številka začasnega bivanja:</label>
+        <div class="col-sm-9">
+          {{ vpis.zacasni_naslov_hisnast }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="zacasni_postna_stevilka" class="col-sm-3 col-form-label">Začasna poštna številka:</label>
+        <div class="col-sm-9">
+          {{ vpis.zacasni_postna_stevilka }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="zacasni_kraj_posta" class="col-sm-3 col-form-label">Začasni kraj pošte:</label>
+        <div class="col-sm-9">
+          {{ vpis.zacasni_kraj_posta }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="zacasni_drzava_posta" class="col-sm-3 col-form-label">Začasna država pošte:</label>
+        <div class="col-sm-9">
+          {{ vpis.zacasni_drzava }}
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <div class="col-sm-3">
+          Pošto prejemam na:
+        </div>
+        <div class="col-sm-9">
+          {{ vpis.naslov_vrocanje ? 'začasni naslov' : 'stalni naslov' }}
+        </div>
+      </div>
+      
+      <div class="form-group row">
+        <label for="vpisna_st" class="col-sm-3 col-form-label">Vpisna številka:</label>
+        <div class="col-sm-9">
+          {{ vpis.vpisna_st }}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="tel_st" class="col-sm-3 col-form-label">Telefonska številka:</label>
+        <div class="col-sm-9">
+          {{ vpis.tel_st }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-sm-3 col-form-label">Elektronska pošta:</label>
+        <div class="col-sm-9">
+          {{ vpis.mail }}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="program" class="col-sm-3 col-form-label">Študijski program:</label>
+        <div class="col-sm-9">
+          {{ vpis.program_opis }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="vrsta_vpisa" class="col-sm-3 col-form-label">Način študija:</label>
+        <div class="col-sm-9">
+          {{ vpis.vrsta_vpisa }}
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="letnik" class="col-sm-3 col-form-label">Letnik:</label>
+        <div class="col-sm-9">
+          {{ vpis.letnik }}
+        </div>
+      </div>
+
+      <!-- start -->
+      <div class="container">
+        <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%;min-height: 90%;">
+        <h1 style="margin:30px;text-align:center">Seznam predmetov</h1>
+        <h6 style="margin-top:30px;" >KT:&nbsp;&nbsp;<div style="display:inline-block;font-size: 30px;color:red;">{{ tock }}</div></h6>
+        <h6 style="margin-top:30px;" >Predmeti:</h6>
+    
+        <div class="list-group">
+          <button ng-repeat="predmet in predmeti" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> </div></button>  
+        </div>
+      </div>
+   </div>
+   <div style="margin-top:30px;" class="print-button">
+     <a ng-click="print()" target="_blank" class="btn btn-primary"> <span class="fa fa-print"></span> Tiskanje</a>
+   </div>
+  </div>
+</div>
+
+<!-- stop -->
+      
+    </form>
+</div>
+<noga></noga>

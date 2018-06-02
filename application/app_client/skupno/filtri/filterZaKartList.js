@@ -9,7 +9,6 @@
     if(secondArgument == undefined || secondArgument == false){
     angular.forEach(items, function(value, key) {
       if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-       
         if(value.izpit.length > 0){
           var steviloRokovLetos = 0
           for(var i =0; i<value.izpit.length; i++){
@@ -63,11 +62,10 @@
     else{
       angular.forEach(items, function(value, key) {
         if( value.Vpis_studijsko_letoFK == firstArgument){//logic for filtering
-         
           if(value.izpit.length > 0){
             var steviloRokovLetos = 0
             for(var i =0; i<value.izpit.length; i++){
-              if(value.izpit[i].odjava == 0){
+              if(value.izpit[i].odjava == 0){ 
                  st++;
                 if(value.izpit[i].datum.split('-')[0] == firstArgument.split('/')[1]) steviloRokovLetos++
                 if(i == value.izpit.length-1) {

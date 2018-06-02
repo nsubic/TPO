@@ -18,7 +18,7 @@ var indexApiPut = require('./app_api/routes/put');
 
 var app = express();
 
-app.set('port', 8081);
+app.set('port', process.env.PORT || 8081);
 // view engine setup
 
 // uncomment after placing your favicon in /public
@@ -33,6 +33,13 @@ app.use(express.static(path.join(__dirname, 'app_client')));
 //Passport
 app.use(passport.initialize());
 
+var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'ae',
+            pass: 'ref'
+          }
+        });
 app.use(function(req, res, next){
 	global.connection = mysql.createConnection({
     host: "127.0.0.1",
@@ -41,7 +48,10 @@ app.use(function(req, res, next){
     database:"mydb",
     connectionLimit: 1000
 	});
-	connection.connect()
+	global.connection.on('error', function(err) {
+    console.error(err);
+  });
+	global.connection.connect()
  
 	next();
 });
@@ -81,5 +91,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.use(clientErrorHandler)
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
 
 module.exports = app;
