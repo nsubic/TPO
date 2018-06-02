@@ -7,6 +7,12 @@
     var vm = this;
     var reader = new FileReader()
 
+    var trimSpaces = function(s){
+    	s = s.replace(/(^\s*)|(\s*$)/gi,"");
+    	s = s.replace(/[ ]{2,}/gi," ");
+    	s = s.replace(/\n /,"\n");
+    	return s
+    }
     
     vm.uvozi = function(){
       var osebe = {};
@@ -31,13 +37,13 @@
           var t1=text.replace(re,"\n").split("\n");
           for(var i = 0;i < t1.length;i=i+1){
             var t2 = t1[i].split(" ")
-            var ime = t2[0]
-            var priimek = t2[1]
-            var vrsta = t2[2]
-            var mail = t2[3]
+            var ime = trimSpaces(t1[i].substring(0,29))
+            var priimek = trimSpaces(t1[i].substring(30,59))
+            var vrsta = 'VT'
+            var mail = trimSpaces(t1[i].substring(60,119))
             var upIme = mail;
             var geslo = Math.random().toString(36).substr(2, 5);
-            
+         
             if(ime == undefined || priimek == undefined || vrsta == undefined || mail == undefined){}
             else{
                 var kandidat = {
@@ -52,7 +58,7 @@
                  estudentPodatki.najdiUpIme(upIme).then(
                   function success(odgovor) {
                     vm.d = { pod: odgovor.data };
-                    
+
                     if(vm.d.pod.response[0]!=undefined){ }
                     else{
                       for (var j in kandidati){
