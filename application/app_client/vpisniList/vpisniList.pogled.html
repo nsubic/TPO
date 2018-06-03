@@ -197,10 +197,10 @@
       <div class="container">
   <div class="my-3 p-3 bg-white rounded box-shadow" style="max-height:90%;overflow:auto;min-width: 100%">
     <h1 style="margin:30px;text-align:center">Predmetnik</h1>
-    <div ng-repeat="skupina in skupine" ng-if="skupina.id != 1">
+    <div ng-repeat="skupina in skupine track by $index" ng-if="skupina.id != 1" ng-init="skupinaId = $index">
       <h6 style="margin-top:30px;">{{ skupina.naziv }}:</h6>  
       <div class="list-group">
-        <button ng-repeat="predmet in skupina.predmeti" ng-if="!predmet.izbran && !predmet.ignore" ng-click="dodajPredmet(predmet)" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> <i class="fas fa-plus"></i> </div></button>  
+        <button ng-repeat="predmet in skupine[skupinaId].predmeti track by $index" ng-if="!predmet.izbran && !skupine[skupinaId].predmeti[$index].ignore" ng-click="dodajPredmet(predmet)" type="button" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;{{ predmet.naziv }}<div  style="position: absolute;display:inline-block;right: 10px;"> <i class="fas fa-plus"></i> </div></button>
       </div>
     </div>
   </div>

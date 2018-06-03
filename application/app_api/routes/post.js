@@ -189,7 +189,16 @@ router.post('/vpis', function(req, res, next) {
         req.body.zacasni_obcina_koda,
         req.body.zacasni_postna_stevilka,
         req.body.vpisna_st,
-    ]);
+    ], function(err, results, fields) {
+        
+        if(err) {
+            console.error(err);
+        }
+        
+        console.info("vpis", results, fields);
+        
+        
+    });
     
     // INSERT Vpis
     global.connection.query('SELECT * FROM Zeton WHERE id = ?', [req.body.zetonId], function(err, results, fields) {
