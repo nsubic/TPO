@@ -54,7 +54,7 @@
       <td>{{p.izpit.profesor_ime | profIme}}</td>
       <td>{{p.izpit.datum | filterDATUMinURA }}</td>
       <td >{{p.izpit.ocena}}</td>
-      <td>{{p.izpit.stPolaganj}}</td>
+      <td><div style="display: inline-block;">{{ p.izpit.stRokov }} / </div><divstyle="display: inline-block;"> {{ p.izpit.stPolaganj }}</div></td>
     </tr>
   </tbody>
 </table>
@@ -121,7 +121,7 @@
 <td style="width: 128px;">{{p.izpit.profesor_ime | profIme}}</td>
 <td style="width: 100px;">{{p.izpit.datum | filterDATUMinURA }}</td>
 <td style="width: 51px;">{{p.izpit.ocena}}</td>
-<td style="width: 99px;">{{p.izpit.stPolaganj}}</td>
+<td style="width: 99px;"><div style="display: inline-block;">{{ p.izpit.stRokov }} / </div><divstyle="display: inline-block;"> {{ p.izpit.stPolaganj }}</div></td>
 </tr>
 </tbody>
 </table>

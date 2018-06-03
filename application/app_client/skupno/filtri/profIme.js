@@ -5,10 +5,8 @@
   var profIme = function() {
     return function(x) {
         if(x == undefined) return ''
-        var j = ""
-        for(var i=1; i<x.split(" ").length; i++)
-          j = j+ " "+x.split(" ")[i]
-        return j
+        
+        return x.replace(/[0-9]/g, "")
     };
   };
   

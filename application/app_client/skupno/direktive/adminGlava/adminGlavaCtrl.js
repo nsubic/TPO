@@ -7,6 +7,7 @@
     
     navvm.ime = $window.localStorage['upIme'];
   };
+    
   
   angular
     .module('estudent')

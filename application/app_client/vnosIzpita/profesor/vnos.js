@@ -394,8 +394,10 @@
         )
       }
   };
-      
-      
+  
+  $('#exampleModalLong').on('hidden.bs.modal', function () {
+ location.reload();
+})
       
     var options = [];
 $( '.dropdown-menu li' ).on( 'click', function( event ) {

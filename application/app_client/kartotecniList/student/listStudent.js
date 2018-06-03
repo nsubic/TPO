@@ -46,7 +46,6 @@
             }
             z=0;
           }
-          console.log(vm.pred)
         });
     });
     
@@ -54,7 +53,7 @@
         return false;
     };
     
-    
+
   }
   angular
     .module('estudent')
