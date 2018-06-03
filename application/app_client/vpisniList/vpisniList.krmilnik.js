@@ -8,7 +8,6 @@
     $scope.emsoDateValidation = false;
     $scope.spoli = [{id: 1, name: 'Ženski'}, {id: 2, name: 'Moški'}];
     $scope.zetonNiNaVoljo = true;
-    $scope.maxPredmeti = 10;
     $scope.obvezniPredmeti = 0;
     $scope.izbraniPredmeti = 0;
     $scope.strokovni = 0;
@@ -423,11 +422,7 @@
       }
       
       var tempPieces = $scope.obvezniPredmeti + $scope.izbraniPredmeti;
-      if(tempPieces >= $scope.maxPredmeti) {
-        alert("Dosegli ste maksimalno dovoljeno število predmetov " + $scope.maxPredmeti);
-        return;
-      }
-      
+
       console.log("letnik:::", $scope.vpis.letnik);
       
       if($scope.vpis.letnik == 2) {
@@ -492,15 +487,31 @@
         var predmeti = skupina.predmeti;
         for(var j = 0; j < predmeti.length; ++j) {
           var lclPredmet = predmeti[j];
+          if(lclPredmet.isModule && lclPredmet.id === predmet.id) {
+            var children = lclPredmet.children;
+            for(var k = 0; k < children.length; ++k) {
+              var child = children[k];
+              var skupine = $scope.skupine;
+              for(var l = 0; l < skupine.length; ++l) {
+                var skupina = skupine[l];
+                var predmeti2 = skupina.predmeti;
+                for(var m = 0; m < predmeti2.length; ++m) {
+                  var mPredmet = predmeti2[m];
+                  console.log("compare", mPredmet.id, child, mPredmet.id === child)
+                  if(mPredmet.id === child) {
+                    mPredmet.ignore = true;
+                  }
+                }
+              }
+            }
+          } else
           if(lclPredmet.id === predmet.id) {
             console.log("ignore", lclPredmet.id, predmet.id);
             lclPredmet.ignore = true;
           } 
         }
       } 
-      
-      $scope.skupine = $scope.skupine;
-      
+
       $scope.recalculate();
     }
     
@@ -509,7 +520,18 @@
       
       $.each($scope.skupine, function(idx1, elem1) {
         $.each(elem1.predmeti, function(idx2, elem2) {
-          if(elem2.id === predmet.id && !elem2.izbran) {
+          if(elem2.isModule && elem2.id === predmet.id) {
+            $.each(elem2.children, function(idx3, elem3) {
+              $.each($scope.skupine, function(idx4, elem4) {
+                $.each(elem4.predmeti, function(idx5, elem5) {
+                  if(elem5.id === elem3) {
+                    elem5.ignore = false;
+                  }  
+                })
+              })
+            })
+          }
+          else if(elem2.id === predmet.id && !elem2.izbran) {
             elem2.ignore = false;
           }
         });
@@ -624,10 +646,6 @@
             $scope.vpis.vrsta_vpisa = first.nacin_studijaFK;
             $scope.vpis.nacin_studija = first.nacin_studijaFK;
             $scope.vpis.letnik = first.letnikFK;
-            
-            if($scope.vpis.letnik == 3) {
-              $scope.maxPredmeti = 11;
-            }
             $scope.vpis.solskoLeto = first.studijsko_letoFK;
             $scope.vpis.visoko_povprecje = first.visoko_povprecje;
             $scope.vpis.prosto_izbirni = first.prosto_izbirni === 1 ? true : false;
