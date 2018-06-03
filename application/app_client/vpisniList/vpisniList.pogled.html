@@ -84,7 +84,9 @@
       <div class="form-group row">
         <label for="stalni_obcina_koda" class="col-sm-3 col-form-label">Kraj pošte:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="stalni_obcina_koda" ng-model="vpis.stalni_obcina_koda">
+          <select class="form-control" id="stalni_obcina_koda" ng-options="item.sifra_obcine as item.ime_obcine for item in obcine | orderBy: ime_obcine" ng-model="vpis.stalni_obcina_koda">
+            <option value="">Izberi občino</option>
+          </select>
         </div>
       </div>
       <div class="form-group row">

@@ -176,14 +176,7 @@
     
     $scope.reloadPredmeti = function() {
       console.log("letnik", $scope.vpis.letnik);
-      if($scope.vpis.letnik == 2) {
-        $scope.maxTock = 54;
-      } else {
-        $scope.maxTock = 60;
-      }
-      
-      console.log("maxTock", $scope.maxTock);
-      
+
       $scope.regexIme = /[a-zA-Z]+/;
       $scope.tock = 0;
       $scope.obvezniPredmeti = 0;
@@ -334,6 +327,7 @@
     
     // Šifranti
     $scope.poste = [];
+    $scope.obcine = [];
     $scope.drzave = [];
     $scope.programi = [];
     $scope.vrste_vpisov = [];
@@ -380,6 +374,13 @@
       });
       
     estudentPodatki
+      .obcina()
+      .then(function(res) {
+        $scope.obcine = res.data.response;
+        console.log("obcine", $scope.obcine);
+      })
+      
+    estudentPodatki
       .letnik()
       .then(function(res) {
         $scope.letniki = res.data.response;
@@ -396,17 +397,7 @@
   
     $scope.$watch('vpis.program', $scope.reloadPredmeti);
     $scope.$watch('vpis.letnik', $scope.reloadPredmeti);
-    $scope.$watch('vpis.stalni_postna_stevilka', function(data) { 
-      if($scope.vpis.stalni_drzava_koda == "SI") {
-        var results = $.grep($scope.poste, function(value, index) {
-          return value.posta.toString() === data;
-        })
-        if(results && results.length > 0) {
-          $scope.vpis.stalni_obcina_koda = results[0].kraj;  
-        }  
-      }
-    }, true);
-    
+
     $scope.$watch('vpis.zacasni_postna_stevilka', function(data) {
       if($scope.vpis.zacasni_drzava_koda  == "SI") {
         var results = $.grep($scope.poste, function(value, index) {
