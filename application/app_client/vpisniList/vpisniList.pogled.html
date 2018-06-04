@@ -47,7 +47,7 @@
       <div class="form-group row">
         <label for="davcna" class="col-sm-3 col-form-label">Davčna številka:</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" name="davcna" id="davcna" ng-model="vpis.davcna" required="required" ng-minlength="8" ng-maxlength="8">
+          <input type="text" class="form-control" name="davcna" id="davcna" ng-model="vpis.davcna" required="required" ng-minlength="8" ng-maxlength="8">
           <span class="form-text text-muted" ng-show="vpisForm.davcna.$touched && vpisForm.davcna.$invalid && vpisForm.davcna.$error.required">Manjka davčna številka</span>
           <span class="form-text text-muted" ng-show="vpisForm.davcna.$touched && vpisForm.davcna.$invalid && vpisForm.davcna.$error.minlength">Neveljavna davčna številka</span>
           <span class="form-text text-muted" ng-show="vpisForm.davcna.$touched && vpisForm.davcna.$invalid && vpisForm.davcna.$error.maxlength">Neveljavna davčna številka</span>
