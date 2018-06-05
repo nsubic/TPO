@@ -105,6 +105,9 @@
                             vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
                             console.log(osebe1)
                             vm.data = { osebe1 };
+                            estudentPodatki.dodajZeton({
+                              vpisna_stFK:vpisna}
+                              )
                             $("#myModal").modal()
                           }, 
                           function error(odgovor) {

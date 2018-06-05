@@ -165,6 +165,9 @@
       var vstaviZeton = function(zeton) {
         return $http.post('/api/zeton', JSON.stringify(zeton));
       };
+      var dodajZeton = function(podatki) {
+        return $http.post('/api/dodajZeton', JSON.stringify(podatki));
+      };
       var posodobiZeton = function(data) {
         return $http.put('/api/zeton', JSON.stringify(data));
       };
@@ -235,6 +238,7 @@
         dodajVpis:dodajVpis,
         letoVpisaVPredmet:letoVpisaVPredmet,
         posljiMail:posljiMail,
+        dodajZeton:dodajZeton,
         prijavljeniNaIzpitVP:prijavljeniNaIzpitVP
       };
     };
