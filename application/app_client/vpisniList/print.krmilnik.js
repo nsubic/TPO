@@ -16,9 +16,9 @@
       .then(function(res) {
         console.log("drzave", res.data.response);
         $scope.drzave = res.data.response;
-      });
-      
-    estudentPodatki
+        
+        
+        estudentPodatki
       .studijskiProgram()
       .then(function(res) {
         console.log("program", res);
@@ -99,7 +99,7 @@
           
           
           var drzave_zacasnega = $.grep($scope.drzave, function(data) {
-            return data.dvomestna_koda === $scope.vpis.zacasni_drzava_posta;
+            return data.dvomestna_koda === $scope.vpis.zacasni_drzava_koda;
           })
           if(drzave_zacasnega.length) {
             $scope.vpis.zacasni_drzava = drzave_zacasnega[0].slo_naziv;  
@@ -123,7 +123,14 @@
             $scope.vpis.stalni_obcina_koda_opis = obcinaseek[0].ime_obcine;
           }
           
+          var zacObcinaSeek = $.grep($scope.obcine, function(data) {
+            return data.sifra_obcine === $scope.vpis.zacasni_obcina_koda;
+          })
           
+          if(zacObcinaSeek.length) {
+            $scope.vpis.zacasni_obcina_koda_opis = zacObcinaSeek[0].ime_obcine;
+          }
+
           $scope.vpis[key] = partial;
         }
       });
@@ -149,6 +156,9 @@
         $scope.tock += data.tocke;
       })
     });
+      });
+      
+    
       
       $scope.print = print;
     
