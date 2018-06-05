@@ -375,6 +375,14 @@ router.get('/PrijavljeniNaIzpit/:sifraIzpita', function(req, res, next) {
 	}); 
 });
 
+router.get('/PrijavljeniNaIzpitVP/:sifraIzpita', function(req, res, next) {
+     global.connection.query('SELECT * FROM Prijavljeni_na_izpit INNER JOIN Student ON Prijavljeni_na_izpit.Student_vpisna_st = Student.vpisna_st WHERE Izpit_šifra = ? and odjava=0 or ocena = ?', [req.params.sifraIzpita, "VP"], function (error, results, fields) {
+		if (error) throw error;
+		console.log(results);
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	}); 
+});
+
 router.get('/podatkiIzpitovZaStudenta/:sifraStudenta', function(req, res, next) {
      global.connection.query('SELECT * FROM Prijavljeni_na_izpit INNER JOIN Izpit ON Izpit.sifra = Prijavljeni_na_izpit.Izpit_šifra WHERE Student_vpisna_st = ? ORDER BY Izpit.datum', [req.params.sifraStudenta], function (error, results, fields) {
 		if (error) throw error;

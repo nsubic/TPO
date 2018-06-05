@@ -215,6 +215,40 @@
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
         
+        if(p.ocena == 'VP' || p.tocke_na_izpitu == "VP"){
+          estudentPodatki.updateOceno1({
+         Izpit_šifra: p.Izpit_šifra,
+         Student_vpisna_st: p.Student_vpisna_st,
+         ocena: "VP",
+        tocke_na_izpitu: "VP",
+        
+       }).then(
+                 function success(odgovor) {
+                   
+                   alert("Študentu je bila vrnjena prijava. Študent je bil zato odjavljen od izpita!");
+                   //location.reload();
+                 }, 
+                 function error(odgovor) {
+                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                   console.log(odgovor.e);
+          });
+          
+        estudentPodatki.odjaviStudentaRef({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
+        }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+          });
+          return;
+        }
         console.log("datum", datumIzpita)
       if (p.ocena == undefined & p.tocke_na_izpitu == undefined)
       {
@@ -294,7 +328,7 @@
       window.localStorage['datumIzpita'] = datum;
       window.localStorage['uraIzpita'] = ure;
       window.localStorage['minuteIzpita'] = minute;
-      estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
+      estudentPodatki.prijavljeniNaIzpitVP(sifraIzpita).then(
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
@@ -306,7 +340,7 @@
               console.log(vm.podatki,"hhjh")
               var steviloPorabljenihRokov = 0
               for(var j = 0; j<vm.podatki.izpiti.length; j++){
-                 if(vm.podatki.izpiti[j].Predmet_sifra_predmeta == sifraPred && vm.podatki.izpiti[j].odjava==0 ){
+                 if(vm.podatki.izpiti[j].Predmet_sifra_predmeta == sifraPred && (vm.podatki.izpiti[j].odjava==0 || vm.podatki.izpiti[j].ocena=="VP") ){
                    console.log(vm.podatki.izpiti[j].datum, datumIzpita, vm.podatki.izpiti[j].datum <= datumIzpita)
                    if(vm.podatki.izpiti[j].datum <= datumIzpita) 
                     steviloPorabljenihRokov++;

@@ -144,6 +144,9 @@
       var prijavljeniNaIzpit = function(sifraIzpita) {
         return $http.get('/api/PrijavljeniNaIzpit/' + sifraIzpita);
       };
+      var prijavljeniNaIzpitVP = function(sifraIzpita) {
+        return $http.get('/api/PrijavljeniNaIzpitVP/' + sifraIzpita);
+      };
       var letoVpisaVPredmet = function(vpisnaSt, predmetSifra) {
         return $http.get('/api/vpisiVPredmetLeto/'+vpisnaSt+'/'+predmetSifra);
       } 
@@ -231,7 +234,8 @@
         vrstaStudija:vrstaStudija,
         dodajVpis:dodajVpis,
         letoVpisaVPredmet:letoVpisaVPredmet,
-        posljiMail:posljiMail
+        posljiMail:posljiMail,
+        prijavljeniNaIzpitVP:prijavljeniNaIzpitVP
       };
     };
 

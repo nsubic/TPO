@@ -2378,8 +2378,8 @@ CREATE TABLE IF NOT EXISTS `Prijavljeni_na_izpit` (
   `sifra_prijave` int(11) NOT NULL AUTO_INCREMENT,
   `Izpit_šifra` int(11) NOT NULL,
   `Student_vpisna_st` int(11) NOT NULL,
-  `ocena` int(11) DEFAULT NULL,
-  `tocke_na_izpitu` int(11) DEFAULT NULL,
+  `ocena` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `tocke_na_izpitu` varchar(3) COLLATE utf8_bin DEFAULT NULL,
   `odjava` int(11) NOT NULL,
   `cas_odjave` datetime DEFAULT NULL,
   `odjavitelj` varchar(45) COLLATE utf8_bin DEFAULT NULL,
@@ -2388,6 +2388,7 @@ CREATE TABLE IF NOT EXISTS `Prijavljeni_na_izpit` (
   KEY `fk_Prijavljeni_na_izpit_Student1_idx` (`Student_vpisna_st`),
   KEY `fk_Prijavljeni_na_izpit_Izpit1` (`Izpit_šifra`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=939120 ;
+
 
 --
 -- Dumping data for table `Prijavljeni_na_izpit`
