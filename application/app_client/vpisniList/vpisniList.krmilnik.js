@@ -610,7 +610,7 @@
       //  .dodajStudenta(vpis) ???
       // sn: ali kaj drugega, ne vem
     }
-    
+    console.log($window.localStorage['upIme']);
     estudentPodatki.student2($window.localStorage['upIme']).then(function (res) {
       console.log(res);
       var vpisna = res.data.response[0].vpisna_st;
@@ -630,7 +630,7 @@
       }
       
       console.log("scope", $scope.vpis);
-
+console.log("scope", vpisna);
       estudentPodatki
         .dobiZeton(vpisna)
         .then(function(res) {

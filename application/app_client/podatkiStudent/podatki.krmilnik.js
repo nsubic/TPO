@@ -12,6 +12,7 @@
       vm.d = { pod: odgovor.data };
       console.log(vm.d.pod.response)
       vm.vpisna = vm.d.pod.response.vpisna_st
+      if(vm.d.pod.response.length == 0 ) window.location.replace("/vpisniList");
     }, 
     function error(odgovor) {
       vm.sporocilo = "There was an error!";

@@ -33,25 +33,10 @@
        controller: 'podatkiStudent',
        controllerAs: 'vm'
     })
-    .when('/vpis', {
+    .when('/vpisniList', {
        templateUrl: '/vpisniList/vpisniList.pogled.html',
        controller: 'vpisniListCtrl',
        controllerAs: 'vm'
-    })
-    .when('/vpis/predmeti', {
-      templateUrl: '/izberiPredmete/izberiPredmete.html',
-      controller: 'vpisniListCtrl',
-      controllerAs: 'vm'
-    })
-    .when('/vpis/potrditev', {
-     templateUrl: '/vpisniList/potrditevVpisniList.pogled.html',
-     controller: 'potrditevVpisniListCtrl',
-     controllerAs: 'vm',
-    })
-    .when('/vpis/print/:leto1/:leto2/:program/:vpisnaSt', {
-     templateUrl: '/vpisniList/print.pogled.html',
-     controller: 'printCtrl',
-     controllerAs: 'vm',
     })
     .when('/uvozPodatkov', {
        templateUrl: '/uvozPodatkovKandidati/uvozPodatkovKandidati.pogled.html',
