@@ -1,8 +1,8 @@
 (function() {
   /* global angular */
   
-  nalozi.$inject = ['$location','estudentPodatki'];
-  function nalozi($location,estudentPodatki) {
+  nalozi.$inject = ['$scope','$location','estudentPodatki'];
+  function nalozi($scope, $location,estudentPodatki) {
     
     var vm = this;
     var reader = new FileReader()
@@ -39,11 +39,13 @@
             var t2 = t1[i].split(" ")
             var ime = trimSpaces(t1[i].substring(0,29))
             var priimek = trimSpaces(t1[i].substring(30,59))
-            var vrsta = 'VT'
-            var mail = trimSpaces(t1[i].substring(60,119))
+            var vrsta = trimSpaces(t1[i].substring(60,66))
+            if(vrsta == "100046") vrsta = 'VT' 
+            else vrsta = 'VU'
+            var mail = trimSpaces(t1[i].substring(67,119))
             var upIme = mail;
             var geslo = Math.random().toString(36).substr(2, 5);
-         
+            geslo = "geslo"
             if(ime == undefined || priimek == undefined || vrsta == undefined || mail == undefined){}
             else{
                 var kandidat = {
