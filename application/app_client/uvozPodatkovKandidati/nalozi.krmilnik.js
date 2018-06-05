@@ -102,16 +102,7 @@
                             vm.sporocilo = "There was an error!";
                             console.log(odgovor);
                           });
-                          estudentPodatki.dodajVpis1({
-                            vpisna_st:vpisna,
-                            vrsta:kandidati[j].vrsta
-                          }).then( function success(odgovor) {
-                            console.log("voila3");
-                          }, 
-                          function error(odgovor) {
-                            vm.sporocilo = "There was an error!";
-                            console.log(odgovor);
-                          });
+                          
                           estudentPodatki.dodajZeton({
                           vpisna_stFK:vpisna}
                           ).then( function success(odgovor) {

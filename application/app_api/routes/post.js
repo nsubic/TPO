@@ -158,7 +158,20 @@ router.post('/vpis', function(req, res, next) {
     if(!req.body.vpisna_st) {
         throw new Error("vpisna_st null");
     }
-    
+    else{
+        global.connection.query("SET FOREIGN_KEY_CHECKS=0;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
+     global.connection.query('DELETE FROM Vpis WHERE vpisna_st = ? AND 	je_potrjen = ?', [req.body.sifra, 0],function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+	global.connection.query("SET FOREIGN_KEY_CHECKS=1;", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
+    }
     if(!req.body.zetonId) {
         throw new Error("zetonId null");
     }
@@ -226,8 +239,8 @@ router.post('/vpis', function(req, res, next) {
     });
     
     // INSERT Vpis
-    global.connection.query('SELECT * FROM Zeton WHERE id = ?', [req.body.zetonId], function(err, results, fields) {
-        
+    console.log("Zakaj prides")
+    global.connection.query('SELECT * FROM Zeton WHERE id = ? ', [req.body.zetonId], function(err, results, fields) {
         global.connection.query('INSERT INTO Vpis (je_potrjen, letnikFK, nacin_studijaFK, oblika_studijaFK, sifra_stProgramFK, studijsko_letoFK, vpisna_st, vrsta_vpisaFK) VALUES (0, ?, ?, ?, ?, ?, ?, ?)', [
             results[0].letnikFK,
             results[0].Nacin_studijaFK,
@@ -240,9 +253,9 @@ router.post('/vpis', function(req, res, next) {
             if(err) {
                 throw err;
             }
-            
+            console.log("pa sem")
             var predmeti = req.body.predmeti;
-            
+            console.log("pa sem")
             if(predmeti.length) {
                 for(var i = 0; i < predmeti.length; ++i) {
                     var selfPredmet = predmeti[i];
@@ -253,7 +266,7 @@ router.post('/vpis', function(req, res, next) {
                     var program = results[0].Nivo_studijaFK;
                     var leto = results[0].Studijsko_letoFK;
                     var vpisnaSt = results[0].vpisna_stFK;
-                    
+                    console.log("pa sem")
                     global.connection.query(`INSERT INTO Izbrani_predmeti (Predmetnik_letnikFK, Predmetnik_sifra_predmetaFK, Predmetnik_sifra_predmetnikaFK, Vpis_sifra_stProgramFK, Vpis_studijsko_letoFK, Vpis_vpisna_st) VALUES (?, ?, ?, ?, ?, ?)`, [
                         letnik, predmet, skupina, program, leto, vpisnaSt,
                     ], function(err, results, fields) {
@@ -271,7 +284,8 @@ router.post('/vpis', function(req, res, next) {
             
             // nadaljuje in označi žeton kot uporabljen
             // adijo
-            global.connection.query('UPDATE Zeton SET izkoriscen = 1 WHERE id = ?', [req.body.zetonId], function(err, results, fields) {
+            console.log("pa sem")
+            global.connection.query('UPDATE Zeton SET izkoriscen = 1 WHERE id = ? AND izkoriscen = ?', [req.body.vpisna_st,0], function(err, results, fields) {
                 res.json({
                     "status": 200,
                     "error": null,
