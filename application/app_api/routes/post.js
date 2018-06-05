@@ -142,7 +142,9 @@ router.post('/vpis', function(req, res, next) {
     if(!req.body.letnik) {
         throw new Error("letnik null");
     }
-    
+    if(!req.body.emso) {
+        throw new Error("letnik null");
+    }
     if(!req.body.program) {
         throw new Error("program null");
     }
@@ -163,9 +165,8 @@ router.post('/vpis', function(req, res, next) {
         if (err) throw err;
         console.log(result);
     });
-     global.connection.query('DELETE FROM Vpis WHERE vpisna_st = ? AND 	je_potrjen = ?', [req.body.sifra, 0],function (error, results, fields) {
+     global.connection.query('DELETE FROM Vpis WHERE vpisna_st = ? AND 	je_potrjen = ?', [req.body.vpisna_st, 0],function (error, results, fields) {
 		if (error) throw error;
-		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
 	global.connection.query("SET FOREIGN_KEY_CHECKS=1;", function (err, result, fields) {
         if (err) throw err;
@@ -175,7 +176,7 @@ router.post('/vpis', function(req, res, next) {
     if(!req.body.zetonId) {
         throw new Error("zetonId null");
     }
-    
+    console.log("faking emso", req.body.emso)
     // UPDATE Student
     global.connection.query(`
     UPDATE Student
