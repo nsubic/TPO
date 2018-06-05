@@ -148,14 +148,13 @@
           }
           
     };
-    
     vm.shraniSifroIzpit = function(sifra, datumIzpita, sifraPredmeta, uraIzpita, imePredmeta)
     {
       window.localStorage['sifraIzpita'] = sifra;
       window.localStorage['sifraPredmeta'] = sifraPredmeta;
       window.localStorage['datumIzpita'] = datumIzpita;
       window.localStorage['imePredmeta'] = imePredmeta;
-      vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
+      vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita, imePredmeta);
     }
     
     vm.dodajanjeOcen1 = function(p) {
@@ -170,9 +169,39 @@
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
         
-        if (p.tocke_na_izpitu == "VP" || p.ocena == "VP")
-        {
+        if(p.ocena == 'VP' || p.tocke_na_izpitu == "VP"){
+          estudentPodatki.updateOceno1({
+         Izpit_šifra: p.Izpit_šifra,
+         Student_vpisna_st: p.Student_vpisna_st,
+         ocena: "VP",
+        tocke_na_izpitu: "VP",
+        
+       }).then(
+                 function success(odgovor) {
+                   
+                   alert("Študentu je bila vrnjena prijava. Študent je bil zato odjavljen od izpita!");
+                   //location.reload();
+                 }, 
+                 function error(odgovor) {
+                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                   console.log(odgovor.e);
+          });
           
+        estudentPodatki.odjaviStudentaRef({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
+        }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+          });
+          return;
         }
         else
         {
@@ -332,7 +361,6 @@
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
-          console.log(vm.prijavljeni.stu.length)
           for(var i = 0; i<vm.prijavljeni.stu.length; i++){
           estudentPodatki.podatkiIzpitovZaStudenta(vm.prijavljeni.stu[i].Student_vpisna_st).then(
             function success(res) {
@@ -352,10 +380,6 @@
                      vm.prijavljeni.stu[j].stPolaganja = steviloPorabljenihRokov;
                  }
               }
-
-
-
-             
           });
           }
         }, 

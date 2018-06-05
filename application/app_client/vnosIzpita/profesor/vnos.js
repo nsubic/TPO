@@ -179,6 +179,40 @@
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
         
+        if(p.ocena == 'VP' || p.tocke_na_izpitu == "VP"){
+          estudentPodatki.updateOceno1({
+         Izpit_šifra: p.Izpit_šifra,
+         Student_vpisna_st: p.Student_vpisna_st,
+         ocena: "VP",
+        tocke_na_izpitu: "VP",
+        
+       }).then(
+                 function success(odgovor) {
+                   
+                   alert("Študentu je bila vrnjena prijava. Študent je bil zato odjavljen od izpita!");
+                   //location.reload();
+                 }, 
+                 function error(odgovor) {
+                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
+                   console.log(odgovor.e);
+          });
+          
+        estudentPodatki.odjaviStudentaRef({
+        Izpit_šifra: p.Izpit_šifra,
+        Student_vpisna_st: p.Student_vpisna_st,
+        odjava: 1,
+        cas_odjave: x1,
+        odjavitelj: odja
+        }).then(
+                function success(odgovor) {
+                  console.log("Uspelo");
+                }, 
+                function error(odgovor) {
+                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
+                  console.log(odgovor.e);
+          });
+          return;
+        }
       if (p.ocena == undefined & p.tocke_na_izpitu == undefined)
       {
         vm.napakaNaObrazcu1 = "Vnesiti morate ali končno oceno ali točke izpita oz. oboje.";
@@ -239,18 +273,44 @@
                    console.log(odgovor.e);
        });
     };
-    vm.prijavljeniStudenti = function(sifraIzpita, datumIzpita, uraIzpita) {
+    vm.prijavljeniStudenti = function(sifraIzpita, datumIzpita, uraIzpita,imePredmeta,imeProfesorja,sifraPred,lokacija) {
       var datum = datumIzpita.substr(0, 10);
       var ure = uraIzpita.substr(0,2);
       var minute = uraIzpita.substr(3,5);
-      
+      vm.trenSifra = sifraPred;
+      vm.trenDatum = datumIzpita;
+      vm.trenUra = uraIzpita;
+      vm.trenPred = imePredmeta;
+      vm.trenProf = imeProfesorja;
+      vm.trenLokacija = lokacija
+      vm.trenLetoPolaganja =datumIzpita.split('-')[0]-1 + '/'+ datumIzpita.split('-')[0]
       window.localStorage['datumIzpita'] = datum;
       window.localStorage['uraIzpita'] = ure;
       window.localStorage['minuteIzpita'] = minute;
-      estudentPodatki.prijavljeniNaIzpit(sifraIzpita).then(
+      estudentPodatki.prijavljeniNaIzpitVP(sifraIzpita).then(
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
+          for(var i = 0; i<vm.prijavljeni.stu.length; i++){
+          estudentPodatki.podatkiIzpitovZaStudenta(vm.prijavljeni.stu[i].Student_vpisna_st).then(
+            function success(res) {
+              vm.podatki = { izpiti: res.data.response };
+              var steviloPorabljenihRokov = 0
+              for(var j = 0; j<vm.podatki.izpiti.length; j++){
+                 if(vm.podatki.izpiti[j].Predmet_sifra_predmeta == sifraPred && (vm.podatki.izpiti[j].odjava==0 || vm.podatki.izpiti[j].ocena=="VP") ){
+                   console.log(vm.podatki.izpiti[j].datum, datumIzpita, vm.podatki.izpiti[j].datum <= datumIzpita)
+                   if(vm.podatki.izpiti[j].datum <= datumIzpita) 
+                    steviloPorabljenihRokov++;
+                 }
+              }
+              console.log(steviloPorabljenihRokov)
+              for(var j = 0; j<vm.prijavljeni.stu.length; j++){
+                 if(vm.prijavljeni.stu[j].Student_vpisna_st == vm.podatki.izpiti[0].Student_vpisna_st){
+                     vm.prijavljeni.stu[j].stPolaganja = steviloPorabljenihRokov;
+                 }
+              }
+          });
+          }
         }, 
         function error(res) {
           vm.sporocilo = "There was an error!";
