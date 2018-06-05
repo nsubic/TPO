@@ -117,6 +117,23 @@
       $scope.splosniTock = splosniTock;
       $scope.moduliTock = moduliTock;
     }
+    $scope.$watch('vpis.ime', function(data) {
+      console.log("ime", data);
+      for(var a in data){
+        if(data[a].match(/[0-9]/i) )
+          alert("V imenu so lahko samo črke!")
+      }
+      
+    });
+    
+    $scope.$watch('vpis.priimek', function(data) {
+      console.log("ime", data);
+      for(var a in data){
+        if(data[a].match(/[0-9]/i) )
+          alert("V imenu so lahko samo črke!")
+      }
+      
+    });
     
     $scope.$watch('vpis.emso', function(data) {
       $scope.emsoChecksumValidation = false;
@@ -176,7 +193,8 @@
     $scope.reloadPredmeti = function() {
       console.log("letnik", $scope.vpis.letnik);
 
-      $scope.regexIme = /[a-zA-Z]+/;
+      $scope.regexIme = /[A-Za-z]{1,}/;
+      $scope.regexPriimek = /[A-Za-z]{1,}/;
       $scope.tock = 0;
       $scope.obvezniPredmeti = 0;
       $scope.izbraniPredmeti = 0;
@@ -553,7 +571,29 @@
       {
         // ce ga ze imamo v bazi, potem pa moramo preverjatni kombinacije, kam se voce vpisat
       }
-      
+      vm.napacenPodatek = 0;
+      $scope.$watch('vpis.ime', function(data) {
+      console.log("ime", data);
+      for(var a in data){
+        if(data[a].match(/[0-9]/i) )
+          alert("V imenu so lahko samo črke!")
+          vm.napacenPodatek=1;
+          console.log("napacenPodatek", vm.napacenPodatek)
+      }
+        return;
+      });
+      console.log("napacenPodatek", vm.napacenPodatek)
+      if(vm.napacenPodatek==1)
+      return
+      console.log("semNeSmes");
+      $scope.$watch('vpis.priimek', function(data) {
+      console.log("ime", data);
+      for(var a in data){
+        if(data[a].match(/[0-9]/i) )
+          alert("V imenu so lahko samo črke!")
+      }
+        return;
+      });
       $scope.vpis.predmeti = [];
       
       $.each($scope.skupine, function(idx1, elem1) {
@@ -613,6 +653,7 @@
     
     estudentPodatki.student2($window.localStorage['upIme']).then(function (res) {
       console.log(res);
+      if(res.data.response.length > 0)
       var vpisna = res.data.response[0].vpisna_st;
       var data = res.data.response[0];
       

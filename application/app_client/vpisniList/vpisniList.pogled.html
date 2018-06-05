@@ -5,14 +5,15 @@
       <div class="form-group row">
         <label for="ime" class="col-sm-3 col-form-label">Ime:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" name="ime" id="ime" ng-model="vpis.ime" ng-pattern="regexIme" required="required">
+          <input type="text" pattern="[A-Za-z]{1,}" class="form-control" name="ime" id="ime" ng-model="vpis.ime" ng-pattern="regexIme" required="required">
           <span class="form-text text-muted" ng-show="vpisForm.ime.$error.pattern">Ime ni v pravilni obliki</span>
         </div>
       </div>
       <div class="form-group row">
         <label for="priimek" class="col-sm-3 col-form-label">Priimek:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="priimek" ng-model="vpis.priimek" ng-pattern="regexIme" required="required">
+          <input type="text" pattern="[A-Za-z]{1,}" class="form-control" id="priimek" ng-model="vpis.priimek" ng-pattern="regexPriimek" required="required">
+          <span class="form-text text-muted" ng-show="vpisForm.priimek.$error.pattern">Priimek ni v pravilni obliki</span>
         </div>
       </div>
       <div class="form-group row">
@@ -147,7 +148,7 @@
       <div class="form-group row">
         <label for="vpisna_st" class="col-sm-3 col-form-label">Vpisna številka:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="vpisna_st" ng-model="vpis.vpisna_st">
+          <input type="text" class="form-control" id="vpisna_st" ng-model="vpis.vpisna_st"  disabled="disabled">
         </div>
       </div>
 
