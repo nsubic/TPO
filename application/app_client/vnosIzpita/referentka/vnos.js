@@ -280,11 +280,17 @@
                    console.log(odgovor.e);
        });
     };
-    vm.prijavljeniStudenti = function(sifraIzpita, datumIzpita, uraIzpita) {
+    vm.prijavljeniStudenti = function(sifraIzpita, datumIzpita, uraIzpita,imePredmeta,imeProfesorja,sifraPred,lokacija) {
       var datum = datumIzpita.substr(0, 10);
       var ure = uraIzpita.substr(0,2);
       var minute = uraIzpita.substr(3,5);
-      
+      vm.trenSifra = sifraPred;
+      vm.trenDatum = datumIzpita;
+      vm.trenUra = uraIzpita;
+      vm.trenPred = imePredmeta;
+      vm.trenProf = imeProfesorja;
+      vm.trenLokacija = lokacija
+      vm.trenLetoPolaganja =datumIzpita.split('-')[0]-1 + '/'+ datumIzpita.split('-')[0]
       window.localStorage['datumIzpita'] = datum;
       window.localStorage['uraIzpita'] = ure;
       window.localStorage['minuteIzpita'] = minute;
@@ -292,6 +298,32 @@
         function success(res) {
           vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
           vm.prijavljeni = { stu: res.data.response };
+          console.log(vm.prijavljeni.stu.length)
+          for(var i = 0; i<vm.prijavljeni.stu.length; i++){
+          estudentPodatki.podatkiIzpitovZaStudenta(vm.prijavljeni.stu[i].Student_vpisna_st).then(
+            function success(res) {
+              vm.podatki = { izpiti: res.data.response };
+              console.log(vm.podatki,"hhjh")
+              var steviloPorabljenihRokov = 0
+              for(var j = 0; j<vm.podatki.izpiti.length; j++){
+                 if(vm.podatki.izpiti[j].Predmet_sifra_predmeta == sifraPred && vm.podatki.izpiti[j].odjava==0 ){
+                   console.log(vm.podatki.izpiti[j].datum, datumIzpita, vm.podatki.izpiti[j].datum <= datumIzpita)
+                   if(vm.podatki.izpiti[j].datum <= datumIzpita) 
+                    steviloPorabljenihRokov++;
+                 }
+              }
+              console.log(steviloPorabljenihRokov)
+              for(var j = 0; j<vm.prijavljeni.stu.length; j++){
+                 if(vm.prijavljeni.stu[j].Student_vpisna_st == vm.podatki.izpiti[0].Student_vpisna_st){
+                     vm.prijavljeni.stu[j].stPolaganja = steviloPorabljenihRokov;
+                 }
+              }
+
+
+
+             
+          });
+          }
         }, 
         function error(res) {
           vm.sporocilo = "There was an error!";

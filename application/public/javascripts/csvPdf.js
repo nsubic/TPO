@@ -1,35 +1,18 @@
 function myFunction2() {
-  var titles = [];
-  var data = [];
 
-  /*
-   * Get the table headers, this will be CSV headers
-   * The count of headers will be CSV string separator
-   */
-  $('.table th').each(function() {
-    titles.push($(this).text());
-  });
-
-  /*
-   * Get the actual data, this will contain all the data, in 1 array
-   */
-  $('.table td').each(function() {
-    data.push($(this).text());
-  });
-  
   /*
    * Convert our data to CSV string
    */
-    var rows = document.querySelectorAll("TOTR");
+    var rows = document.querySelectorAll("table.table.noro tr");
     var row = ""
-    for (var i = 0; i < rows.length-1; i++) {
+    for (var i = 0; i < rows.length; i++) {
         var cols = rows[i].querySelectorAll("td, th");
-        
         for (var j = 0; j < cols.length; j++){
-            row = row + cols[j].innerText;
+            row = row + cols[j].innerHTML;
             if(j < cols.length-1)  row = row +','
         }
         row=row+'\n'
+
     }
 
   /*
@@ -81,6 +64,7 @@ function myFunction() {
             row = row + cols[j].innerText;
             if(j < cols.length-1)  row = row +','
         }
+        console.log(row)
         row=row+'\n'
 
     }

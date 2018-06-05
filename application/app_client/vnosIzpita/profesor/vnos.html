@@ -130,7 +130,7 @@
 </div>
           <tbody>
             <form name="vnosOcen">
-            <tr class="form-group table td" ng-repeat="p in vm.prijavljeni.stu">
+            <tr class="form-group table td" ng-repeat="p in vm.prijavljeni.stu | orderBy:'priimek'">
                 <th scope="row">{{$index +1}}</th>
                 <ng-form name="vnosOcenPosamezno">
                 <td>{{ p.Student_vpisna_st  }}</td>
