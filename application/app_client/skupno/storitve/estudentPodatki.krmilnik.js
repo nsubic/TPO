@@ -42,6 +42,9 @@
       var dodajStudenta = function(podatki) {
         return $http.post('/api/dodajStudenta/',podatki);
       };
+      var dodajVpis1 = function(podatki) {
+        return $http.post('/api/dodajVpis1/',podatki);
+      };
       var dodajOsebe = function(podatki) {
         return $http.post('/api/dodajOsebe/',podatki);
       };
@@ -239,7 +242,8 @@
         letoVpisaVPredmet:letoVpisaVPredmet,
         posljiMail:posljiMail,
         dodajZeton:dodajZeton,
-        prijavljeniNaIzpitVP:prijavljeniNaIzpitVP
+        prijavljeniNaIzpitVP:prijavljeniNaIzpitVP,
+        dodajVpis1:dodajVpis1
       };
     };
 

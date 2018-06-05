@@ -2541,15 +2541,14 @@ INSERT INTO `Profesor` (`sifra_profesorja`, `ime`, `priimek`) VALUES
 --
 -- Table structure for table `Student`
 --
-
 CREATE TABLE IF NOT EXISTS `Student` (
   `priimek` varchar(45) COLLATE utf8_bin NOT NULL,
   `ime` varchar(45) COLLATE utf8_bin NOT NULL,
   `emso` int(10) unsigned zerofill DEFAULT NULL,
   `vpisna_st` int(11) NOT NULL,
-  `stalni_postna_stevilka` int(11) NOT NULL,
-  `stalni_obcina_koda` int(11) NOT NULL,
-  `stalni_drzava_koda` varchar(2) COLLATE utf8_bin NOT NULL,
+  `stalni_postna_stevilka` int(11) DEFAULT NULL,
+  `stalni_obcina_koda` int(11) DEFAULT NULL,
+  `stalni_drzava_koda` varchar(2) COLLATE utf8_bin DEFAULT NULL,
   `stalni_naslov_ulica` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `stalni_naslov_hisnast` int(11) DEFAULT NULL,
   `davcna` int(11) DEFAULT NULL,
@@ -2558,13 +2557,13 @@ CREATE TABLE IF NOT EXISTS `Student` (
   `spol` int(11) DEFAULT NULL,
   `datum_rojstva` date DEFAULT NULL,
   `kraj_rojstva` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `zacasni_postna_stevilka` int(11) NOT NULL,
-  `zacasni_obcina_koda` int(11) NOT NULL,
-  `zacasni_drzava_koda` varchar(2) COLLATE utf8_bin NOT NULL,
+  `zacasni_postna_stevilka` int(11) DEFAULT NULL,
+  `zacasni_obcina_koda` int(11) DEFAULT NULL,
+  `zacasni_drzava_koda` varchar(2) COLLATE utf8_bin DEFAULT NULL,
   `zacasni_naslov_ulica` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `zacasni_naslov_hisnast` int(11) DEFAULT NULL,
-  `Drzava_rojstva` varchar(2) COLLATE utf8_bin NOT NULL,
-  `Obcina_rojstva` int(11) NOT NULL,
+  `Drzava_rojstva` varchar(2) COLLATE utf8_bin DEFAULT NULL,
+  `Obcina_rojstva` int(11) DEFAULT NULL,
   `naslov_vrocanje` int(11) DEFAULT NULL,
   `Oseba_upIme` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`vpisna_st`),

@@ -90,6 +90,37 @@
                             vm.sporocilo = "There was an error!";
                             console.log(odgovor.e);
                           });
+                          estudentPodatki.dodajStudenta({
+                            priimek:kandidati[j].priimek,
+                            ime:kandidati[j].ime,
+                            vpisna_st:vpisna,
+                            upIme:kandidati[j].mail
+                          }).then( function success(odgovor) {
+                            console.log("voila3");
+                          }, 
+                          function error(odgovor) {
+                            vm.sporocilo = "There was an error!";
+                            console.log(odgovor);
+                          });
+                          estudentPodatki.dodajVpis1({
+                            vpisna_st:vpisna,
+                            vrsta:kandidati[j].vrsta
+                          }).then( function success(odgovor) {
+                            console.log("voila3");
+                          }, 
+                          function error(odgovor) {
+                            vm.sporocilo = "There was an error!";
+                            console.log(odgovor);
+                          });
+                          estudentPodatki.dodajZeton({
+                          vpisna_stFK:vpisna}
+                          ).then( function success(odgovor) {
+                            console.log("voila3");
+                          }, 
+                          function error(odgovor) {
+                            vm.sporocilo = "There was an error!";
+                            console.log(odgovor);
+                          });
                           console.log("pridesm")
                           estudentPodatki.dodajKandidate({
                             ime:kandidati[j].ime,
@@ -105,14 +136,12 @@
                             vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
                             console.log(osebe1)
                             vm.data = { osebe1 };
-                            estudentPodatki.dodajZeton({
-                              vpisna_stFK:vpisna}
-                              )
+
                             $("#myModal").modal()
                           }, 
                           function error(odgovor) {
                             vm.sporocilo = "There was an error!";
-                            console.log(odgovor.e);
+                            console.log(odgovor);
                           });
                         }
                       }
