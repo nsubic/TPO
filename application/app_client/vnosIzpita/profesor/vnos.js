@@ -115,10 +115,12 @@
           
     };
     
-    vm.shraniSifroIzpit = function(sifra, datumIzpita, uraIzpita, imeIzpita)
+    vm.shraniSifroIzpit = function(sifra, datumIzpita, uraIzpita, imeIzpita, imePredmeta)
     {
       window.localStorage['sifraIzpita'] = sifra;
       window.localStorage['imeIzpita'] = imeIzpita;
+      window.localStorage['datumIzpita'] = datumIzpita;
+      window.localStorage['imePredmeta'] = imePredmeta;
       vm.prijavljeniStudenti(sifra, datumIzpita, uraIzpita);
     }
     
@@ -278,12 +280,24 @@
       var ure = uraIzpita.substr(0,2);
       var minute = uraIzpita.substr(3,5);
       vm.trenSifra = sifraPred;
+      console.log("datum",vm.trenSifra)
       vm.trenDatum = datumIzpita;
+      console.log("datum",vm.trenDatum)
       vm.trenUra = uraIzpita;
+            console.log("ura",vm.trenUra)
+
       vm.trenPred = imePredmeta;
+            console.log("Predmet",vm.trenPred)
+
       vm.trenProf = imeProfesorja;
+            console.log("Prof",vm.trenProf)
+
       vm.trenLokacija = lokacija
+            console.log("lokacija",vm.trenLokacija)
+
       vm.trenLetoPolaganja =datumIzpita.split('-')[0]-1 + '/'+ datumIzpita.split('-')[0]
+            console.log("Leto",vm.trenLetoPolaganja)
+
       window.localStorage['datumIzpita'] = datum;
       window.localStorage['uraIzpita'] = ure;
       window.localStorage['minuteIzpita'] = minute;

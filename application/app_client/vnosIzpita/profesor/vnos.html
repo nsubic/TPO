@@ -165,7 +165,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div id="source" class="modal-body" style="height:100%;width:100%;overflow:auto;">
+      <div class="modal-body" style="height:100%;width:100%;overflow:auto;">
         <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu4" class="alert alert-danger">{{ vm.napakaNaObrazcu4 }}</div>
@@ -202,52 +202,52 @@
   </div>
 </div>
 
-    <div style="visibility:hidden;">
-      <div id="source"  style="height:100%;width:100%;overflow:auto;">
-        <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <h3 style="text-align:center;">Pregled prijavljenih študentov na izpit</h3>
-        <h3 style="text-align:center;">{{ vm.trenSifra }} {{vm.trenPred}} </h3>
-        <table style="height: 68px;  margin-left: auto; margin-right: auto; margin-top:30px; margin-bottom:30px" width="655">
-        <tbody>
+<div style="visibility:hidden;">
+  <div id="source"  style="height:100%;width:100%;overflow:auto;">
+    <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <h3 style="text-align:center;">Pregled prijavljenih študentov na izpit</h3>
+    <h3 style="text-align:center;">{{ vm.trenSifra }} {{vm.trenPred}} </h3>
+    <table style="height: 68px;  margin-left: auto; margin-right: auto; margin-top:30px; margin-bottom:30px" width="655">
+    <tbody>
+    <tr>
+    <td style="width: 318px;"><strong>Datum:</strong> {{vm.trenDatum | filterDATUMinURA}}</td>
+    <td style="width: 321px;"><strong>Ura:</strong> {{ vm.trenUra }}</td>
+    </tr>
+    <tr>
+    <td style="width: 318px;"><strong>Prostor:</strong> {{vm.trenLokacija }}</td>
+    <td style="width: 321px;"><strong>Profesor(ji):</strong> {{ vm.trenProf }}</td>
+    </tr>
+    
+    </tbody>
+    </table>
+     <table class="table noro">
+      <thead>
         <tr>
-        <td style="width: 318px;"><strong>Datum:</strong> {{vm.trenDatum | filterDATUMinURA}}</td>
-        <td style="width: 321px;"><strong>Ura:</strong> {{ vm.trenUra }}</td>
+          <th  class="TOTR" scope="col">#</th>
+          <th class="TOTR"  scope="col">Vpisna št.</th>
+          <th scope="TOTR">Ime</th>
+          <th scope="TOTR">Priimek</th>
+          <th class="TOTR"  scope="col">Št. točk</th>
+          <th class="TOTR"  scope="col">Ocena</th>
+          <th class="TOTR"  scope="col">Štud. leto poslušanja</th>
+          <th class="TOTR"  scope="col">Zap. št. polaganja</th>
         </tr>
-        <tr>
-        <td style="width: 318px;"><strong>Prostor:</strong> {{vm.trenLokacija }}</td>
-        <td style="width: 321px;"><strong>Profesor(ji):</strong> {{ vm.trenProf }}</td>
+      </thead>
+      <tbody>
+        <tr ng-repeat="p in vm.prijavljeni.stu | orderBy:'priimek'">
+          <td class="TOTR"  scope="row">{{$index +1}}</td>
+          <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
+          <td class="TOTR" >{{ p.ime }}</td>
+          <td class="TOTR" >{{ p.priimek }}</td>
+          <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
+          <td class="TOTR" >{{ p.ocena }}</td>
+          <td class="TOTR" >{{ vm.trenLetoPolaganja }}</td>
+          <td class="TOTR" >{{ p.stPolaganja }}</td>
         </tr>
-        
-        </tbody>
-        </table>
-         <table class="table noro">
-          <thead>
-            <tr>
-              <th  class="TOTR" scope="col">#</th>
-              <th class="TOTR"  scope="col">Vpisna št.</th>
-              <th scope="TOTR">Ime</th>
-              <th scope="TOTR">Priimek</th>
-              <th class="TOTR"  scope="col">Št. točk</th>
-              <th class="TOTR"  scope="col">Ocena</th>
-              <th class="TOTR"  scope="col">Štud. leto poslušanja</th>
-              <th class="TOTR"  scope="col">Zap. št. polaganja</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="p in vm.prijavljeni.stu | orderBy:'priimek'">
-              <td class="TOTR"  scope="row">{{$index +1}}</td>
-              <td class="TOTR" >{{ p.Student_vpisna_st  }}</td>
-              <td class="TOTR" >{{ p.ime }}</td>
-              <td class="TOTR" >{{ p.priimek }}</td>
-              <td class="TOTR" >{{ p.tocke_na_izpitu }}</td>
-              <td class="TOTR" >{{ p.ocena }}</td>
-              <td class="TOTR" >{{ vm.trenLetoPolaganja }}</td>
-              <td class="TOTR" >{{ p.stPolaganja }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 <script>
