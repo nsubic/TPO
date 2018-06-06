@@ -914,7 +914,6 @@ CREATE TABLE IF NOT EXISTS `Nosilec_predmeta` (
 --
 
 INSERT INTO `Nosilec_predmeta` (`sifra_opcije`, `sifra_predmetaFK`, `sifra_profesorjaFK1`, `sifra_profesorjaFK2`, `sifra_profesorjaFK3`) VALUES
-(0, 63213, 630001, NULL, NULL),
 (1, 63241, 630001, NULL, NULL),
 (2, 63258, 630001, NULL, NULL),
 (3, 63708, 630001, NULL, NULL),
@@ -982,7 +981,7 @@ INSERT INTO `Nosilec_predmeta` (`sifra_opcije`, `sifra_predmetaFK`, `sifra_profe
 (65, 63702, 630042, NULL, NULL),
 (66, 63703, 630043, NULL, NULL),
 (67, 63709, 630044, NULL, NULL),
-(68, 63213, 630001, NULL, NULL);
+(68, 63213, 630010, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1963,10 +1962,6 @@ CREATE TABLE IF NOT EXISTS `Predmetnik` (
 --
 
 INSERT INTO `Predmetnik` (`sifra_predmetaFK`, `sifra_predmetnikaFK`, `letnikFK`, `sifra_stProgramFK`, `studijsko_letoFK`, `Nosilec_predmeta_sifra_opcije`) VALUES
-(63213, 1, 2, 'VT', '2015/2016', 1),
-(63213, 1, 2, 'VT', '2016/2017', 1),
-(63213, 1, 2, 'VT', '2017/2018', 1),
-(63213, 1, 2, 'VT', '2018/2019', 1),
 (63253, 3, 3, 'VT', '2015/2016', 1),
 (63253, 3, 3, 'VT', '2016/2017', 1),
 (63253, 3, 3, 'VT', '2017/2018', 1),
@@ -2366,7 +2361,12 @@ INSERT INTO `Predmetnik` (`sifra_predmetaFK`, `sifra_predmetnikaFK`, `letnikFK`,
 (63709, 1, 1, 'VU', '2015/2016', 67),
 (63709, 1, 1, 'VU', '2016/2017', 67),
 (63709, 1, 1, 'VU', '2017/2018', 67),
-(63709, 1, 1, 'VU', '2018/2019', 67);
+(63709, 1, 1, 'VU', '2018/2019', 67),
+(63213, 1, 2, 'VT', '2015/2016', 68),
+(63213, 1, 2, 'VT', '2016/2017', 68),
+(63213, 1, 2, 'VT', '2017/2018', 68),
+(63213, 1, 2, 'VT', '2018/2019', 68);
+
 
 -- --------------------------------------------------------
 
