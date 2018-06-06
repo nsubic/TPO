@@ -16,13 +16,15 @@
     });
     vm.potrdilo = function(p)
     {
-      
+      console.log("Potrdilo", p.vpisna_st)
+      window.localStorage['vpisnaPreveri'] = p.vpisna_st;
       var win = window.open('');
-win.document.write($("#potrdiloV").html());
+    win.document.write($("#potrdiloV").html());
 
     }
     vm.preveriVpisno = function(vpisna)
     {
+        console.log("vpisna prava", vpisna, window.localStorage['vpisnaPreveri'] )
         var vpisnaShrani = parseInt(window.localStorage['vpisnaPreveri']);
         console.log("vpisn1 ", vpisnaShrani);
         if (vpisnaShrani == vpisna)
@@ -42,6 +44,9 @@ win.document.write($("#potrdiloV").html());
     }
     vm.potrdi = function(vpisna)
     {
+      
+      window.localStorage['vpisnaPreveri'];
+      console.log("vpisna", vpisna)
        estudentPodatki.potrdiVpisReferent({
         podatki: vpisna
       }).then(

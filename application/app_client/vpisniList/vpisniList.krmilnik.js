@@ -177,6 +177,7 @@
         
         if(last_num !== checksum) {
           $scope.emsoChecksumValidation = true;
+          vm.emso=1
         } else {
           $scope.emsoChecksumValidation = false;
           vm.emso = 0;
@@ -199,11 +200,12 @@
         
         console.log("comparing", txtEMSO, txtBirth, txtEMSO !== txtBirth);
         console.log(!$scope.emsoChecksumValidation)
-        if((txtEMSO !== txtBirth)) {
+        if((txtEMSO !== txtBirth) && !$scope.emsoChecksumValidation) {
           $scope.emsoDateValidation = true;
         } else {
           $scope.emsoDateValidation = false;
         }
+        console.log(!$scope.emsoDateValidation)
         if($scope.emsoChecksumValidation == false && $scope.emsoDateValidation == false)
           vm.emso = 0;
         else vm.emso = 1;

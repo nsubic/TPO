@@ -215,7 +215,7 @@ router.get('/studenti', function(req, res, next) {
 });
 router.get('/pridobiNeprijavljene', function(req, res, next) {
 	
-     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student INNER JOIN Vrsta_vpisa INNER JOIN Studijski_program INNER JOIN Posta  ON Student.vpisna_st = Vpis.vpisna_st  and Vrsta_vpisa.vrsta_vpisa = Vpis.vrsta_vpisaFK and Studijski_program.sifra_stProgram = Vpis.sifra_stProgramFK and Posta.postna_stevilka = Student.stalni_postna_stevilka WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek, Student.ime DESC', function (error, results, fields) {
+     global.connection.query('SELECT * FROM Vpis  INNER JOIN Student INNER JOIN Vrsta_vpisa INNER JOIN Studijski_program INNER JOIN Posta  ON Student.vpisna_st = Vpis.vpisna_st  and Vrsta_vpisa.vrsta_vpisa = Vpis.vrsta_vpisaFK and Studijski_program.sifra_stProgram = Vpis.sifra_stProgramFK and Posta.postna_stevilka = Student.stalni_postna_stevilka WHERE Vpis.je_potrjen=0 ORDER BY Student.priimek', function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
 	});
