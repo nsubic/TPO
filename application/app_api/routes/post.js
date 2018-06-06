@@ -143,7 +143,7 @@ router.post('/vpis', function(req, res, next) {
         throw new Error("letnik null");
     }
     if(!req.body.emso) {
-        throw new Error("letnik null");
+        throw new Error("emso null");
     }
     if(!req.body.program) {
         throw new Error("program null");
@@ -286,7 +286,7 @@ router.post('/vpis', function(req, res, next) {
             // nadaljuje in označi žeton kot uporabljen
             // adijo
             console.log("pa sem")
-            global.connection.query('UPDATE Zeton SET izkoriscen = 1 WHERE id = ? AND izkoriscen = ?', [req.body.vpisna_st,0], function(err, results, fields) {
+            global.connection.query('UPDATE Zeton SET izkoriscen = ? WHERE vpisna_stFK = ? AND izkoriscen = ?', [1, req.body.vpisna_st,0], function(err, results, fields) {
                 res.json({
                     "status": 200,
                     "error": null,
