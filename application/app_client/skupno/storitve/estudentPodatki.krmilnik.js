@@ -69,6 +69,9 @@
       var student2 = function(upime) {
         return $http.get('/api/student2/'+upime);
       };
+      var student3 = function(upime) {
+        return $http.get('/api/student3/'+upime);
+      };
       var student3 = function(vpisna) {
         return $http.get('/api/student3/'+vpisna);
       };
@@ -243,7 +246,8 @@
         posljiMail:posljiMail,
         dodajZeton:dodajZeton,
         prijavljeniNaIzpitVP:prijavljeniNaIzpitVP,
-        dodajVpis1:dodajVpis1
+        dodajVpis1:dodajVpis1,
+        student3:student3
       };
     };
 

@@ -651,7 +651,7 @@
       // sn: ali kaj drugega, ne vem
     }
     console.log($window.localStorage['upIme']);
-    estudentPodatki.student2($window.localStorage['upIme']).then(function (res) {
+    estudentPodatki.student3($window.localStorage['upIme']).then(function (res) {
       console.log(res);
       if(res.data.response.length > 0)
       var vpisna = res.data.response[0].vpisna_st;

@@ -184,6 +184,17 @@ router.get('/student2/:upime', function(req, res, next) {
     }
 });
 
+router.get('/student3/:upime', function(req, res, next) {
+     if (req.params && req.params.upime) { 
+     global.connection.query('SELECT * FROM Student  WHERE Student.Oseba_upIme = ?', [req.params.upime], function (error, results, fields) {
+		if (error) throw error;
+		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+	});
+     } else {
+        res.send(JSON.stringify({"status": 400 , "error": null, "response": null}));
+    }
+});
+
 
 router.get('/student3/:vpisna', function(req, res, next) {
      if (req.params && req.params.vpisna) { 

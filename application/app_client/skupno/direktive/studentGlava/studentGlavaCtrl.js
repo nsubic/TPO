@@ -10,14 +10,14 @@
     navvm.trenutniUporabnik = $window.localStorage['upIme'];
     console.log(navvm.trenutniUporabnik);
     navvm.vpisna=""
-    
-    estudentPodatki.student2($window.localStorage['upIme']).then(
+    console.log("upIme", $window.localStorage['upIme'])
+    estudentPodatki.student3($window.localStorage['upIme']).then(
     function success(odgovor) {
       navvm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
       navvm.d = { pod: odgovor.data };
-      console.log(navvm.d.pod.response)
+      console.log("response1",navvm.d)
       navvm.vpisna = navvm.d.pod.response[0].vpisna_st
-      console.log(navvm.vpisna)
+      console.log("vpisna", navvm.vpisna)
     })
     
     navvm.ime = $window.localStorage['upIme'];
