@@ -2544,7 +2544,7 @@ INSERT INTO `Profesor` (`sifra_profesorja`, `ime`, `priimek`) VALUES
 CREATE TABLE IF NOT EXISTS `Student` (
   `priimek` varchar(45) COLLATE utf8_bin NOT NULL,
   `ime` varchar(45) COLLATE utf8_bin NOT NULL,
-  `emso` int(10) unsigned zerofill DEFAULT NULL,
+  `emso` varchar(13) COLLATE utf8_bin DEFAULT NULL,
   `vpisna_st` int(11) NOT NULL,
   `stalni_postna_stevilka` int(11) DEFAULT NULL,
   `stalni_obcina_koda` int(11) DEFAULT NULL,
