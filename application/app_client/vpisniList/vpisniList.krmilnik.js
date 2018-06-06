@@ -580,9 +580,113 @@
     }
     
     $scope.izvediVpis = function() {
+      console.log("zacasni", document.getElementById("prejem_zacasni").checked)
+      
       console.info("submit start");
       console.log("napaki", vm.napacnPriimek, vm.napacnoIme, vm.davcna, vm.emso);
-      if( vm.napacnoIme == 1){
+      if(document.getElementById("prejem_zacasni").checked){
+        if(document.getElementById("zacasni_naslov_ulica").value.length < 1){
+          alert("Dopišite začasni naslov!")
+          document.getElementById("zacasni_naslov_ulica").focus();
+          return;
+        }
+        else if(document.getElementById("zacasni_naslov_hisnast").value.length < 1){
+          alert("Dopišite hišno številko začasnega naslova!")
+          document.getElementById("zacasni_naslov_hisnast").focus();
+          return;
+        }
+        else if(document.getElementById("zacasni_postna_stevilka").value.length < 1){
+          alert("Dopišite poštno številko začasnega naslova!")
+          document.getElementById("zacasni_postna_stevilka").focus();
+          return;
+        }
+        else if(document.getElementById("zacasni_kraj_posta").value.length < 1){
+          alert("Dopišite kraj pošte začasnega naslova!")
+          document.getElementById("zacasni_kraj_posta").focus();
+          return;
+        }
+        else if(document.getElementById("zacasni_drzava_koda").value.length < 1){
+          alert("Dopišite državo začasne pošte!")
+          document.getElementById("zacasni_drzava_koda").focus();
+          return;
+        }
+      }
+      else if(document.getElementById("ime").value.length < 1){
+        alert("Dopišite ime!")
+        document.getElementById("ime").focus();
+        return;
+      }
+      else if(document.getElementById("priimek").value.length < 1){
+        alert("Dopišite priimek!")
+        document.getElementById("priimek").focus();
+        return;
+      }
+      else if(document.getElementById("datum_rojstva").value.length < 1){
+        alert("Oznacite datum rojstva!")
+        document.getElementById("datum_rojstva").focus();
+        return;
+      }
+      else if(document.getElementById("kraj_rojstva").value.length < 1){
+        alert("Dopišite kraj rojstva!")
+        document.getElementById("kraj_rojstva").focus();
+        return;
+      }
+      else if(document.getElementById("drzava_rojstva").value.length < 1){
+        alert("Dopišite državo rojstva!")
+        document.getElementById("drzava_rojstva").focus();
+        return;
+      }
+      else if(document.getElementById("emso").value.length < 1){
+        alert("Dopišite EMŠO!")
+        document.getElementById("emso").focus();
+        return;
+      }
+      else if(document.getElementById("davcna").value.length < 1){
+        alert("Dopišite davcno!")
+        document.getElementById("davcna").focus();
+        return;
+      }
+      else if(document.getElementById("spol").value.length < 1){
+        alert("Označite spol!")
+        document.getElementById("spol").focus();
+        return;
+      }
+      else if(document.getElementById("stalni_naslov_ulica").value.length < 1){
+        alert("Dopišite stalni naslov!")
+        document.getElementById("stalni_naslov_ulica").focus();
+        return;
+      }
+      else if(document.getElementById("stalni_naslov_hisnast").value.length < 1){
+        alert("Dopišite hišno številko!")
+        document.getElementById("stalni_naslov_hisnast").focus();
+        return;
+      }
+      else if(document.getElementById("stalni_postna_stevilka").value.length < 1){
+        alert("Dopišite poštno številko!")
+        document.getElementById("stalni_postna_stevilka").focus();
+        return;
+      }
+      else if(document.getElementById("stalni_obcina_koda").value.length < 1){
+        alert("Dopišite občino!")
+        document.getElementById("stalni_obcina_koda").focus();
+        return;
+      }
+      else if(document.getElementById("stalni_drzava_koda").value.length < 1){
+        alert("Dopišite državo!")
+        document.getElementById("stalni_drzava_koda").focus();
+        return;
+      }
+      else if(document.getElementById("tel_st").value.length < 1){
+        alert("Dopišite telefonsko številko!")
+        document.getElementById("tel_st").focus();
+        return;
+      }
+      else if(document.getElementById("email").value.length < 1){
+        alert("Dopišite email!")
+        document.getElementById("email").focus();
+        return;
+      }
+      else if( vm.napacnoIme == 1){
         alert("V imenu so lahko samo črke!")
         document.getElementById("ime").focus();
         return;
@@ -602,7 +706,6 @@
         document.getElementById("emso").focus();
         return;
       }
-      else{
         $scope.vpis.predmeti = [];
         
         $.each($scope.skupine, function(idx1, elem1) {
@@ -658,7 +761,6 @@
         // estudentPodatki
         //  .dodajStudenta(vpis) ???
         // sn: ali kaj drugega, ne vem
-      }
     }
     console.log($window.localStorage['upIme']);
     estudentPodatki.student3($window.localStorage['upIme']).then(function (res) {
