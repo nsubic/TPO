@@ -117,22 +117,36 @@
       $scope.splosniTock = splosniTock;
       $scope.moduliTock = moduliTock;
     }
+    vm.napacnoIme = 0;
     $scope.$watch('vpis.ime', function(data) {
       console.log("ime", data);
+      vm.napacnoIme = 0;
       for(var a in data){
-        if(data[a].match(/[0-9]/i) )
+        if(data[a].match(/[0-9]/i) ){
+          vm.napacnoIme = 1;
           alert("V imenu so lahko samo črke!")
+        }
       }
       
     });
     
+     vm.napacnPriimek = 0;
     $scope.$watch('vpis.priimek', function(data) {
       console.log("ime", data);
+      vm.napacnPriimek = 0;
       for(var a in data){
-        if(data[a].match(/[0-9]/i) )
-          alert("V imenu so lahko samo črke!")
+        if(data[a].match(/[0-9]/i) ){
+          vm.napacnPriimek = 1;
+          alert("V priimku so lahko samo črke!")
+        }
       }
-      
+    });
+    
+    vm.davcna = 0;
+    $scope.$watch('vpis.davcna', function(data) {
+      console.log("davcna", data);
+      if(data == undefined)vm.davcna=1;
+      else  vm.davcna=0;
     });
     
     $scope.$watch('vpis.emso', function(data) {
@@ -560,95 +574,79 @@
     
     $scope.izvediVpis = function() {
       console.info("submit start");
-      
-      // IGNORE
-      if (true) // ce se bo student prvic vpisal na faks
-      {
-        // potrebujemo novo vpisno stevilko
-        // preverimo ce so pogoji vpisa oz. wateva je ze treba
-      }
-      else
-      {
-        // ce ga ze imamo v bazi, potem pa moramo preverjatni kombinacije, kam se voce vpisat
-      }
-      vm.napacenPodatek = 0;
-      $scope.$watch('vpis.ime', function(data) {
-      console.log("ime", data);
-      for(var a in data){
-        if(data[a].match(/[0-9]/i) )
-          alert("V imenu so lahko samo črke!")
-          vm.napacenPodatek=1;
-          console.log("napacenPodatek", vm.napacenPodatek)
-      }
+      console.log("napaki", vm.napacnPriimek, vm.napacnoIme, vm.davcna);
+      if( vm.napacnoIme == 1){
+        alert("V imenu so lahko samo črke!")
+        document.getElementById("ime").focus();
         return;
-      });
-      console.log("napacenPodatek", vm.napacenPodatek)
-      if(vm.napacenPodatek==1)
-      return
-      console.log("semNeSmes");
-      $scope.$watch('vpis.priimek', function(data) {
-      console.log("ime", data);
-      for(var a in data){
-        if(data[a].match(/[0-9]/i) )
-          alert("V imenu so lahko samo črke!")
       }
+      else if(vm.napacnPriimek == 1 ){
+        alert("V priimku so lahko samo črke!");
+        document.getElementById("priimek").focus();
         return;
-      });
-      $scope.vpis.predmeti = [];
-      
-      $.each($scope.skupine, function(idx1, elem1) {
-        
-        if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3 && elem1.id === 4) {
-          return; // skip 4
-        }
-        
-        $.each(elem1.predmeti, function(idx2, elem2) {
-          if(elem2.izbran || elem2.skupina === 1) {
-            $scope.vpis.predmeti.push({
-              predmet: elem2.id,
-              skupina: elem2.skupina,
-            });
-          }
-        });
-      })
-      
-      // še dodati predmete v modulih
-      
-      if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3) {
+      }
+      else if(vm.davcna == 1 ){
+        alert("Napačna davčna številka!");
+        document.getElementById("davcna").focus();
+        return;
+      }
+      else{
+        $scope.vpis.predmeti = [];
         
         $.each($scope.skupine, function(idx1, elem1) {
-          if(elem1.id !== 4) {
-            return;
+          
+          if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3 && elem1.id === 4) {
+            return; // skip 4
           }
-
+          
           $.each(elem1.predmeti, function(idx2, elem2) {
-            if(elem2.izbran) {
-              $.each(elem2.nodes, function(idx3, elem3) {
-                $scope.vpis.predmeti.push({
-                  predmet: elem3.sifra_predmetaFK,
-                  skupina: elem2.skupina,
-                });  
+            if(elem2.izbran || elem2.skupina === 1) {
+              $scope.vpis.predmeti.push({
+                predmet: elem2.id,
+                skupina: elem2.skupina,
               });
-              
             }
           });
-        });
-      }
-  
-      // konec
-      
-      estudentPodatki
-        .dodajVpis($scope.vpis)
-        .then(function(res) {
-          console.log(res);
-          var leta = $scope.vpis.solskoLeto.split("/");
-          $window.location.href = "/" + ["vpis", "print", leta[0], leta[1], $scope.vpis.program, $scope.vpis.vpisna_st].join("/");
-        }, function(err) {
-          alert(err);
         })
-      // estudentPodatki
-      //  .dodajStudenta(vpis) ???
-      // sn: ali kaj drugega, ne vem
+        
+        // še dodati predmete v modulih
+        
+        if(!$scope.vpis.prosto_izbirni && $scope.vpis.letnik == 3) {
+          
+          $.each($scope.skupine, function(idx1, elem1) {
+            if(elem1.id !== 4) {
+              return;
+            }
+  
+            $.each(elem1.predmeti, function(idx2, elem2) {
+              if(elem2.izbran) {
+                $.each(elem2.nodes, function(idx3, elem3) {
+                  $scope.vpis.predmeti.push({
+                    predmet: elem3.sifra_predmetaFK,
+                    skupina: elem2.skupina,
+                  });  
+                });
+                
+              }
+            });
+          });
+        }
+    
+        // konec
+        
+        estudentPodatki
+          .dodajVpis($scope.vpis)
+          .then(function(res) {
+            console.log(res);
+            var leta = $scope.vpis.solskoLeto.split("/");
+            $window.location.href = "/" + ["vpis", "print", leta[0], leta[1], $scope.vpis.program, $scope.vpis.vpisna_st].join("/");
+          }, function(err) {
+            alert(err);
+          })
+        // estudentPodatki
+        //  .dodajStudenta(vpis) ???
+        // sn: ali kaj drugega, ne vem
+      }
     }
     console.log($window.localStorage['upIme']);
     estudentPodatki.student3($window.localStorage['upIme']).then(function (res) {
