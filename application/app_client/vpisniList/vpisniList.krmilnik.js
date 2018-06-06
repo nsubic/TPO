@@ -22,7 +22,7 @@
     
     $scope.maxTock = 60;
     $scope.tock = 0;
-    
+    vm.tock = 0;
     $scope.groupModule = [
       {
         "id": 1,
@@ -107,6 +107,7 @@
       });
       
       $scope.tock = $scope.maxTock - intermediate;
+      vm.tock = $scope.tock
       $scope.obvezniPredmeti = intermediateObvezni;
       $scope.izbraniPredmeti = intermediateIzbirni;
       $scope.strokovni = strokovni;
@@ -217,6 +218,7 @@
       $scope.regexIme = /[A-Za-z]{1,}/;
       $scope.regexPriimek = /[A-Za-z]{1,}/;
       $scope.tock = 0;
+      vm.tock = $scope.tock;
       $scope.obvezniPredmeti = 0;
       $scope.izbraniPredmeti = 0;
       $scope.zetoni = [];
@@ -580,6 +582,8 @@
     }
     
     $scope.izvediVpis = function() {
+      
+      console.log("tocke", vm.tock);
       console.log("zacasni", document.getElementById("prejem_zacasni").checked)
       
       console.info("submit start");
@@ -704,6 +708,12 @@
       else if(vm.emso == 1 ){
         alert("Napačn EMŠO!");
         document.getElementById("emso").focus();
+        return;
+      }
+      
+      var dosezenih = 60 - vm.tock
+      if(vm.tock > 0){
+        alert("izbrali ste " + dosezenih + "KT, potrebuje še " + vm.tock + "KT!");
         return;
       }
         $scope.vpis.predmeti = [];
