@@ -148,8 +148,9 @@
       if(data == undefined)vm.davcna=1;
       else  vm.davcna=0;
     });
-    
+    vm.emso = 0;
     $scope.$watch('vpis.emso', function(data) {
+      console.log("emso", vm.emso);
       $scope.emsoChecksumValidation = false;
       $scope.emsoDateValidation = false;
       if(data && data.length === 13) {
@@ -177,8 +178,10 @@
           $scope.emsoChecksumValidation = true;
         } else {
           $scope.emsoChecksumValidation = false;
+          vm.emso = 0;
         }
-        
+        console.log("emso1", vm.emso);
+
         console.log("datum", $scope.vpis.datum_rojstva);
         var dateDr = $scope.vpis.datum_rojstva;
         
@@ -194,12 +197,16 @@
         var txtBirth = [dateDr.getFullYear().toString().substr(1, 3), dateDr.getMonth()+1, dateDr.getDate()].join("-");
         
         console.log("comparing", txtEMSO, txtBirth, txtEMSO !== txtBirth);
-        
-        if(txtEMSO !== txtBirth && !$scope.emsoChecksumValidation) {
+        console.log(!$scope.emsoChecksumValidation)
+        if((txtEMSO !== txtBirth)) {
           $scope.emsoDateValidation = true;
         } else {
           $scope.emsoDateValidation = false;
         }
+        if($scope.emsoChecksumValidation == false && $scope.emsoDateValidation == false)
+          vm.emso = 0;
+        else vm.emso = 1;
+        console.log("emso2",vm.emso);
       }
       
     })
@@ -574,7 +581,7 @@
     
     $scope.izvediVpis = function() {
       console.info("submit start");
-      console.log("napaki", vm.napacnPriimek, vm.napacnoIme, vm.davcna);
+      console.log("napaki", vm.napacnPriimek, vm.napacnoIme, vm.davcna, vm.emso);
       if( vm.napacnoIme == 1){
         alert("V imenu so lahko samo črke!")
         document.getElementById("ime").focus();
@@ -588,6 +595,11 @@
       else if(vm.davcna == 1 ){
         alert("Napačna davčna številka!");
         document.getElementById("davcna").focus();
+        return;
+      }
+      else if(vm.emso == 1 ){
+        alert("Napačn EMŠO!");
+        document.getElementById("emso").focus();
         return;
       }
       else{
