@@ -116,14 +116,15 @@
         <h3>{{ vm.ime }}</h3>
         <div role="alert" ng-show="vm.napakaNaObrazcu1" class="alert alert-danger">{{ vm.napakaNaObrazcu1 }}</div>
         <div role="alert" ng-show="vm.napakaNaObrazcu3" class="alert alert-danger">{{ vm.napakaNaObrazcu3 }}</div>
+        <div>Za vrnjeno prijavo vpišite VP v polje za Št. točk!</div>
          <table class="table1">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Vpisna št.</th>
-              <th scope="col">Št. točk</th>
               <th scope="col">Ime</th>
               <th scope="col">Priimek</th>
+              <th scope="col">Št. točk</th>
               <th scope="col">Končna Ocena</th>
             </tr>
           </thead>
@@ -138,7 +139,21 @@
                 <td>{{ p.priimek  }}</td>
                  <!-- tuki morm zj poi tm window.getSIFRO in poi putam glede na te dve  -->
                 <td><input type="text" id="tockeNove" ng-model="p.tocke_na_izpitu" style="width:110%;" value="{{ p.tocke_na_izpitu }}"><br></td>
-                 <td><input type="text" id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}"><br></td>
+                 <td>
+                  <select id="ocenaNova" ng-model="p.ocena" style="width:110%;" value="{{ p.ocena }}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select> 
+                 
+                 <br></td>
                 <td><input type="submit" ng-click="vm.dodajanjeOcen(p)" value="Vnesi"></td>
                 <td><input type="submit"  ng-click="vm.dodajanjeOcen1(p)" value="Odjavi"></td>
               </ng-form>

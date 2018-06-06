@@ -169,48 +169,15 @@
         var uraIzpita = window.localStorage['uraIzpita'];
         var minutaIzpita = window.localStorage['minuteIzpita'];
         
-        if(p.ocena == 'VP' || p.tocke_na_izpitu == "VP"){
-          estudentPodatki.updateOceno1({
-         Izpit_šifra: p.Izpit_šifra,
-         Student_vpisna_st: p.Student_vpisna_st,
-         ocena: "VP",
-        tocke_na_izpitu: "VP",
         
-       }).then(
-                 function success(odgovor) {
-                   
-                   alert("Študentu je bila vrnjena prijava. Študent je bil zato odjavljen od izpita!");
-                   //location.reload();
-                 }, 
-                 function error(odgovor) {
-                   vm.napakaNaObrazcu = "Ni dostopa do baze!";
-                   console.log(odgovor.e);
-          });
-          
-        estudentPodatki.odjaviStudentaRef({
-        Izpit_šifra: p.Izpit_šifra,
-        Student_vpisna_st: p.Student_vpisna_st,
-        odjava: 1,
-        cas_odjave: x1,
-        odjavitelj: odja
-        }).then(
-                function success(odgovor) {
-                  console.log("Uspelo");
-                }, 
-                function error(odgovor) {
-                  vm.napakaNaObrazcu3 = "Ni dostopa do baze!";
-                  console.log(odgovor.e);
-          });
-          return;
-        }
-        else
-        {
+        
+        
           if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
           {
             vm.napakaNaObrazcu3 = "Ne smete brisati ce je ze vpisano  st tock, oz. ne smete vpisovati tock pri odjavi studenta.";
             return;
           }
-        }
+        
       
       
         var odja = $window.localStorage['upIme'];
