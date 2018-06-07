@@ -606,9 +606,9 @@
           document.getElementById("zacasni_postna_stevilka").focus();
           return;
         }
-        else if(document.getElementById("zacasni_kraj_posta").value.length < 1){
+        else if(document.getElementById("zacasni_obcina_koda").value.length < 1){
           alert("Dopišite kraj pošte začasnega naslova!")
-          document.getElementById("zacasni_kraj_posta").focus();
+          document.getElementById("zacasni_obcina_koda").focus();
           return;
         }
         else if(document.getElementById("zacasni_drzava_koda").value.length < 1){
