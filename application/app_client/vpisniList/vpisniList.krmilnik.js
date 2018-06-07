@@ -469,7 +469,7 @@
       console.log("letnik:::", $scope.vpis.letnik);
       
       if($scope.vpis.letnik == 2) {
-        if($scope.splosniTock >= 6 && predmet.skupina == 3) {
+        if(($scope.splosniTock + predmet.tocke) > 6 && predmet.skupina == 3) {
          if($scope.splosni > 1) {
             alert("Izbrana že imate splošna predmeta, izbira zato ni mogoča.");
           } else {
@@ -478,7 +478,7 @@
           return;
         }
         
-        if($scope.strokovniTock >= 6 && predmet.skupina == 2) {
+        if(($scope.strokovniTock + predmet.tocke) > 6 && predmet.skupina == 2) {
           if($scope.strokovni > 1) {
             alert("Izbrana že imate strokovna predmeta, izbira zato ni mogoča");
           } else {

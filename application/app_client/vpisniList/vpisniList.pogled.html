@@ -120,9 +120,11 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="zacasni_kraj_posta" class="col-sm-3 col-form-label">Začasni kraj pošte:</label>
+        <label for="zacasni_obcina_koda" class="col-sm-3 col-form-label">Začasni kraj pošte:</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="zacasni_kraj_posta" ng-model="vpis.zacasni_kraj_posta">
+          <select class="form-control" id="zacasni_obcina_koda" ng-options="item.sifra_obcine as item.ime_obcine for item in obcine | orderBy: ime_obcine" ng-model="vpis.zacasni_obcina_koda">
+            <option value="">Izberi občino</option>
+          </select>
           <small class="form-text text-muted">Neobvezno polje</small>
         </div>
       </div>
