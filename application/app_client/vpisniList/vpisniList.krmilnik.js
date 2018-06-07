@@ -316,12 +316,11 @@
           var moreData = [];
            
           $.each(grpMod.children, function(idx3, elem3) {
-            var predmet = $.grep($scope.predmeti, function(data3) {
-              return data3.sifra_predmetaFK === elem3;
+            var predmet = $.grep($scope.predmeti2, function(data3) {
+              return data3.sifra_predmeta === elem3;
             });
             
             if(predmet.length) {
-              console.log(predmet[0]);
               moreData.push(predmet[0]);
             }
           });
@@ -428,6 +427,13 @@
         $scope.letniki = res.data.response;
         console.log("letniki", $scope.letniki);
       });
+      
+      estudentPodatki
+        .predmet()
+        .then(function(res) {
+          $scope.predmeti2 = res.data.response;
+          console.log("sif predmeti", $scope.predmeti2);
+        })
       
       estudentPodatki
         .nosilciInPredmeti()
@@ -749,7 +755,7 @@
               if(elem2.izbran) {
                 $.each(elem2.nodes, function(idx3, elem3) {
                   $scope.vpis.predmeti.push({
-                    predmet: elem3.sifra_predmetaFK,
+                    predmet: elem3.sifra_predmeta,
                     skupina: elem2.skupina,
                   });  
                 });

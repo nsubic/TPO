@@ -33,6 +33,7 @@
     estudentPodatki
       .studentiVpis(vpisnaSt)
       .then(function(res) {
+        console.log("vpis?", res.data.response);
         var currents = $.grep(res.data.response, function(data) {
           return data.sifra_stProgramFK === program && data.studijsko_letoFK === [leto1, leto2].join("/");
         })
