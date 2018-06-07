@@ -26,9 +26,7 @@
                 <td>{{ p.priimek  }}</td>
                 <td>{{ p.naziv  }}</td>
                 <td>{{ p.studijsko_letoFK  }}</td>
-                <td><input type="submit" ng-click="vm.potrdi(p.vpisna_st)"  value="Potrditev"></td>
-                <td><button type="submit"  ng-click="vm.submit(p)" value="Natisni">Natisni</td>
-                <td><button  ng-click="vm.potrdilo(p)" value="Ogled potrdila">Ogled potrdila</td>
+                <td><input type="submit" ng-click="vm.potrdi(p.vpisna_st)"  value="Potrditev"  data-toggle="modal" data-target="#natisniPotrdila" class="delete"></td>
               </ng-form>
             </tr>
             </form>
@@ -83,8 +81,47 @@
             </form>
        </div>
       </div>
-      
-      
+<div class="modal fade" id="natisniPotrdila" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+  <div class="modal-dialog" role="document" style="width:100%" >
+    <div class="modal-content" width='700px'>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Natisni potrdila o vpisu!</h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+ <table class="table" style="height: 68px;  margin-left: auto; margin-right: auto; margin-top:30px; margin-bottom:30px" width="655">
+    <thead>
+    <tr>
+    </tr>
+       </thead>
+        <tbody>
+            <tr class="form-group table td"  ng-if="vm.preveriVpisno(p.vpisna_st)" ng-repeat="p in vm.potrdiVpis.stu">
+                <ng-form name="potrdiloVPisa">
+                <td>{{ p.ime  }}</td>
+                <td>{{ p.priimek  }}</td>
+                <td>{{ p.naziv  }}</td>
+                <td><button type="submit"  ng-click="vm.submit(p)" value="Natisni">Natisni</td>
+                <td><button  ng-click="vm.potrdilo(p)" value="Ogled potrdila">Ogled potrdila</td>
+              </ng-form>
+            </tr>
+            </form>
+          </tbody>
+  </table>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Zapri</button>
+      </div>
+      </div>
+    </div>
+</div>
+<script>
+    $('#natisniPotrdila').on('shown.bs.modal', function () {
+  $('#exampleModalLong').on('hide', function () {
+    })
+  $('#myInput').trigger('focus')
+})
+</script>
 <style>
 .serif {
     font-family: "Times New Roman", Times, serif;
@@ -94,3 +131,4 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 </style>
+

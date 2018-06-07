@@ -45,7 +45,7 @@
     vm.potrdi = function(vpisna)
     {
       
-      window.localStorage['vpisnaPreveri'];
+      window.localStorage['vpisnaPreveri'] = vpisna;
       console.log("vpisna", vpisna)
        estudentPodatki.potrdiVpisReferent({
         podatki: vpisna
@@ -53,16 +53,16 @@
     function success(res) {
       vm.sporocilo = res.data.length > 0 ? "" : "No exams found.";
       console.log(res.data.response)
-      alert("Uspešno potrjen vpis!")
-      location.reload();
     }, 
     function error(res) {
       vm.sporocilo = "There was an error!";
       console.log(res.e);
     });
     }
-            }
-  
+    $('#natisniPotrdila').on('hidden.bs.modal', function () {
+    location.reload();
+  })     
+  }
   angular
     .module('estudent')
     .controller('potrditevVpisniListCtrl', potrditevVpisniListCtrl);
