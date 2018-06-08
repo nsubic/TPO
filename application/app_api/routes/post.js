@@ -90,7 +90,9 @@ var data = req.body;
  
 });
 router.post('/dodajIzpit', function(req, res, next) {
-    console.log(req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija)
+
+    console.log("datum1", req.body.datum);
+    
      global.connection.query('INSERT INTO Izpit( rok, Predmet_sifra_predmeta, datum, lokacija,ura,profesor_ime ) VALUES (?,?,?,?,?,?)',[req.body.rok,req.body.Predmet_sifra_predmeta, req.body.datum, req.body.lokacija,req.body.ura,req.body.profesor_ime], function (error, results, fields) {
 		if (error) throw error;
 		res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
@@ -176,8 +178,7 @@ router.post('/vpis', function(req, res, next) {
     if(!req.body.zetonId) {
         throw new Error("zetonId null");
     }
-    console.log("faking emso", req.body.emso)
-    // UPDATE Student
+    
     global.connection.query(`
     UPDATE Student
         SET

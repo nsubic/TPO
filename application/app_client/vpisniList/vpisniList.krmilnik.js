@@ -342,7 +342,7 @@
       priimek: null,
       datum_rojstva: null,
       kraj_rojstva: null,
-      drzava_rojstva: "SI",
+      drzava_rojstva: null,
       emso: null,
       davcna: null,
       spol: null,
@@ -360,7 +360,7 @@
       program: null,
       vrsta_vpisa: null,
       letnik: null,
-      solskoLeto: "2018/2019",
+      solskoLeto: "2016/2017",
       zetonId: null,
     };
     
@@ -587,7 +587,7 @@
       
       console.log("tocke", vm.tock);
       console.log("zacasni", document.getElementById("prejem_zacasni").checked)
-      
+      console.log(document.getElementById("datum_rojstva").value)
       console.info("submit start");
       console.log("napaki", vm.napacnPriimek, vm.napacnoIme, vm.davcna, vm.emso);
       if(document.getElementById("prejem_zacasni").checked){
