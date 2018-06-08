@@ -6,7 +6,7 @@
     var vpisna = $routeParams.vpisna;
     console.log(vpisna)
     
-    estudentPodatki.student3(vpisna).then(
+    estudentPodatki.student4(vpisna).then(
     function success(odgovor) {
       vm.sporocilo = odgovor.data.length > 0 ? "" : "Ni nobenih predmetov.";
       vm.data = { studenti: odgovor.data.response };

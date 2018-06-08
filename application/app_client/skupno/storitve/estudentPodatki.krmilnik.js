@@ -72,8 +72,8 @@
       var student3 = function(upime) {
         return $http.get('/api/student3/'+upime);
       };
-      var student3 = function(vpisna) {
-        return $http.get('/api/student3/'+vpisna);
+      var student4 = function(vpisna) {
+        return $http.get('/api/student4/'+vpisna);
       };
       var stVpisanih = function() {
         return $http.get('/api/stVpisanih/');
@@ -236,6 +236,7 @@
         IzbrisiPrijavePoSifri:IzbrisiPrijavePoSifri,
         odjaviStudentaRef:odjaviStudentaRef,
         student3:student3,
+        student4:student4,
         vrniTocke:vrniTocke,
         vrniOcene:vrniOcene,
         vstaviZeton:vstaviZeton,

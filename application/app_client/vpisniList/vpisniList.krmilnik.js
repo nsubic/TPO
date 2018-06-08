@@ -360,7 +360,7 @@
       program: null,
       vrsta_vpisa: null,
       letnik: null,
-      solskoLeto: "2016/2017",
+      solskoLeto: "2017/2018",
       zetonId: null,
     };
     

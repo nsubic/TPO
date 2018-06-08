@@ -196,7 +196,7 @@ router.get('/student3/:upime', function(req, res, next) {
 });
 
 
-router.get('/student3/:vpisna', function(req, res, next) {
+router.get('/student4/:vpisna', function(req, res, next) {
      if (req.params && req.params.vpisna) { 
      global.connection.query('SELECT *,Nacin_studija.opis AS eins FROM Student INNER JOIN Vpis ON Student.vpisna_st = Vpis.vpisna_st INNER JOIN Nacin_studija ON Vpis.nacin_studijaFK = Nacin_studija.nacin_studija INNER JOIN Vrsta_vpisa ON Vpis.vrsta_vpisaFK = Vrsta_vpisa.vrsta_vpisa INNER JOIN Studijski_program ON Vpis.sifra_stProgramFK = Studijski_program.sifra_stProgram WHERE Student.vpisna_st = ?', [req.params.vpisna], function (error, results, fields) {
 		if (error) throw error;

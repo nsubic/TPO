@@ -232,7 +232,7 @@
           return;
         }
       
-      if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
+      /*if (p.tocke_na_izpitu != undefined || p.ocena != undefined)
       {
          if (parseInt(datumIzpita.substr(0,4)) <= parseInt(datumTMP.substr(0,4)))
         {
@@ -258,7 +258,7 @@
           vm.napakaNaObrazcu1 = "Točk/ocen ne morete vpisovati pred izpitnim rokom.";
                     return;
         }
-      }
+      }*/
       estudentPodatki.updateOceno1({
          Izpit_šifra: p.Izpit_šifra,
          Student_vpisna_st: p.Student_vpisna_st,
