@@ -316,12 +316,11 @@
           var moreData = [];
            
           $.each(grpMod.children, function(idx3, elem3) {
-            var predmet = $.grep($scope.predmeti, function(data3) {
-              return data3.sifra_predmetaFK === elem3;
+            var predmet = $.grep($scope.predmeti2, function(data3) {
+              return data3.sifra_predmeta === elem3;
             });
             
             if(predmet.length) {
-              console.log(predmet[0]);
               moreData.push(predmet[0]);
             }
           });
@@ -430,6 +429,13 @@
       });
       
       estudentPodatki
+        .predmet()
+        .then(function(res) {
+          $scope.predmeti2 = res.data.response;
+          console.log("sif predmeti", $scope.predmeti2);
+        })
+      
+      estudentPodatki
         .nosilciInPredmeti()
         .then(function(res) {
           $scope.predmeti = res.data.response;
@@ -469,7 +475,7 @@
       console.log("letnik:::", $scope.vpis.letnik);
       
       if($scope.vpis.letnik == 2) {
-        if($scope.splosniTock >= 6 && predmet.skupina == 3) {
+        if(($scope.splosniTock + predmet.tocke) > 6 && predmet.skupina == 3) {
          if($scope.splosni > 1) {
             alert("Izbrana že imate splošna predmeta, izbira zato ni mogoča.");
           } else {
@@ -478,7 +484,7 @@
           return;
         }
         
-        if($scope.strokovniTock >= 6 && predmet.skupina == 2) {
+        if(($scope.strokovniTock + predmet.tocke) > 6 && predmet.skupina == 2) {
           if($scope.strokovni > 1) {
             alert("Izbrana že imate strokovna predmeta, izbira zato ni mogoča");
           } else {
@@ -606,9 +612,9 @@
           document.getElementById("zacasni_postna_stevilka").focus();
           return;
         }
-        else if(document.getElementById("zacasni_kraj_posta").value.length < 1){
+        else if(document.getElementById("zacasni_obcina_koda").value.length < 1){
           alert("Dopišite kraj pošte začasnega naslova!")
-          document.getElementById("zacasni_kraj_posta").focus();
+          document.getElementById("zacasni_obcina_koda").focus();
           return;
         }
         else if(document.getElementById("zacasni_drzava_koda").value.length < 1){
@@ -749,7 +755,7 @@
               if(elem2.izbran) {
                 $.each(elem2.nodes, function(idx3, elem3) {
                   $scope.vpis.predmeti.push({
-                    predmet: elem3.sifra_predmetaFK,
+                    predmet: elem3.sifra_predmeta,
                     skupina: elem2.skupina,
                   });  
                 });
